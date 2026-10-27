@@ -24,7 +24,8 @@
   --nav:#eee6de;         /* layer buttons */
   --line:#93755f;        /* illustration outline, It's Saturday! */
   --script:#924f50;      /* curved greeting on the card */
-  --rule:#e4dbd1;        /* dividers, light outlines (derived) */
+  --rule:#e4dbd1;
+  --alert:#ef4a51;        /* highlighted words in the final message (PDF) */        /* dividers, light outlines (derived) */
   --optima:Optima,"Optima nova",Belleza,"Noto Sans TC",sans-serif;
   --tc:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
   --u:min(calc(100vw / 1920),max(.74px,calc(100vh / 1080)),1.4px);
@@ -139,9 +140,13 @@ p,h1,h2,h3,ul{margin:0}
 .layer-nav button[aria-current="true"]{background:var(--ink);color:var(--card)}
 .layer-nav button{order:var(--o)}
 
-/* ---------- final page ---------- */
-.final{grid-template-columns:calc(380*var(--u)) calc(641.5*var(--u)) calc(96*var(--u)) calc(477.5*var(--u)) 1fr}
-.final-card{grid-column:2;padding-top:calc(137*var(--u))}
+/* ---------- final page: centred message on top; card left, copy + summary right (PDF layout) ---------- */
+.final{grid-template-columns:calc(423*var(--u)) calc(543.5*var(--u)) calc(151.5*var(--u)) calc(477.5*var(--u)) 1fr;
+  grid-template-rows:auto auto;align-content:start;padding-bottom:calc(60*var(--u))}
+.final-head{grid-column:2 / 5;grid-row:1;padding-top:calc(60*var(--u));display:flex;flex-direction:column;align-items:center;text-align:center}
+.final-head .thanks+.thanks{margin-top:calc(20*var(--u))}
+.thanks em{font-style:normal;color:var(--alert)}
+.final-card{grid-column:2;grid-row:2;padding-top:calc(34*var(--u))}
 .reveal{position:relative}
 .reveal.playing{overflow:hidden}
 .reveal #cardOut{position:relative;z-index:2;will-change:transform}
@@ -153,9 +158,9 @@ p,h1,h2,h3,ul{margin:0}
 .final-card img{display:block;width:100%;height:auto;-webkit-touch-callout:default;-webkit-user-select:auto;user-select:auto}
 .cardwait{aspect-ratio:641.5/867;display:grid;place-items:center;color:var(--soft);font-size:14px}
 .save-tip{margin-top:calc(14*var(--u));text-align:center;color:var(--mute);font-size:max(11px,calc(13.5*var(--u)));letter-spacing:.12em}
-.final-side{grid-column:4;padding-top:calc(184.5*var(--u));display:flex;flex-direction:column}
+.final-side{grid-column:4;grid-row:2;padding-top:calc(64.5*var(--u));display:flex;flex-direction:column}
 .thanks{text-align:center;font-size:max(13px,calc(16.45*var(--u)));letter-spacing:var(--track);line-height:1.82}
-.final-side .label{margin-top:calc(46.5*var(--u))}
+.final-side .label{margin-top:calc(36*var(--u))}
 .summary{list-style:none;padding:0;margin-top:calc(14*var(--u))}
 .summary li{display:grid;grid-template-columns:calc(26*var(--u)) 1fr auto;align-items:center;gap:calc(14*var(--u));min-height:calc(42*var(--u));
   border-bottom:1px solid var(--rule);padding:calc(5*var(--u)) 0}
@@ -165,11 +170,9 @@ p,h1,h2,h3,ul{margin:0}
 .textlink{background:none;border:0;padding:4px 0;font-size:max(12px,calc(14*var(--u)));letter-spacing:.1em;color:var(--soft);
   background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .3s,color .3s}
 .textlink:hover{background-size:100% 1px;color:var(--ink)}
-.restart{align-self:center;margin-top:calc(20*var(--u));font-size:max(13px,calc(16.45*var(--u)));letter-spacing:var(--track);color:var(--ink)}
-.final-side .cta{margin-top:calc(20*var(--u))}
-.final-side .restart+.cta{margin-top:calc(36*var(--u))}
-.ship{text-align:center;margin-top:calc(26.5*var(--u));font-size:max(12px,calc(16.45*var(--u)));letter-spacing:var(--track)}
-.ghostbtn{margin-top:calc(42*var(--u));height:calc(57*var(--u));min-height:44px;border:0;background:var(--card);font-size:max(13px,calc(16.45*var(--u)));letter-spacing:.16em;
+.restart{align-self:center;margin-top:calc(34*var(--u));font-size:max(13px,calc(16.45*var(--u)));letter-spacing:var(--track);color:var(--ink)}
+.ship{text-align:center;margin-top:calc(22*var(--u));padding:calc(7*var(--u)) calc(22*var(--u));background:var(--card);font-size:max(11px,calc(12.5*var(--u)));letter-spacing:.1em;line-height:1.4}
+.ghostbtn{margin-top:calc(24*var(--u));height:calc(57*var(--u));min-height:44px;border:0;background:var(--card);font-size:max(13px,calc(16.45*var(--u)));letter-spacing:.16em;
   transition:background .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
 .ghostbtn:hover{background:#fff;transform:translateY(-2px)}
 .copyfield{margin-top:12px;width:100%;min-height:140px;font:13px/1.6 var(--tc);border:1px solid var(--rule);background:var(--card);color:var(--ink);padding:10px}
@@ -237,15 +240,14 @@ p,h1,h2,h3,ul{margin:0}
   .field textarea{height:150px}
   .field input,.field textarea{font-size:16px;letter-spacing:.03em}
   .final-side{display:contents}
-  .final>*,.final-side>*{width:100%;max-width:560px;order:3}
-  .final-side>.thanks{order:1}
-  .final-side>#copyTree,.final-side>#copyCard,.final-side>#copyField,.final-side>.ship{order:2}
-  .final-card{order:2;padding-top:20px}
-  .final-card{order:3}
-  .final-side>.ship{margin:12px 0 0;font-size:12.5px}
-  .final-side>#copyTree{margin-top:18px}
-  .final-side>#copyCard{margin-top:10px}
-  .final-side>#copyTree,.final-side>#copyCard{height:46px;min-height:46px;font-size:13.5px}
+  .final>*,.final-side>*{width:100%;max-width:560px}
+  .final-head{order:1;padding-top:8px}
+  .final-head .thanks+.thanks{margin-top:14px}
+  .ship{margin-top:16px;width:auto;padding:6px 14px;font-size:11.5px;letter-spacing:.04em}
+  #copyAll{order:2;margin-top:24px;height:50px;font-size:14px;letter-spacing:.06em}
+  #copyField{order:2}
+  .final-card{order:3;padding-top:24px}
+  .final-side>.label,.final-side>.summary,.final-side>.restart,.final-side>.ghostbtn{order:4}
   .final-side>.restart{width:auto}
   .save-tip{font-size:11.5px;letter-spacing:.03em;margin-top:10px}
   .thanks{font-size:14px;letter-spacing:.05em}
@@ -256,9 +258,6 @@ p,h1,h2,h3,ul{margin:0}
   .summary .t small{display:block;margin:2px 0 0;font-size:12px;letter-spacing:.02em}
   .textlink{font-size:13px}
   .restart{font-size:14px;letter-spacing:.06em;margin-top:20px}
-  .final-side .cta{margin-top:14px;font-size:14px;letter-spacing:.06em}
-  .final-side .restart+.cta{margin-top:24px}
-  .ship{font-size:13px;letter-spacing:.04em;margin-top:20px}
   .ghostbtn{margin-top:24px;height:50px;font-size:14px;letter-spacing:.08em}
   .notice{width:auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
   .notice-in{width:auto;min-width:0;max-width:560px;padding-top:36px}
@@ -353,19 +352,21 @@ p,h1,h2,h3,ul{margin:0}
 
 <div id="finalPage" hidden>
   <div class="frame final">
+    <header class="final-head">
+      <p class="thanks">謝謝你參與了這份暖心送禮！</p>
+      <p class="thanks">請務必<em>按下「複製客製化內容」按鈕</em><br>並於<em>上面備注欄</em>貼上客製化內容</p>
+      <p class="ship">聖誕訂單統一於 12/10 陸續出貨，如另有需求請聯繫我們</p>
+    </header>
     <div class="final-card">
       <div class="reveal" id="reveal"><div id="cardOut"><div class="cardwait">小卡製作中…</div></div></div>
       <p class="save-tip">手機長按小卡即可儲存圖片；電腦請按右鍵另存<button class="textlink reroll" id="reroll">換個邊框</button></p>
     </div>
     <section class="final-side" aria-label="完成">
-      <p class="thanks">謝謝你參與了這份聖誕節！<br>請務必按下「複製客製化內容」按鈕<br>並於商品下單時貼上客製化內容</p>
+      <button class="cta" id="copyAll">一鍵複製 「 聖誕樹客製化內容 」</button>
+      <textarea class="copyfield" id="copyField" readonly hidden aria-label="複製內容"></textarea>
       <h3 class="label">你的聖誕配色</h3>
       <ul class="summary" id="summary"></ul>
       <button class="textlink restart" id="restart">回到第一層修改</button>
-      <button class="cta" id="copyTree">一鍵複製 「 聖誕樹客製化內容 」</button>
-      <button class="cta" id="copyCard">一鍵複製 「 卡片內容 」</button>
-      <textarea class="copyfield" id="copyField" readonly hidden aria-label="複製內容"></textarea>
-      <p class="ship">客製化商品會於下單 5-10 工作天出貨唷！</p>
       <button class="ghostbtn" id="toNotice">訂購與退換貨須知</button>
     </section>
   </div>
@@ -840,7 +841,7 @@ function pageIn(el){if(reduce||!el.animate)return;el.animate([{opacity:0,transfo
 function showFinal(){
   setDock(false);$('editorPage').hidden=true;$('finalPage').hidden=false;setStageActive(false);
   toTop();buildSummary();newFrame();playEnvelope=true;makeCard();
-  pageIn(document.querySelector('.final-card'));
+  pageIn(document.querySelector('.final-head'));pageIn(document.querySelector('.final-card'));
   const side=document.querySelector('.final-side');
   [...side.children].forEach((c,i)=>{if(!reduce&&c.animate)c.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:520,delay:120+i*45,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'})});
 }
@@ -1005,14 +1006,15 @@ function treeText(){return LAYERS.map((L,i)=>{const st=state[i],w=itemOf(WAX,st.
   return `${L.ord}：${w.n}、香氣：${w.scent}${st.s?`、🅥潑墨：${itemOf(INK,st.sc).s}`:''}`}).join('\n')}
 function cardText(){const to=$('cTo').value.trim(),msg=$('cMsg').value.trim(),from=$('cFrom').value.trim();
   return `【卡片內容】\nDear ${to||'（未填）'}\n${msg||'（未填內容）'}\n署名：${from||'（未填）'}`}
+// everything the shop needs, in one paste: the six layers, then the card text
+function orderText(){return `${treeText()}\n\n${cardText()}`}
 function copy(btn,text){
   const label=btn.querySelector('.lbl')?btn.querySelector('.lbl').textContent:btn.textContent,f=$('copyField');
-  const ok=()=>{setLabel(btn,'已複製 ✓ 請貼到訂單備註');setTimeout(()=>setLabel(btn,label),2000)};
+  const ok=()=>{setLabel(btn,'已複製 ✓ 請貼到上面備注欄');setTimeout(()=>setLabel(btn,label),2000)};
   const fallback=()=>{f.hidden=false;f.value=text;f.focus();f.select()};
   try{navigator.clipboard.writeText(text).then(ok,fallback)}catch(e){fallback()}
 }
-$('copyTree').onclick=e=>copy(e.currentTarget,treeText());
-$('copyCard').onclick=e=>copy(e.currentTarget,cardText());
+$('copyAll').onclick=e=>copy(e.currentTarget,orderText());
 
 LAYERS.forEach((_,i)=>repaint(i));
 renderStep();
