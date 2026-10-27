@@ -89,11 +89,13 @@ p,h1,h2,h3,ul{margin:0}
 .seg button:hover{background:rgba(77,31,33,.07)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--card)}
 
-.cta{position:relative;overflow:hidden;isolation:isolate;flex:none;display:flex;align-items:center;justify-content:center;width:100%;height:calc(60*var(--u));min-height:44px;border:0;background:var(--ink);color:var(--card);
+.cta{position:relative;-webkit-appearance:none;appearance:none;max-width:100%;min-width:0;flex:none;display:flex;align-items:center;justify-content:center;width:100%;height:calc(60*var(--u));min-height:44px;border:0;background:var(--ink);color:var(--card);
   font-size:max(13px,calc(16.45*var(--u)));letter-spacing:.18em;transition:background .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
 .cta:hover{background:var(--ink-hover);transform:translateY(-2px)}
 .cta:active{transform:translateY(0) scale(.99)}
-.ripple{position:absolute;border-radius:50%;background:rgba(248,244,239,.38);pointer-events:none;z-index:-1;transform:scale(0);animation:ripple .7s cubic-bezier(.22,.61,.36,1) forwards}
+.cta .lbl{position:relative;z-index:1}
+.cta .rip{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:inherit;-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.ripple{position:absolute;border-radius:50%;background:rgba(248,244,239,.38);pointer-events:none;transform:scale(0);animation:ripple .7s cubic-bezier(.22,.61,.36,1) forwards}
 @keyframes ripple{to{transform:scale(1);opacity:0}}
 .note{margin-top:calc(17.5*var(--u));text-align:center;color:var(--mute);font-size:max(10px,calc(13.5*var(--u)));letter-spacing:.08em;line-height:1.78}
 
@@ -783,14 +785,16 @@ $('random').onclick=()=>{flipCube();
 
 /* ---------- ripple feedback on the main buttons ---------- */
 // change a button's text without removing ripples that are still animating inside it
-function setLabel(b,text){const t=[...b.childNodes].find(n=>n.nodeType===3);if(t)t.nodeValue=text;else b.prepend(text)}
+function prepCta(b){if(b.querySelector('.lbl'))return;const t=b.textContent;b.innerHTML='<span class="rip" aria-hidden="true"></span><span class="lbl"></span>';b.lastChild.textContent=t}
+document.querySelectorAll('.cta').forEach(prepCta);
+function setLabel(b,text){prepCta(b);b.querySelector('.lbl').textContent=text}
 document.addEventListener('pointerdown',e=>{
   const b=e.target.closest('.cta');if(!b||reduce)return;
   const r=b.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
   const d=2*Math.max(Math.hypot(x,y),Math.hypot(r.width-x,y),Math.hypot(x,r.height-y),Math.hypot(r.width-x,r.height-y));
   const sp=document.createElement('span');sp.className='ripple';
   sp.style.cssText=`width:${d}px;height:${d}px;left:${x-d/2}px;top:${y-d/2}px`;
-  sp.addEventListener('animationend',()=>sp.remove());b.appendChild(sp);
+  sp.addEventListener('animationend',()=>sp.remove());prepCta(b);b.querySelector('.rip').appendChild(sp);
 });
 
 /* ---------- embedded in the shop (BVshop iframe): report height, scroll the shop page ---------- */
@@ -808,7 +812,7 @@ if(EMBED){
    On its own page this uses the window scroll. Inside the shop's iframe the iframe never scrolls,
    so the shop page sends {ispViewport:{top}} (the iframe's top edge on screen) and the bar follows it. */
 const dock=$('dock'),stageBox=document.querySelector('.stage'),phone=matchMedia('(max-width:1279px)');
-let docked=false,typing=false,viewTop=null;
+let docked=false,typing=false,viewTop=null,headerH=0;
 function setDock(on){
   if(on===docked)return;docked=on;
   const parts=[$('three'),nav,$('random')];
@@ -820,16 +824,16 @@ function checkDock(){
   const h=Math.min(innerWidth*.56,240),top=EMBED?viewTop:scrollY;
   if(top===null){setDock(false);return}
   const stageBottom=stageBox.getBoundingClientRect().bottom+(EMBED?0:scrollY);
-  const endOfTool=$('editCard').getBoundingClientRect().bottom+(EMBED?0:scrollY); // stop pinning once the card has scrolled past
+  const endOfTool=$('next').getBoundingClientRect().bottom+(EMBED?0:scrollY); // stop pinning once the main button has scrolled under the bar
   setDock(phone.matches&&!$('editorPage').hidden&&!typing&&stageBottom<top+h&&top+h<endOfTool);
   if(docked&&EMBED)dock.style.top=top+'px';
 }
 addEventListener('scroll',()=>{if(!EMBED)checkDock()},{passive:true});addEventListener('resize',checkDock);
-addEventListener('message',e=>{const v=e.data&&e.data.ispViewport;if(!v||typeof v.top!=='number')return;viewTop=Math.max(0,-v.top);checkDock()});
+addEventListener('message',e=>{const v=e.data&&e.data.ispViewport;if(!v||typeof v.top!=='number')return;headerH=Math.max(0,+v.header||0);viewTop=Math.max(0,headerH-v.top);checkDock()});
 $('cardView').addEventListener('focusin',()=>{typing=true;checkDock()});
 $('cardView').addEventListener('focusout',()=>{typing=false;setTimeout(checkDock,250)});
 
-function toTop(){if(EMBED){try{document.body.scrollIntoView({block:'start'})}catch(e){}}else window.scrollTo({top:0})}
+function toTop(){if(EMBED){try{parent.postMessage({ispScrollTop:true},'*')}catch(e){}}else window.scrollTo({top:0})}
 
 /* ---------- pages ---------- */
 function pageIn(el){if(reduce||!el.animate)return;el.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)'})}
@@ -1002,7 +1006,7 @@ function treeText(){return LAYERS.map((L,i)=>{const st=state[i],w=itemOf(WAX,st.
 function cardText(){const to=$('cTo').value.trim(),msg=$('cMsg').value.trim(),from=$('cFrom').value.trim();
   return `【卡片內容】\nDear ${to||'（未填）'}\n${msg||'（未填內容）'}\n署名：${from||'（未填）'}`}
 function copy(btn,text){
-  const label=btn.textContent,f=$('copyField');
+  const label=btn.querySelector('.lbl')?btn.querySelector('.lbl').textContent:btn.textContent,f=$('copyField');
   const ok=()=>{setLabel(btn,'已複製 ✓ 請貼到訂單備註');setTimeout(()=>setLabel(btn,label),2000)};
   const fallback=()=>{f.hidden=false;f.value=text;f.focus();f.select()};
   try{navigator.clipboard.writeText(text).then(ok,fallback)}catch(e){fallback()}
