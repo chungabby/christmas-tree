@@ -7,7 +7,7 @@
 <title>Make Your Own Christmas Candle</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Belleza&family=Lato:wght@700&family=Noto+Sans+TC:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Belleza&family=Cormorant+Garamond:wght@500&family=Lato:wght@700&family=Noto+Sans+TC:wght@400;500&display=swap">
 <style>
 /* Layout: 1920×1080 desktop frame from the PDF, every size written in design px × --u so the whole
    composition keeps its proportions; below 1000px wide (or on portrait screens) it becomes one column. */
@@ -21,8 +21,6 @@
   --soft:#87655f;        /* arrows, 3D disclaimer */
   --mute:#a48a8a;        /* small "page does not save" note */
   --hint:#333333;        /* "點選任一層做編輯" */
-  --nav:#eee6de;         /* progress step buttons */
-  --ok:#5a8562;          /* done badge on the progress steps (PDF) */
   --line:#93755f;        /* illustration outline, It's Saturday! */
   --script:#924f50;      /* curved greeting on the card */
   --rule:#e4dbd1;
@@ -58,7 +56,6 @@ p,h1,h2,h3,ul{margin:0}
 .ed #editCard{grid-column:2;grid-row:3;align-self:center;margin-top:calc(30*var(--u))}
 .ed .stage-col{grid-row:3;align-self:center;margin-top:calc(30*var(--u))}
 .ed{padding-bottom:calc(90*var(--u))}
-.ed-foot{display:none}
 .ed.writing .stage-col{position:absolute;visibility:hidden;pointer-events:none} /* keeps its size: no WebGL resize when coming back */
 .ed.writing #editCard{grid-column:2 / 5;justify-self:center;width:calc(641.5*var(--u))}
 
@@ -67,21 +64,24 @@ p,h1,h2,h3,ul{margin:0}
 .scallop>svg.shape{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible;filter:drop-shadow(0 14px 28px rgba(77,31,33,.07))}
 .card-in{position:relative;display:flex;flex-direction:column;
   padding:calc(100*var(--u)) calc(87.5*var(--u)) calc(76*var(--u))}
-.progress{--pi:calc(69*var(--u));position:relative;width:max-content;max-width:100%;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:calc(21*var(--u));list-style:none;padding:0}
-/* connector behind the circles; the walked part turns dark */
-.progress::before{content:"";position:absolute;left:calc(var(--pi) / 2);right:calc(var(--pi) / 2);top:50%;height:calc(3*var(--u));min-height:2px;transform:translateY(-50%);
-  background:linear-gradient(90deg,var(--ink) var(--pct,0%),#c9b5b0 var(--pct,0%));transition:background .5s}
-.progress li{position:relative;display:block}
-.progress button{position:relative;display:grid;place-items:center;width:var(--pi);height:var(--pi);padding:0;border-radius:50%;border:1px solid var(--ink);
-  background:var(--nav);color:var(--ink);font-weight:600;font-size:max(10px,calc(13.6*var(--u)));letter-spacing:.04em;white-space:nowrap;
-  transition:background .3s,color .3s,transform .35s cubic-bezier(.2,.8,.2,1)}
+/* progress: hand-cut shapes 1–7 joined by arrows; walked steps solid, the rest 30% (numbers 40%) */
+.progress{--pi:calc(78*var(--u));--ar:calc(34*var(--u));--sg:calc(12*var(--u));--sc:#494934;position:relative;width:max-content;max-width:100%;margin:0 auto;
+  display:flex;align-items:center;justify-content:center;gap:var(--sg);list-style:none;padding:0}
+.progress li{position:relative;display:block;line-height:0}
+.progress .arr{width:var(--ar);color:var(--sc)}
+.progress .arr svg{display:block;width:100%;height:auto}
+.progress button{position:relative;display:block;width:var(--pi);height:var(--pi);padding:0;border:0;background:none;color:var(--sc);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .progress button:hover{transform:translateY(-2px)}
-.progress .cur{background:var(--ink);color:var(--card);border-color:var(--ink)}
-.progress .badge{position:absolute;left:50%;top:0;width:calc(29.5*var(--u));height:calc(29.5*var(--u));min-width:15px;min-height:15px;margin-left:calc(-14.75*var(--u));
-  transform:translateY(-55%) scale(.4);border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;opacity:0;
-  transition:opacity .25s,transform .4s cubic-bezier(.2,.8,.2,1.5)}
-.progress .badge svg{width:55%;height:55%}
-.progress .done .badge{opacity:1;transform:translateY(-55%)}
+.progress .shp{position:absolute;inset:0;width:100%;height:100%;fill:var(--sc);opacity:.3;transition:opacity .35s}
+.progress .num{position:absolute;inset:0;display:grid;place-items:center;font:500 calc(var(--pi) * .5)/1 "Cormorant Garamond",Georgia,serif;color:var(--sc);opacity:.4;transition:opacity .35s,color .35s}
+.progress .cur .shp,.progress .done .shp{opacity:1}
+.progress .cur .num,.progress .done .num{opacity:1;color:#f4efe8}
+.progress .cur{transform:scale(1.1)}
+.progress .cur:hover{transform:scale(1.1) translateY(-2px)}
+.progress .ok{position:absolute;left:-14%;top:-24%;width:46%;height:auto;fill:#d8895d;opacity:0;transform:scale(.4) rotate(-12deg);
+  transition:opacity .25s,transform .45s cubic-bezier(.2,.8,.2,1.6)}
+.progress .done .ok{opacity:1;transform:rotate(-8deg)}
 .phint{margin-top:calc(12*var(--u));min-height:1.5em;text-align:center;font-size:max(12px,calc(14.5*var(--u)));letter-spacing:.06em;line-height:1.5;color:var(--soft)}
 .phint b{color:var(--ink);font-weight:500}
 .phint button{background:none;border:0;padding:0 0 1px;font:inherit;letter-spacing:inherit;color:var(--ink);border-bottom:1px solid currentColor;margin-left:.3em}
@@ -95,7 +95,7 @@ p,h1,h2,h3,ul{margin:0}
 .label .desc .cs::before{content:"（"}.label .desc .cs::after{content:"）"}
 .label .desc{font-weight:400;font-size:max(11px,calc(13.5*var(--u)));letter-spacing:.03em;white-space:nowrap;transition:color .3s}
 .sec{margin-top:calc(20*var(--u))}
-.sec:first-of-type{margin-top:calc(40*var(--u))}
+#layerView .sec:first-of-type{margin-top:0}
 .indent{padding-left:calc(37*var(--u));margin-top:calc(20*var(--u))}
 .swatches{display:grid;grid-template-columns:repeat(5,calc(58.5*var(--u)));gap:calc(14*var(--u))}
 .sw{position:relative;width:calc(58.5*var(--u));height:calc(58.5*var(--u));border-radius:50%;border:0;padding:0;
@@ -119,6 +119,13 @@ p,h1,h2,h3,ul{margin:0}
 .cta:hover{background:var(--ink-hover);transform:translateY(-2px)}
 .cta:active{transform:translateY(0) scale(.99)}
 .cta .lbl{position:relative;z-index:1}
+.btns{display:flex;gap:calc(12*var(--u))}
+.btns .cta{width:auto}
+.btns #prev{flex:0 0 32%}.btns #next{flex:1 1 auto}
+.cta.cta-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.cta.cta-ghost:hover{background:rgba(77,31,33,.06)}
+.cta.cta-ghost .ripple{background:rgba(77,31,33,.14)}
+.cta:disabled{opacity:.35;pointer-events:none}
 .cta .rip{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:inherit;-webkit-mask-image:-webkit-radial-gradient(white,black)}
 .ripple{position:absolute;border-radius:50%;background:rgba(248,244,239,.38);pointer-events:none;transform:scale(0);animation:ripple .7s cubic-bezier(.22,.61,.36,1) forwards}
 @keyframes ripple{to{transform:scale(1);opacity:0}}
@@ -140,20 +147,24 @@ p,h1,h2,h3,ul{margin:0}
 .stage{position:relative;width:100%;height:calc(800*var(--u))}
 #three{position:absolute;inset:0}
 #three canvas{display:block;width:100%;height:100%;cursor:pointer}
+/* brackets around the layer being edited: appear with its bounce, gone after ~2.5s */
+.brk{position:absolute;left:0;top:0;width:var(--bw,14px);height:var(--bh,60px);pointer-events:none;opacity:0;transition:opacity .45s;will-change:transform,opacity;
+  transform:translate(var(--bx,0px),var(--by,0px))}
+.brk svg{display:block;width:100%;height:100%;overflow:visible}
+.brk path{fill:none;stroke:#494934;stroke-width:1.4;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.brk.on{opacity:.9}
 .fail{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--soft);padding:24px}
-.random{position:absolute;right:calc(70*var(--u));top:calc(20*var(--u));--s:clamp(63px,calc(82.6*var(--u)),83px);width:var(--s);height:var(--s);
-  padding:0;border:0;background:none;perspective:900px;font-size:calc(var(--s) * .2);line-height:1.3;letter-spacing:.12em}
-.random .tilt{display:block;width:100%;height:100%;transform-style:preserve-3d;transform:rotateX(-16deg) rotateY(-24deg);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-.random:hover .tilt{transform:rotateX(-20deg) rotateY(-30deg) translateY(-2px)}
-.random .cube{display:block;position:relative;width:100%;height:100%;transform-style:preserve-3d;
-  transform:rotateX(var(--rx,0deg));transition:transform .75s cubic-bezier(.65,0,.25,1.12)}
-/* four faces around the horizontal axis, both ends left open so you can see inside (like a hollow box) */
-.random .f{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:var(--card);color:var(--ink);
-  border:1.33px solid var(--ink);border-radius:0;outline:1px solid transparent;-webkit-font-smoothing:antialiased;font-weight:600;padding-left:.1em;backface-visibility:visible}
-.random .f:nth-child(1){transform:translateZ(calc(var(--s) / 2))}
-.random .f:nth-child(2){transform:rotateX(-90deg) translateZ(calc(var(--s) / 2));background:var(--nav)}
-.random .f:nth-child(3){transform:rotateX(-180deg) translateZ(calc(var(--s) / 2))}
-.random .f:nth-child(4){transform:rotateX(-270deg) translateZ(calc(var(--s) / 2));background:var(--nav)}
+/* random colours: a blue burst that keeps turning behind a white pebble; a little hop when pressed */
+.random{position:absolute;right:calc(50*var(--u));top:calc(10*var(--u));--s:clamp(84px,calc(118*var(--u)),124px);width:var(--s);height:var(--s);
+  padding:0;border:0;background:none;color:#aa5959;font-size:calc(var(--s) * .16);font-weight:600;line-height:1.3;letter-spacing:.12em}
+.random .rnd{position:relative;display:block;width:100%;height:100%;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.random:hover .rnd{transform:scale(1.05)}
+.random .burst{position:absolute;inset:0;width:100%;height:100%;fill:#9db4ea;animation:spin 14s linear infinite}
+.random .blob{position:absolute;left:15.5%;top:20%;width:69%;height:61%;fill:#f4f4f4}
+.random .txt{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding-left:.12em}
+.random.hop .rnd{animation:hop .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes hop{0%{transform:none}35%{transform:translateY(-9%) scale(1.06) rotate(-4deg)}70%{transform:translateY(2%) scale(.98) rotate(2deg)}100%{transform:none}}
 .disclaimer{position:absolute;left:0;right:0;top:100%;color:var(--soft);font-size:max(11px,calc(14*var(--u)));letter-spacing:.1em;white-space:nowrap;margin-top:calc(18*var(--u));text-align:center;line-height:1.4}
 
 /* ---------- final page: centred message on top; card left, copy + summary right (PDF layout) ---------- */
@@ -187,7 +198,7 @@ p,h1,h2,h3,ul{margin:0}
 .textlink:hover{background-size:100% 1px;color:var(--ink)}
 .restart{align-self:center;margin-top:calc(34*var(--u));font-size:max(13px,calc(16.45*var(--u)));letter-spacing:var(--track);color:var(--ink)}
 .restart.restart-top{margin-top:calc(20*var(--u))}
-.ship{text-align:center;margin-top:calc(22*var(--u));padding:calc(7*var(--u)) calc(22*var(--u));background:var(--card);font-size:max(11px,calc(13.5*var(--u)));letter-spacing:.1em;line-height:1.4}
+.ship{text-align:center;margin-top:calc(22*var(--u));padding:0;color:#a01f1f;font-size:max(11px,calc(13.5*var(--u)));letter-spacing:.1em;line-height:1.4}
 .ghostbtn{margin-top:calc(24*var(--u));height:calc(60*var(--u));min-height:44px;border:0;background:var(--card);font-size:max(13px,calc(16.45*var(--u)));letter-spacing:.16em;
   transition:background .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
 .ghostbtn:hover{background:#fff;transform:translateY(-2px)}
@@ -212,29 +223,24 @@ p,h1,h2,h3,ul{margin:0}
   :root{--u:1px}
   .frame,.final{width:auto;min-height:0;display:flex;flex-direction:column;align-items:center;
     padding:calc(18px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 32px max(12px,env(safe-area-inset-left,0px))}
-  /* editor (PDF phone): head, progress, tree left + option panel on the right edge, then button */
-  #editorPage .ed{display:grid;grid-template-columns:minmax(0,1fr) clamp(178px,50vw,260px);column-gap:0;align-items:start;
+  /* phone: head, big tree, progress, then the option card (two columns inside, button at the bottom like desktop) */
+  #editorPage .ed{display:grid;grid-template-columns:minmax(0,1fr);column-gap:0;align-items:start;
     padding:calc(22px + env(safe-area-inset-top,0px)) 0 28px max(0px,env(safe-area-inset-left,0px));width:auto;max-width:760px;margin:0 auto}
   .ed>*{width:auto;max-width:none}
   .ed-head{grid-column:1 / -1;grid-row:1;padding:0 16px}
   .brand{font-size:clamp(17px,5.1vw,26px)}
   .lead{margin-top:10px;font-size:12px;letter-spacing:.06em;line-height:1.75}
-  .ed-prog{grid-column:1 / -1;grid-row:2;padding:30px 12px 0}
-  .progress{--pi:clamp(32px,9.4vw,44px);gap:clamp(6px,2.4vw,14px)}
-  .progress button{font-size:clamp(9px,2.5vw,11px);letter-spacing:0;border-width:.75px}
-  .progress .badge{width:16px;height:16px;min-width:0;min-height:0;margin-left:-8px}
+  .ed-prog{grid-column:1 / -1;grid-row:3;padding:18px 12px 0}
+  .progress{--pi:clamp(30px,8.6vw,40px);--ar:clamp(10px,3vw,16px);--sg:clamp(2px,.8vw,6px)}
   .phint{font-size:11.5px;letter-spacing:.02em;margin-top:8px;min-height:1.6em;padding:0 4px}
-  .ed .stage-col{grid-column:1;grid-row:3;margin:0;align-self:stretch;justify-content:center;position:relative}
-  .stage{height:100%;min-height:330px}
-  .random{left:14px;right:auto;top:4px;--s:44px;font-size:9.5px;letter-spacing:.06em}
-  #three{top:56px} /* the cube sits above the tree, never on it */
-  .disclaimer{display:none}
-  .ed #editCard{grid-column:2;grid-row:3;margin:6px 0 0}
-  .ed-foot{display:block;grid-column:1 / -1;grid-row:4;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 16px}
-  .ed-foot .disc-m{display:block;text-align:center;color:var(--soft);font-size:11px;letter-spacing:.06em;margin:14px 0 10px}
+  .ed .stage-col{grid-column:1;grid-row:2;margin:14px 0 0;align-self:start;position:relative}
+  .stage{height:clamp(300px,85vw,360px)}
+  .random{right:clamp(10px,5vw,28px);top:clamp(0px,2vw,10px);--s:76px;font-size:11.5px;letter-spacing:.08em}
+  .disclaimer{position:static;margin-top:6px;font-size:11px;letter-spacing:.06em;white-space:normal;padding:0 16px}
+  .ed #editCard{grid-column:1;grid-row:4;margin:14px 12px 0}
   .dk{display:none}
   .scallop>svg.shape{filter:none}
-  .card-in{height:auto;min-height:0;padding:16px max(14px,env(safe-area-inset-right,0px)) 18px var(--r)}
+  .card-in{height:auto;min-height:0;padding:calc(var(--r) + 4px) 20px calc(var(--r) + 4px)}
   .eyebrow{font-size:11px;letter-spacing:.06em}
   .lname{font-size:17.5px;letter-spacing:.06em;margin-top:4px}
   .label{font-size:12.5px;letter-spacing:.04em;gap:2px 5px;flex-wrap:wrap}
@@ -249,11 +255,18 @@ p,h1,h2,h3,ul{margin:0}
   .sw::after{inset:-3px;border-width:1.25px}
   .seg{display:flex;width:127px}
   .seg button{flex:1;width:auto;height:33px;font-size:12px;letter-spacing:.05em}
-  .swap{margin-bottom:0}
+  .swap{margin-bottom:22px}
   .cta{height:48px;font-size:14px;letter-spacing:.08em;margin-top:0}
   .note{font-size:11px;letter-spacing:.02em;line-height:1.7;text-wrap:balance;margin-top:10px}
-  .ed.writing #editCard{grid-column:1 / -1;width:auto;margin-left:16px;justify-self:stretch}
-  .ed.writing .ed-foot .disc-m{display:none}
+  .ed.writing #editCard{grid-column:1 / -1;grid-row:4;width:auto;margin:14px 12px 0;justify-self:stretch}
+  /* inside the card: name centred on top, colours left, splatter right */
+  #layerView{display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:clamp(14px,5vw,24px);align-items:start}
+  #layerView .sec:nth-of-type(1){grid-column:1 / -1;grid-row:1;margin-top:0}
+  #layerView .sec:nth-of-type(2){grid-column:1;grid-row:2;margin-top:16px}
+  #layerView #splatOpts{grid-column:2;grid-row:2;margin-top:16px}
+  #layerView .label .desc{flex-basis:auto;flex-direction:row;margin-top:0}
+  #layerView .label .desc .cs::before{content:"（"}#layerView .label .desc .cs::after{content:"）"}
+  #colors{grid-template-columns:repeat(5,minmax(0,39px))}
   .intro{font-size:13.5px;letter-spacing:.04em;line-height:1.75}
   .intro br{display:none}
   .fields{gap:14px;margin-top:16px}
@@ -263,7 +276,7 @@ p,h1,h2,h3,ul{margin:0}
   .final>*,.final-side>*{width:100%;max-width:560px}
   .final-head{order:1;padding-top:8px}
   .final-head .thanks+.thanks{margin-top:14px}
-  .ship{margin-top:16px;width:auto;padding:6px 14px;font-size:11px;letter-spacing:.04em}
+  .ship{margin-top:14px;width:auto;padding:0;font-size:11px;letter-spacing:.04em}
   #copyAll{order:2;margin-top:24px}
   #copyField{order:2}
   .final-card{order:3;padding-top:24px}
@@ -311,8 +324,6 @@ p,h1,h2,h3,ul{margin:0}
       <div class="card-in">
         <div class="swap" id="swap">
           <div id="layerView">
-            <p class="eyebrow" id="eyebrow">第一層</p>
-            <h2 class="lname" id="lname">聖誕花瓣</h2>
             <div class="sec">
               <div class="label"><span class="ico" aria-hidden="true">🕯️</span>蠟塊顏色與香氣 <span class="desc" id="colorDesc"><span class="cn"></span><span class="cs"></span></span></div>
               <div class="indent"><div class="swatches" id="colors" role="group" aria-label="蠟塊顏色與香氣"></div></div>
@@ -341,16 +352,15 @@ p,h1,h2,h3,ul{margin:0}
           </div>
         </div>
         <div class="act" id="act">
-          <button class="cta" id="next">下一層</button>
+          <div class="btns"><button class="cta cta-ghost" id="prev">上一層</button><button class="cta" id="next">下一層</button></div>
           <p class="note">頁面不會保存你的設計。請在離開前複製內容並貼到訂單備註，<br>否則我們無法收到你的客製需求。</p>
         </div>
       </div>
     </div>
     <section class="stage-col" aria-label="蠟燭 3D 預覽">
-      <div class="stage"><div id="three"></div><button class="random" id="random" aria-label="隨機配色"><span class="tilt"><span class="cube" id="cube"><span class="f">隨機<br>配色</span><span class="f">隨機<br>配色</span><span class="f">隨機<br>配色</span><span class="f">隨機<br>配色</span></span></span></button></div>
+      <div class="stage"><div id="three"></div><div class="brk" id="brkL" aria-hidden="true"><svg viewBox="0 0 10 100" preserveAspectRatio="none"><path d="M10 0Q0 50 10 100"/></svg></div><div class="brk" id="brkR" aria-hidden="true"><svg viewBox="0 0 10 100" preserveAspectRatio="none"><path d="M0 0Q10 50 0 100"/></svg></div><button class="random" id="random" aria-label="隨機配色"><span class="rnd"><svg class="burst" viewBox="0 0 210.75 197.76" aria-hidden="true"><path d="M82.11,19.89c5.13-.98,7.63,6.28,8.78,9.73l15.86,47.42c7.51-15.85,14.08-28.02,18.89-42.55L137.07,0c9.47.49,19.73-.34,27.03,5.36,3.98,5.09-.43,14.12-2.71,19.48l-16.71,39.22-8.22,20.1,46.17-17.51c4.76-1.81,12.26-6.3,17.25-2.89,4,2.73,5.63,11.33,6.35,16.5l-31.23,13.89-27.18,11.73,28.07,13.63,34.86,15.67-10.1,23.8c-14.12,1.64-50.86-15.89-66.14-22.3l12.94,29.52c2.58,5.89,4.6,11.76,6.01,18.33-9.07,4.21-16.37,7.02-25.76,9.91l-14.23-41.49c-.43-1.26-2.56-3.97-3.04-4.67-1.54-2.21-19.89,43.17-24.49,49.48-8.8-2.47-15.57-5.9-22.69-11.39l19.7-56.89-52.88,27.38c-6.08-6.32-10.92-15.11-10.94-25.17l39.57-13.3c5.98-2.01,10.91-4.7,16.77-9.53l-22.86-8.75-28.99-13.1L0,75.83c2.57-8.72,7.2-25.61,19.11-20.05,9.86,4.6,19.32,8.9,29.31,12.42l31.81,11.22-19.33-51.59c7.87-3.81,13.69-6.51,21.21-7.93ZM145.36,105.24c.16.43.65.65,1.08.49s.65-.65.49-1.08-.65-.65-1.08-.49-.65.65-.49,1.08Z"/></svg><svg class="blob" viewBox="0 0 135.66 119.88" preserveAspectRatio="none" aria-hidden="true"><path d="M118.41,19.25C104.67,7.81,86.14.07,68.06,0,50.05-.07,25.25,11.54,14.28,25.59c-5.08,6.52-11.81,12.27-13.35,21.02-3.29,18.78,2.56,27.92,11.04,42.73,4.76,8.32,11.94,13.67,19.52,19.62,12.97,10.18,57.38,16.48,75.02,3.97,7.31-5.19,14.99-12.08,20.4-18.59,15.01-18.04,9.73-59.93-8.5-75.11Z"/></svg><span class="txt">隨機<br>配色</span></span></button></div>
       <p class="disclaimer">此為3D模擬示意，顏色與形狀以實體為準<span class="dk">，可參考我們的商品照片</span></p>
     </section>
-    <div class="ed-foot" id="edFoot"><p class="disc-m">此為3D模擬示意，顏色與形狀以實體為準</p></div>
   </div>
 </div>
 
@@ -484,8 +494,10 @@ const host=document.getElementById('three');
 const TEXQ=(matchMedia('(pointer:coarse)').matches||innerWidth<1280)?.5:1; // texture size factor
 let renderer;
 try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){renderer=null}
-const meshes=[],bounces={};let fit=()=>{},stageActive=true;
-function bounceLayer(i){bounces[i]=performance.now()}
+const meshes=[],bounces={};let fit=()=>{},placeBrk=()=>{},stageActive=true,brkUntil=0;
+function bounceLayer(i){bounces[i]=performance.now();if(i===step)flashBrk()}
+// show the brackets around the current layer for a moment (they follow its bounce)
+function flashBrk(){brkUntil=performance.now()+1000;['brkL','brkR'].forEach(id=>document.getElementById(id).classList.add('on'))}
 function setStageActive(on){stageActive=on;if(on)requestAnimationFrame(()=>fit())}
 
 if(!renderer||!window.THREE){
@@ -619,11 +631,27 @@ if(!renderer||!window.THREE){
   fit=()=>{
     const w=host.clientWidth,h=host.clientHeight;if(!w||!h||(w===fw&&h===fh))return;fw=w;fh=h;
     renderer.setSize(w,h,false);camera.aspect=w/h;
-    const d=Math.max(total*1.14/2/T,3.3/2/(T*camera.aspect));
+    const d=Math.max(total*1.14/2/T,3.7/2/(T*camera.aspect)); // width term leaves room for the brackets
     camera.position.copy(target).addScaledVector(VIEW,d);camera.lookAt(target);
     camera.updateProjectionMatrix();
   };
   new ResizeObserver(fit).observe(host);fit();
+
+  // brackets: projected left / right edges and height of the current layer
+  meshes.forEach(m=>{const b=new THREE.Box3().setFromObject(m);m.userData.rad=Math.max(b.max.x,-b.min.x,b.max.z,-b.min.z);m.userData.hh=(b.max.y-b.min.y)/2});
+  const bl=document.getElementById('brkL'),br=document.getElementById('brkR'),pc=new THREE.Vector3(),pt=new THREE.Vector3(),right=new THREE.Vector3(),up=new THREE.Vector3();
+  const px=v=>[(v.x+1)/2*fw,(1-v.y)/2*fh];
+  placeBrk=now=>{
+    if(brkUntil&&now>brkUntil){brkUntil=0;bl.classList.remove('on');br.classList.remove('on')}
+    const m=meshes[step];if(!brkUntil||!m||!fw)return;
+    m.getWorldPosition(pc);right.set(1,0,0).applyQuaternion(camera.quaternion);up.set(0,1,0).applyQuaternion(camera.quaternion);
+    const r=m.userData.rad*1.12,h=m.userData.hh*1.25;
+    const [lx]=px(pt.copy(pc).addScaledVector(right,-r).project(camera)),[rx]=px(pt.copy(pc).addScaledVector(right,r).project(camera));
+    const [,ty]=px(pt.copy(pc).addScaledVector(up,h).project(camera)),[,by]=px(pt.copy(pc).addScaledVector(up,-h).project(camera));
+    const H=Math.max(24,by-ty),W=Math.max(7,Math.min(18,H*.14)),g=Math.max(10,W*1.1);
+    bl.style.cssText=`--bx:${(lx-g-W).toFixed(1)}px;--by:${ty.toFixed(1)}px;--bw:${W.toFixed(1)}px;--bh:${H.toFixed(1)}px`;
+    br.style.cssText=`--bx:${(rx+g).toFixed(1)}px;--by:${ty.toFixed(1)}px;--bw:${W.toFixed(1)}px;--bh:${H.toFixed(1)}px`;
+  };
 
   // click a layer to edit it
   const ray=new THREE.Raycaster(),ndc=new THREE.Vector2();let down=null;
@@ -644,7 +672,7 @@ if(!renderer||!window.THREE){
     if(!reduce)candle.rotation.y+=dt*.35;
     meshes.forEach(m=>m.position.y=m.userData.baseY);
     if(!reduce)for(const i in bounces){const t=(now-bounces[i])/650;if(t>=1){delete bounces[i];continue}if(t>0)meshes[i].position.y+=.14*Math.sin(Math.PI*t)*(1-t*.5)}
-    renderer.render(scene,camera);
+    renderer.render(scene,camera);placeBrk(now);
   })(0);
 }
 
@@ -685,31 +713,21 @@ function lum(h){const n=parseInt(h.slice(1),16);return(.299*(n>>16)+.587*(n>>8&2
 function waxText(id){const w=itemOf(WAX,id);return w.scent?`${w.n}（${w.scent}）`:w.n}
 function describe(st){return waxText(st.c)+(st.s?`・潑墨：${itemOf(INK,st.sc).n}`:'')}
 
-const PHONE=matchMedia('(max-width:1279px)');
 // scalloped card shape. Desktop: six circles along the top and bottom edge.
 // Phone: circles down the left edge, flat right side running to the screen edge (PDF phone layout).
 function scallop(svg){
   const draw=()=>{
     const w=svg.clientWidth,h=svg.clientHeight;if(!w||!h)return;
-    let s;
-    if(PHONE.matches){
-      const r=Math.min(37,w*.19),n=Math.max(2,Math.round((h-2*r)/(r*1.48))+1),step=(h-2*r)/(n-1);
-      svg.parentElement.style.setProperty('--r',r+'px');
-      s=`<rect x="${r}" y="0" width="${Math.max(0,w-r)}" height="${h}"/>`;
-      for(let i=0;i<n;i++)s+=`<circle cx="${r}" cy="${r+i*step}" r="${r}"/>`;
-    }else{
-      const r=w*0.10678,step=(w-2*r)/5;
-      svg.parentElement.style.setProperty('--r',r+'px');
-      s=`<rect x="0" y="${r}" width="${w}" height="${Math.max(0,h-2*r)}"/>`;
-      for(let i=0;i<6;i++){const cx=r+i*step;s+=`<circle cx="${cx}" cy="${r}" r="${r}"/><circle cx="${cx}" cy="${h-r}" r="${r}"/>`}
-    }
+    // six half-circles along the top and bottom edges (same on desktop and phone)
+    const r=w*0.10678,step=(w-2*r)/5;
+    svg.parentElement.style.setProperty('--r',r+'px');
+    let s=`<rect x="0" y="${r}" width="${w}" height="${Math.max(0,h-2*r)}"/>`;
+    for(let i=0;i<6;i++){const cx=r+i*step;s+=`<circle cx="${cx}" cy="${r}" r="${r}"/><circle cx="${cx}" cy="${h-r}" r="${r}"/>`}
     svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.innerHTML=`<g fill="#f8f4ef">${s}</g>`;
   };
-  new ResizeObserver(draw).observe(svg);draw();PHONE.addEventListener('change',draw);
+  new ResizeObserver(draw).observe(svg);draw();
 }
 scallop(document.querySelector('#editCard svg.shape'));
-function placeAct(){const a=$('act');if(PHONE.matches){if(a.parentElement!==$('edFoot'))$('edFoot').appendChild(a)}else if(a.parentElement!==document.querySelector('#editCard .card-in'))document.querySelector('#editCard .card-in').appendChild(a)}
-placeAct();PHONE.addEventListener('change',placeAct);
 
 const TICK='<span class="tick"><svg viewBox="0 0 20 20" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg></span>';
 function swatchRow(el,list,key){
@@ -726,14 +744,18 @@ swatchRow($('colors'),WAX,'c');swatchRow($('splatColors'),INK,'sc');
 $('splatOff').onclick=()=>{state[step].s=false;refreshLayer(true)};
 $('splatOn').onclick=()=>{state[step].s=true;refreshLayer(true)};
 
-/* ---------- progress: 第1層 … 第6層, 卡片 ---------- */
+/* ---------- progress: 1 … 6, ✉ (card) ---------- */
 const done=new Set();let randMsg=false;
-const BADGE='<span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3 5 8.6 9.6 3.6"/></svg></span>';
+const PSHAPES=[["0 0 109.5 122.68", "M104.55,77.75c-2.53-3.68-6-7.22-9.82-9.31l-7.06-3.85c5.05-1.58,8.82-3.11,9.85-8.33,1.37-6.91-6.72-17.79-13.07-21.25l5.12-2.16c6.34-12.57-6.87-18.48-15.68-23.68-5.86-3.46-11.37-6.83-17.71-9.17l-6.71,3.96-8.97,5.29c-6.71,3.96-16.83,13.05-12.42,21.35,1.14,2.15,3.84,3.38,6.96,4.26l-7.01,5.06c-6.88,4.97-17.29,15.77-15.48,24.64.84,4.1,4.87,5.16,8.93,5.69-9.4,8.17-15.19,10.8-20.41,22.41-1.96,4.36-1.12,8.39,1.56,12.27,3.23,4.68,7.01,9.73,13.37,10.37,12.11,1.22,21.6-3.41,32.35-9.4l-.52,12.48c-.25,5.97,7.33,3.35,17.5,4.28,1.78.16,4.76-.53,4.58-2.62-.35-3.95-.65-7.87-.76-11.7l9.17,3.23c7.96,2.8,20.44,1.81,27.28-5.59,1.87-2.02,3.48-6.41,3.77-9.55.6-6.52-1.16-13.35-4.83-18.68ZM33.31,44.24c2.13,4.19-.84,7.37-3.55,9.17l-4.48,2.98,8.03-12.16ZM18.23,98.89c-.28-2.74,3.53-11.89,6.07-13.83,3.76-2.87-3.77,13.4-6.07,13.83ZM29.03,88.98c-.2-1.93,2.49-8.38,4.27-9.74,2.65-2.02-2.65,9.44-4.27,9.74ZM37.15,56.95l-3.16,2.1,5.66-8.56c1.5,2.95-.59,5.19-2.5,6.46Z"], ["0 0 118.67 118.2", "M61.77,88.89l-16.67,13.65-18.31,14.55c-1,.8-2.27,1.41-3.39.97-.93-.37-1.22-2.24-.96-3.38l3.59-15.52,4.99-19.13-15.65-.78-12.92-.85c-.75-.05-2.07-.55-2.36-1.1-.35-.66.33-2.47.98-2.87l13.97-8.39,10.81-6.63-4.72-7.07c-5.51-8.26-11.39-17.45-14.39-26.92-.16-.49-.04-1.66.08-1.98s1.36-.7,1.79-.53l10.59,4.04,22.68,7.84,4.57-10.9c3.4-8.1,7.27-15.8,11.74-23.86,4.01,1.98,5.33,5.68,6.61,9.52,2.87,8.6,5.76,17.01,9.24,25.81l16.44-4.82,21.22-6.38c.65-.19,1.78.11,2.05.4s.18,1.68-.18,2.13l-9.39,11.72-11.6,14.09,26.09,16.95c-10.08,3.05-19.27,4.49-28.93,6.86-.71.17-2.02,1.44-2.25,1.94l.59,17.17.14,13.15-.05,5.28c0,.67-.3,1.73-.64,2.2-.41.57-2.52.19-3-.33-8.08-8.77-15.49-17.52-22.76-26.8Z"], ["0 0 108.09 116.02", "M33.87,76.96c1.61-1.85,3.02-2.94,3.24-5.47-10.78.26-20.05,3.2-30.23,6.47-1.49-.78-2.07-4.64-1.01-5.94,3.87-2.19,7.64-3.62,11-6.64-3.03-1.18-12.03,4.25-12.76.46-.99-5.11,9.5-4.21,13.48-8.66l-13.59-.48c-1.11-.61-1.48-3.85-.51-4.74l9.46-1.74c-5.39-4.47-11.52-2.77-11.85-8.25-.06-1,.14-2.32.65-2.82s2.39-.54,3.08-.28c13.12,4.82,19.33,5.39,31.62,9.9,1.44.53,2.95.7,4.41.07l-9.46-12.63C29.36,33.5,12.21,2.41,14.04.74c.42-.38,2.01-.86,2.57-.72,16.67,4.17,25.58,6.77,41.25,13.9,9.69,4.41,17.43,22.04,19.92,32.74l7.22-1.17c13.25-2.14,8.52-2.04,23.09,2.06-1.85,1.48-3.36,2.26-5.64,3.13-.92,8.04-14.42,20.56-22.62,22.32-1.85,7.69-3.3,12.66-6.55,20.01s-9.92,11.89-16.21,16.19c-7.07,4.83-14.04,5.69-22.42,5.87-5.73.13-11.58,1.16-17.48.92s-11.05-.16-17.17-.06c2.58-4.11,4.81-8.4,8.09-11.6,7.34-7.14,14.23-14.09,20.94-21.81l4.83-5.56Z"], ["0 0 126.54 119.35", "M44.07,118.55c-.33.39-1.76.84-2.19.8-3.33-.3-1.89-19.65-1.65-23.18l1.18-17.27c-3.6-.64-7.31-.2-10.98.58l-16.5,3.5c-3.22.68-6.16,1.18-9.34,2.22-1.58.52-3.89.64-4.59-1.08,2.84-4.21,6.92-7.38,10.54-10.71l19.03-17.5c1.1-1.01-.02-4.27-1.02-5.86-5.64-9.05-10.82-20.13-13.75-30.15-.16-.54.14-1.79.48-1.83.52-.06,2.21.05,2.71.43l13.9,10.56,19.37,14.08c4.66-3.89,21.54-48.27,27.83-42.65l1.35,23.03,2.2,21.27c7.41-2.42,14.31-4.09,21.37-6.89l19.48-7.73c14.92-5.92-29.87,35.91-29.89,35.2,2.72,12.23,7.52,22.59,12.94,33.51,1.77,3.57,4.08,6.76,2.13,9.51-.44.62-2.38.57-3.06.18l-9.77-5.61-12.52-8.5-11.2-7.61-10.04,10.79c-3.48,3.74-6.78,7.54-10.22,11.63l-7.79,9.28Z"], ["0 0 115.99 108.31", "M115.79,54.59c-.09-4.02-1.24-7.83-2.35-12.06-2.9-11.11-6.2-21.73-10.68-32.38-1.25-2.96-2.01-6.14-3.12-9.4l-25.53-.32L33.79,0c-1.09-.01-2.84,1.27-3.75,1.51-2.26.59-4.82,4.42-6.33,6.95C15.26,22.66,7.03,36.54,0,51.47c.73,6.59,1.1,12.41.99,18.41-.23,11.97,1.16,16.49.45,31.38-.12,2.49-.56,5.27.97,7.05h13.09c.4-9.38-2.24-15.25.82-23.72,1.67-4.62,6.13-7.71,10.88-6.7,13.7,2.9,10.72,18.09,12.13,29.43l.55.96,37.76-.5,32.08-.47c1.93-.03,4.36-.44,6.01-.63l.26-42.93-.2-9.16Z"], ["0 0 128.62 128.1", "M66.95,96.34l-18.07,14.79-19.84,15.76c-1.09.87-2.46,1.53-3.67,1.05-1.01-.4-1.33-2.43-1.04-3.66l3.89-16.82,5.41-20.73-16.96-.85-14-.92c-.81-.05-2.24-.6-2.55-1.19-.38-.71.36-2.68,1.06-3.11l15.14-9.1,11.71-7.19-5.11-7.66c-5.97-8.95-12.35-18.91-15.6-29.18-.17-.54-.04-1.8.09-2.15s1.48-.76,1.94-.58l11.48,4.38,24.58,8.49,4.96-11.81c3.68-8.78,7.88-17.12,12.72-25.86,4.34,2.14,5.77,6.16,7.16,10.32,3.11,9.33,6.24,18.43,10.01,27.97l17.81-5.23,22.99-6.92c.7-.21,1.93.12,2.22.43s.19,1.83-.19,2.3l-10.17,12.7-12.57,15.27,28.27,18.37c-10.92,3.3-20.88,4.87-31.35,7.43-.77.19-2.19,1.56-2.44,2.1l.64,18.61.15,14.26-.05,5.73c0,.73-.32,1.87-.69,2.38-.44.62-2.73.2-3.25-.36-8.75-9.5-16.79-18.99-24.66-29.04Z"], ["0 0 120.15 116.74", "M115.19,23.25c.15.08-.61-.52-.75-.52l-6.63-.12c-.28-6.06-.55-15.97-7.12-18.54-4.22-1.65-9.32-1-13.25.77-6.69,3.02-12.56,6.54-17.96,11.32l-7.01,6.21c-1.89-6.81-6.7-11.55-12.28-15.37-5.81-3.99-17.64-10.66-23.7-4.5-5.28,5.38-8.14,12.85-7.36,20.13-4.55.8-14.75-1.76-17.4.58C0,24.74.44,31.94.03,36.79c-.15,1.75.14,3.87,1.33,5.1,1.05,1.08,3.28,1.43,5.25,1.77,1.76,3.9,1.58,8.84,1.67,13.25l.16,8.33c.16,8.46.46,36.28-.34,44.83-.14,1.46,1.71,3.16,3.17,3.35l16.73,2.13c3.4.43,6.75.29,10.08.31l19.75.12c2.61,1.25,5.55.64,8.29-.13l4.88-.06,15.55.49c7.57.24,15.38,1.31,22.66-.86,3.15-.94,2.79-5.64,2.8-8.03l.05-7.26-.24-29.88.26-17.73c.05-3.38.68-6.76,1.13-10.08,3.82.6,6.77-1.42,6.82-4.95l.13-9.71c.04-3.21-2.4-4.55-4.96-4.52ZM29.7,22.52c-2.73-1.72-2.15-6.51-.27-8.8,1.57-4.71,6.17-6.68,10.61-4.69,7.28,2.75,13.78,6.73,18.97,13.5h-29.32ZM94.91,11.45c3.94,2.37,5.02,7.98,4.21,11.82l-4.91-.11-.58-.42-26.53-.18c6.48-5.53,19.37-12.92,27.81-11.11Z"]];
+const OK=`<svg class="ok" viewBox="0 0 41.51 29.41" aria-hidden="true"><path d="M35.47,10.56c-.44-.02-1.08-.03-1.92-.02-.84.01-1.45,0-1.83-.01-.16,0-.32-.02-.48-.05-.17-.04-.37-.08-.6-.14-.23-.06-.42-.1-.56-.12.09-.12.19-.27.29-.46s.2-.34.28-.46c.08-.12.15-.23.23-.32.17-.18.57-.59,1.22-1.23.64-.64,1.15-1.18,1.51-1.63.37-.45.69-.93.96-1.46.5-.97.7-1.81.62-2.52-.06-.63-.31-1.13-.73-1.51-.42-.37-.91-.58-1.47-.62s-1.12.06-1.66.3c-1.13.51-2.02,1.35-2.68,2.52-.41.7-1.01,1.76-1.8,3.18-.11.2-.26.49-.47.87-.21.38-.4.72-.58,1.02-.18.3-.35.59-.51.87l-.1.12-.21.11-.17.1c-.21-.36-.32-.56-.33-.59,0-.02,0-.16,0-.43,0-.27,0-.69,0-1.27,0-.58-.01-1.09-.03-1.53-.02-.44-.05-.86-.12-1.25-.05-.44-.22-.84-.5-1.21-.28-.37-.65-.65-1.11-.83-.46-.19-.96-.24-1.49-.16-1.65.25-2.72,1.26-3.23,3.04-.25.87-.21,2.03.1,3.48.24,1.18.78,2.79,1.6,4.84.46,1.1.84,2.15,1.14,3.16.12.46.29,1.32.52,2.58.03.13.06.27.08.42.02.15.04.3.05.43.01.13.03.27.05.42.02.14.04.29.06.44.02.15.05.29.08.42.15.89.63,1.64,1.44,2.25.81.62,1.64.96,2.51,1.03,1.4.09,2.76-.26,4.09-1.06.88-.54,1.42-1.39,1.62-2.54.19-1.15-.05-2.05-.73-2.7-.14-.14-.47-.47-1.01-.99-.54-.52-.94-.93-1.22-1.23l-.08-.13-.06-.16-.05-.18-.07-.17c.06,0,.14,0,.24-.03.1-.03.19-.04.27-.05l.18.03c.48.27.89.58,1.21.93.37.38.89.92,1.57,1.62.67.7,1.1,1.15,1.29,1.33,1.36,1.4,2.81,2.1,4.35,2.09,1.88-.01,3.22-.88,4.02-2.6.29-.63.36-1.55.2-2.77-.17-1.41-.77-2.59-1.8-3.55-1.08-.98-2.47-1.52-4.16-1.61ZM7.68,16.26c-.46-.1-.8-.52-1.03-1.27-.15-.49-.07-1.06.24-1.71.23-.49.66-.73,1.29-.72.55.01.94.3,1.16.85.35.81.33,1.51-.05,2.08-.43.62-.96.88-1.6.77ZM16.06,10.88c-.52-.63-1.1-1.24-1.74-1.82-1.45-1.35-2.88-2.08-4.28-2.17-1.41-.07-2.84.13-4.27.6-1.25.4-2.32,1.21-3.21,2.42-.72.95-1.29,2.14-1.7,3.57C-.02,16.48-.22,19.38.24,22.16c.25,1.41.64,2.61,1.19,3.59,1.4,2.47,3.38,3.69,5.93,3.66.84,0,1.74-.12,2.69-.34,1.04-.23,2-.54,2.86-.92,1.39-.62,2.64-1.54,3.73-2.76,1.09-1.23,1.87-2.62,2.33-4.17.38-1.28.31-2.95-.21-5.02-.45-1.2-.69-1.84-.73-1.91-.51-1.3-1.17-2.44-1.97-3.41Z"/></svg>`;
+const ARROW='<li class="arr" aria-hidden="true"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h37M33 1.5 38 6l-5 4.5"/></svg></li>';
 const prog=$('progress');
 for(let i=0;i<=CARD_STEP;i++){
+  if(i)prog.insertAdjacentHTML('beforeend',ARROW);
   const li=document.createElement('li'),b=document.createElement('button');b.type='button';
   b.setAttribute('aria-label',i<CARD_STEP?`${LAYERS[i].ord} ${LAYERS[i].name}`:'寫張卡片');
-  b.innerHTML=(i<CARD_STEP?`第${i+1}層`:'卡片')+BADGE;
+  const [vb,d]=PSHAPES[i];
+  b.innerHTML=`<svg class="shp" viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="${d}"/></svg><span class="num" aria-hidden="true">${i+1}</span>`+(i<CARD_STEP?OK:'');
   b.onclick=()=>go(i);li.appendChild(b);prog.appendChild(li);
 }
 function drawProgress(){
@@ -741,11 +763,10 @@ function drawProgress(){
     b.classList.toggle('cur',i===step);b.classList.toggle('done',i<CARD_STEP&&done.has(i));
     if(i===step)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
   });
-  prog.style.setProperty('--pct',(Math.min(done.size,6)/6*100)+'%');
   const h=$('phint'),left=6-done.size;
   if(step===CARD_STEP)h.innerHTML='最後一步：寫下想說的話，我們會印在小卡上 ✉︎';
   else if(randMsg)h.innerHTML='已幫你隨機配好 6 層！可以逐層微調，或<button type="button" data-go="card">直接寫卡片 →</button>';
-  else if(left<=0)h.innerHTML='6 層都選好了！<button type="button" data-go="card">來寫張卡片吧 ✉︎</button>';
+  else if(left<=0)h.innerHTML='6 層都選好了！<button type="button" data-go="card">來寫張卡片吧 💌</button>';
   else h.innerHTML=`還差 <b>${left}</b> 層就可以寫卡片囉！`;
   const g=h.querySelector('[data-go]');if(g)g.onclick=()=>go(CARD_STEP);
 }
@@ -753,7 +774,6 @@ function pulseHint(){const h=$('phint');h.classList.remove('pop');void h.offsetW
 
 function refreshLayer(changed){
   const st=state[step],L=LAYERS[step],wax=itemOf(WAX,st.c);
-  $('eyebrow').textContent=L.ord;$('lname').textContent=L.name;
   const d=$('colorDesc');d.querySelector('.cn').textContent=wax.n;d.querySelector('.cs').textContent=wax.scent;d.style.color=lum(wax.h)>.7?'var(--soft)':wax.h;
   $('splatDesc').textContent=st.s?itemOf(INK,st.sc).n:'';
   $('splatOpts').hidden=!st.s;
@@ -789,6 +809,7 @@ function renderStep(){
   }
   drawProgress();
   setLabel($('next'),card?'生成小卡與客製化內容':step===5?'下一步：寫張卡片':'下一層');
+  setLabel($('prev'),card?'上一步':'上一層');$('prev').disabled=step===0;
   if(!card)refreshLayer(false);
 }
 function go(i){
@@ -801,26 +822,42 @@ function go(i){
   step=i;if(step<CARD_STEP)bounceLayer(step);
   if(mode)modeSwitch();else swapContent(renderStep);
 }
-// entering / leaving the card step: fade the old layout out, switch once, slide the card in (transform + opacity only)
+// entering / leaving the card step: the tree sinks and folds away (on phones its row closes),
+// then the card glides to its new place (FLIP); going back reverses it
 let modeAnim=[],modeTimer=0;
 function modeSwitch(){
   if(swapping){swapping.cancel();swapping=null}clearTimeout(swapTimer);clearTimeout(modeTimer);
   modeAnim.forEach(a=>a.cancel());modeAnim=[];
-  const c=$('editCard'),sc=document.querySelector('.ed .stage-col');
+  const c=$('editCard'),sc=document.querySelector('.ed .stage-col'),sw=$('swap');
+  sc.style.overflow='';
   if(reduce||!c.animate){renderStep();return}
-  const o={duration:140,easing:'ease-in',fill:'forwards'};
-  modeAnim=[c.animate([{opacity:1},{opacity:0}],o),sc.animate([{opacity:1},{opacity:0}],o)];
-  modeTimer=setTimeout(()=>{
-    modeAnim.forEach(a=>a.cancel());renderStep();
-    modeAnim=[c.animate([{opacity:0,transform:'translateX(48px)'},{opacity:1,transform:'none'}],{duration:480,easing:'cubic-bezier(.2,.8,.2,1)'})];
-    if(step<CARD_STEP)modeAnim.push(sc.animate([{opacity:0},{opacity:1}],{duration:480,easing:'ease-out'}));
-  },140);
+  const phone=innerWidth<1280,entering=step===CARD_STEP,ease='cubic-bezier(.55,0,.25,1)';
+  const glide=before=>{const a=c.getBoundingClientRect(),dx=before.left-a.left,dy=before.top-a.top;
+    if(Math.abs(dx)+Math.abs(dy)>1)modeAnim.push(c.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)'}));
+    modeAnim.push(sw.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:460,delay:140,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}))};
+  const fold=[{opacity:1,transform:'none'},{opacity:0,transform:'translateY(28px) scale(.8)'}];
+  if(entering){
+    const h=sc.offsetHeight,t=phone?650:450;
+    if(phone){sc.style.overflow='hidden';fold[0].height=h+'px';fold[1].height='0px';fold[0].marginTop='14px';fold[1].marginTop='0px'}
+    modeAnim=[sc.animate(fold,{duration:t,easing:ease,fill:'forwards'}),sw.animate([{opacity:1},{opacity:0}],{duration:220,fill:'forwards'})];
+    modeTimer=setTimeout(()=>{const before=c.getBoundingClientRect();renderStep();modeAnim.forEach(a=>a.cancel());modeAnim=[];sc.style.overflow='';glide(before)},t);
+  }else{
+    modeAnim=[sw.animate([{opacity:1},{opacity:0}],{duration:160,fill:'forwards'})];
+    modeTimer=setTimeout(()=>{
+      const before=c.getBoundingClientRect();renderStep();modeAnim.forEach(a=>a.cancel());modeAnim=[];
+      const grow=[...fold].reverse();
+      if(phone){const h=sc.offsetHeight;sc.style.overflow='hidden';grow[0]={...grow[0],height:'0px',marginTop:'0px'};grow[1]={...grow[1],height:h+'px',marginTop:'14px'}}
+      const g=sc.animate(grow,{duration:phone?650:520,easing:'cubic-bezier(.2,.8,.2,1)'});g.onfinish=g.oncancel=()=>{sc.style.overflow=''};
+      modeAnim.push(g);glide(before);
+    },160);
+  }
 }
 $('next').onclick=()=>{if(step<CARD_STEP)go(step+1);else showFinal()};
+$('prev').onclick=()=>{if(step>0)go(step-1)};
 $('cMsg').addEventListener('input',()=>{$('cCount').textContent=`${$('cMsg').value.length}/80`});
-const cube=$('cube');let cubeTurn=0;
-function flipCube(){cubeTurn++;cube.style.setProperty('--rx',cubeTurn*90+'deg')}
-$('random').onclick=()=>{flipCube();
+function hop(b){b.classList.remove('hop');void b.offsetWidth;b.classList.add('hop')}
+$('random').addEventListener('animationend',e=>{if(e.animationName==='hop')e.currentTarget.classList.remove('hop')});
+$('random').onclick=e=>{hop(e.currentTarget);
   state.forEach((st,i)=>{st.c=WAX[Math.floor(Math.random()*WAX.length)].id;st.s=Math.random()<.3;
     if(st.s){let k;do{k=INK[Math.floor(Math.random()*INK.length)].id}while(k===st.c&&INK.length>1);st.sc=k}repaint(i)});
   meshes.forEach((_,i)=>setTimeout(()=>bounceLayer(i),i*70));
@@ -854,7 +891,13 @@ if(EMBED){
   addEventListener('load',report);setTimeout(report,800);
 }
 // go back to the top of the tool (in the shop this scrolls the product page to the tool's top edge)
-function toTop(){if(EMBED){try{parent.postMessage({ispScrollTop:true},'*')}catch(e){}}else window.scrollTo({top:0})}
+// the shop's smooth scroll can be cut short when the iframe changes height at the same moment (iOS),
+// so report the new height first and ask once more after the layout has settled
+function toTop(){
+  if(!EMBED){window.scrollTo({top:0});return}
+  const send=()=>{try{parent.postMessage({ispBannerHeight:Math.ceil(document.body.getBoundingClientRect().height)},'*');parent.postMessage({ispScrollTop:true},'*')}catch(e){}};
+  requestAnimationFrame(send);setTimeout(send,700);
+}
 
 /* ---------- pages ---------- */
 function pageIn(el){if(reduce||!el.animate)return;el.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)'})}
