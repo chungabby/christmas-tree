@@ -930,6 +930,7 @@ function pageIn(el){if(reduce||!el.animate)return;el.animate([{opacity:0,transfo
 function showFinal(){
   $('editorPage').hidden=true;$('finalPage').hidden=false;setStageActive(false);
   toTop();buildSummary();playEnvelope=true;makeCard();
+  askFill(orderText(),false); // quietly fill the shop's field already; the copy button fills it again and scrolls there
   pageIn(document.querySelector('.final-head'));pageIn(document.querySelector('.final-card'));
   const side=document.querySelector('.final-side');
   [...side.children].forEach((c,i)=>{if(!reduce&&c.animate)c.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:520,delay:120+i*45,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'})});
@@ -1028,11 +1029,25 @@ function cardText(){const to=$('cTo').value.trim(),msg=$('cMsg').value.trim(),fr
   return `【卡片內容】\nDear ${to||'（未填）'}\n${msg||'（未填內容）'}\n署名：${from||'（未填）'}`}
 // everything the shop needs, in one paste: the six layers, then the card text
 function orderText(){return `${treeText()}\n\n${cardText()}`}
+// in the shop: ask the embed code to put the text straight into the product's 「貼上客製內容」 field
+// (and, when asked, scroll the page up to it). Resolves true when the shop page found and filled the field.
+let fillReply=null;
+addEventListener('message',e=>{if(e.data&&typeof e.data.ispFilled==='boolean'&&fillReply){const r=fillReply;fillReply=null;r(e.data.ispFilled)}});
+function askFill(text,scroll){
+  if(!EMBED)return Promise.resolve(false);
+  return new Promise(res=>{
+    if(fillReply)fillReply(false);fillReply=res;
+    try{parent.postMessage({ispFill:text,ispFillScroll:!!scroll},'*')}catch(e){fillReply=null;res(false);return}
+    setTimeout(()=>{if(fillReply===res){fillReply=null;res(false)}},800); // older embed code: no answer
+  });
+}
 function copy(btn,text){
   const label=btn.querySelector('.lbl')?btn.querySelector('.lbl').textContent:btn.textContent,f=$('copyField');
-  const ok=()=>{setLabel(btn,'已複製 ✓ 請貼到上面備注欄');setTimeout(()=>setLabel(btn,label),2000)};
-  const fallback=()=>{f.hidden=false;f.value=text;f.focus();f.select()};
-  try{navigator.clipboard.writeText(text).then(ok,fallback)}catch(e){fallback()}
+  const clip=new Promise(res=>{try{navigator.clipboard.writeText(text).then(()=>res(true),()=>res(false))}catch(e){res(false)}});
+  Promise.all([clip,askFill(text,true)]).then(([copied,filled])=>{
+    if(filled||copied){setLabel(btn,filled?'已填入上方欄位 ✓ 確認後即可下單':'已複製 ✓ 請貼到上面備注欄');setTimeout(()=>setLabel(btn,label),2600)}
+    else{f.hidden=false;f.value=text;f.focus();f.select()}
+  });
 }
 $('copyAll').onclick=e=>copy(e.currentTarget,orderText());
 
