@@ -7,7 +7,7 @@
 <title>Make Your Own Christmas Candle</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Belleza&family=Cormorant+Garamond:wght@500&family=Lato:wght@700&family=Noto+Sans+TC:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Belleza&family=Lato:wght@700&family=Noto+Sans+TC:wght@400;500&display=swap">
 <style>
 /* Layout: 1920×1080 desktop frame from the PDF, every size written in design px × --u so the whole
    composition keeps its proportions; below 1000px wide (or on portrait screens) it becomes one column. */
@@ -74,7 +74,7 @@ p,h1,h2,h3,ul{margin:0}
   transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .progress button:hover{transform:translateY(-2px)}
 .progress .shp{position:absolute;inset:0;width:100%;height:100%;fill:var(--sc);opacity:.3;transition:opacity .35s}
-.progress .num{position:absolute;inset:0;display:grid;place-items:center;font:500 calc(var(--pi) * .5)/1 "Cormorant Garamond",Georgia,serif;color:var(--sc);opacity:.4;transition:opacity .35s,color .35s}
+.progress .num{position:absolute;inset:0;display:grid;place-items:center;font:400 calc(var(--pi) * .46)/1 var(--optima);color:var(--sc);opacity:.4;transition:opacity .35s,color .35s}
 .progress .cur .shp,.progress .done .shp{opacity:1}
 .progress .cur .num,.progress .done .num{opacity:1;color:#f4efe8}
 .progress .cur{transform:scale(1.1)}
@@ -159,7 +159,7 @@ p,h1,h2,h3,ul{margin:0}
 .brk.on{opacity:.9}
 .fail{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--soft);padding:24px}
 /* random colours: a blue burst that keeps turning behind a white pebble; a little hop when pressed */
-.random{position:absolute;right:calc(50*var(--u));top:calc(10*var(--u));--s:clamp(84px,calc(118*var(--u)),124px);width:var(--s);height:var(--s);
+.random{position:absolute;left:calc(50*var(--u));bottom:calc(30*var(--u));--s:clamp(84px,calc(118*var(--u)),124px);width:var(--s);height:var(--s);
   padding:0;border:0;background:none;color:#aa5959;font-size:calc(var(--s) * .16);font-weight:600;line-height:1.3;letter-spacing:.12em}
 .random .rnd{position:relative;display:block;width:100%;height:100%;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .random:hover .rnd{transform:scale(1.05)}
@@ -177,6 +177,7 @@ p,h1,h2,h3,ul{margin:0}
 .final-head{grid-column:2 / 5;grid-row:1;padding-top:calc(60*var(--u));display:flex;flex-direction:column;align-items:center;text-align:center}
 .final-head .thanks+.thanks{margin-top:calc(20*var(--u))}
 .thanks em{font-style:normal;color:var(--alert)}
+.vip .final-head .thanks+.thanks,.vip .ship,.vip #toNotice,.vip #notice{display:none}
 .final-card{grid-column:2;grid-row:2;padding-top:calc(34*var(--u))}
 /* real envelope (PDF): the card stands in the velvet pocket, its lower part tucked inside */
 .reveal{position:relative;padding-bottom:30.9%}
@@ -239,7 +240,7 @@ p,h1,h2,h3,ul{margin:0}
   .phint{font-size:11.5px;letter-spacing:.02em;margin-top:8px;min-height:1.6em;padding:0 4px}
   .ed .stage-col{grid-column:1;grid-row:2;margin:14px 0 0;align-self:start;position:relative}
   .stage{height:clamp(300px,85vw,360px)}
-  .random{right:clamp(10px,5vw,28px);top:clamp(0px,2vw,10px);--s:76px;font-size:11.5px;letter-spacing:.08em}
+  .random{left:auto;right:clamp(10px,5vw,28px);bottom:0;--s:76px;font-size:11.5px;letter-spacing:.08em}
   .disclaimer{position:static;margin-top:6px;font-size:11px;letter-spacing:.06em;white-space:normal;padding:0 16px}
   .ed #editCard{grid-column:1;grid-row:4;margin:14px 12px 0}
   .dk{display:none}
@@ -376,7 +377,7 @@ p,h1,h2,h3,ul{margin:0}
   <div class="frame final">
     <header class="final-head">
       <p class="thanks">謝謝你參與了這份暖心送禮！</p>
-      <p class="thanks">請務必<em>按下「複製客製化內容」按鈕</em><br>並於<em>上面備注欄</em>貼上客製化內容</p>
+      <p class="thanks">請按下<em>「一鍵複製」按鈕</em><br>會自動幫你填入<em>上方「貼上客製內容」欄位</em><br>確認內容無誤後即可下單</p>
       <p class="ship">聖誕訂單統一於 12/10 陸續出貨，如另有需求請聯繫我們</p>
     </header>
     <div class="final-card">
@@ -428,17 +429,20 @@ const INK=[{id:'ffffff',h:'#ffffff',n:'白色',s:'白'},{id:'e2d6c4',h:'#e2d6c4'
 const CM=0.3,LH=3*CM,rad=d=>d/2*CM;
 // every layer is 3 cm tall; diameters 8 / 7 / 5.5 / 4.5 / 3.5 / 2.7 cm
 const LAYERS=[
-  {ord:'第一層',name:'聖誕花瓣',shape:{R:rad(8),H:LH,p:3.2,lobes:8,depth:0.14,sharp:0.55},def:{c:'494934',s:false,sc:'ffffff'}},
-  {ord:'第二層',name:'浪漫甜甜圈',shape:{R:rad(7),H:LH,p:2.4},engrave:['Give yourself a little break :)','It’s Saturday!'],def:{c:'ffffff',s:false,sc:'5f452c'}},
-  {ord:'第三層',name:'枕頭',shape:{R:rad(5.5),H:LH,p:2.2,lobes:4,depth:0.15,soft:0.05},def:{c:'95aabc',s:false,sc:'ffffff'}},
-  {ord:'第四層',name:'聖誕禮物',shape:{R:rad(4.5),H:LH,p:2.5,ribbons:4,rw:0.26,rh:0.055},def:{c:'410b14',s:false,sc:'ffffff'}},
-  {ord:'第五層',name:'裝飾球球',shape:{R:rad(3.5),H:LH,p:5,pTop:2.1,taper:0.12},def:{c:'9c836c',s:false,sc:'ffffff'}},
-  {ord:'第六層',name:'星星',star:true,width:2.7*CM,def:{c:'494934',s:false,sc:'ffffff'}}
+  {ord:'第一層',shape:{R:rad(8),H:LH,p:3.2,lobes:8,depth:0.14,sharp:0.55},def:{c:'494934',s:false,sc:'ffffff'}},
+  {ord:'第二層',shape:{R:rad(7),H:LH,p:2.4},engrave:['Give yourself a little break :)','It’s Saturday!'],def:{c:'ffffff',s:false,sc:'5f452c'}},
+  {ord:'第三層',shape:{R:rad(5.5),H:LH,p:2.2,lobes:4,depth:0.15,soft:0.05},def:{c:'95aabc',s:false,sc:'ffffff'}},
+  {ord:'第四層',shape:{R:rad(4.5),H:LH,p:2.5,ribbons:4,rw:0.26,rh:0.055},def:{c:'410b14',s:false,sc:'ffffff'}},
+  {ord:'第五層',shape:{R:rad(3.5),H:LH,p:5,pTop:2.1,taper:0.12},def:{c:'9c836c',s:false,sc:'ffffff'}},
+  {ord:'第六層',star:true,width:2.7*CM,def:{c:'494934',s:false,sc:'ffffff'}}
 ];
 /* ============================================================ */
 const hexOf=(list,id)=>(list.find(x=>x.id===id)||list[0]).h;
 const itemOf=(list,id)=>list.find(x=>x.id===id)||list[0];
+const VIP=false; // VIP edition: no card writing, fixed greeting on the card, copy only (sent by DM), no order notes
+if(VIP)document.documentElement.classList.add('vip');
 const CARD_STEP=6;
+const LAST=VIP?CARD_STEP-1:CARD_STEP; // last step you can open
 const state=LAYERS.map(l=>({...l.def}));
 let step=0;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -758,10 +762,10 @@ const PSHAPES=[["0 0 109.5 122.68", "M104.55,77.75c-2.53-3.68-6-7.22-9.82-9.31l-
 const OK=`<svg class="ok" viewBox="0 0 41.51 29.41" aria-hidden="true"><path d="M35.47,10.56c-.44-.02-1.08-.03-1.92-.02-.84.01-1.45,0-1.83-.01-.16,0-.32-.02-.48-.05-.17-.04-.37-.08-.6-.14-.23-.06-.42-.1-.56-.12.09-.12.19-.27.29-.46s.2-.34.28-.46c.08-.12.15-.23.23-.32.17-.18.57-.59,1.22-1.23.64-.64,1.15-1.18,1.51-1.63.37-.45.69-.93.96-1.46.5-.97.7-1.81.62-2.52-.06-.63-.31-1.13-.73-1.51-.42-.37-.91-.58-1.47-.62s-1.12.06-1.66.3c-1.13.51-2.02,1.35-2.68,2.52-.41.7-1.01,1.76-1.8,3.18-.11.2-.26.49-.47.87-.21.38-.4.72-.58,1.02-.18.3-.35.59-.51.87l-.1.12-.21.11-.17.1c-.21-.36-.32-.56-.33-.59,0-.02,0-.16,0-.43,0-.27,0-.69,0-1.27,0-.58-.01-1.09-.03-1.53-.02-.44-.05-.86-.12-1.25-.05-.44-.22-.84-.5-1.21-.28-.37-.65-.65-1.11-.83-.46-.19-.96-.24-1.49-.16-1.65.25-2.72,1.26-3.23,3.04-.25.87-.21,2.03.1,3.48.24,1.18.78,2.79,1.6,4.84.46,1.1.84,2.15,1.14,3.16.12.46.29,1.32.52,2.58.03.13.06.27.08.42.02.15.04.3.05.43.01.13.03.27.05.42.02.14.04.29.06.44.02.15.05.29.08.42.15.89.63,1.64,1.44,2.25.81.62,1.64.96,2.51,1.03,1.4.09,2.76-.26,4.09-1.06.88-.54,1.42-1.39,1.62-2.54.19-1.15-.05-2.05-.73-2.7-.14-.14-.47-.47-1.01-.99-.54-.52-.94-.93-1.22-1.23l-.08-.13-.06-.16-.05-.18-.07-.17c.06,0,.14,0,.24-.03.1-.03.19-.04.27-.05l.18.03c.48.27.89.58,1.21.93.37.38.89.92,1.57,1.62.67.7,1.1,1.15,1.29,1.33,1.36,1.4,2.81,2.1,4.35,2.09,1.88-.01,3.22-.88,4.02-2.6.29-.63.36-1.55.2-2.77-.17-1.41-.77-2.59-1.8-3.55-1.08-.98-2.47-1.52-4.16-1.61ZM7.68,16.26c-.46-.1-.8-.52-1.03-1.27-.15-.49-.07-1.06.24-1.71.23-.49.66-.73,1.29-.72.55.01.94.3,1.16.85.35.81.33,1.51-.05,2.08-.43.62-.96.88-1.6.77ZM16.06,10.88c-.52-.63-1.1-1.24-1.74-1.82-1.45-1.35-2.88-2.08-4.28-2.17-1.41-.07-2.84.13-4.27.6-1.25.4-2.32,1.21-3.21,2.42-.72.95-1.29,2.14-1.7,3.57C-.02,16.48-.22,19.38.24,22.16c.25,1.41.64,2.61,1.19,3.59,1.4,2.47,3.38,3.69,5.93,3.66.84,0,1.74-.12,2.69-.34,1.04-.23,2-.54,2.86-.92,1.39-.62,2.64-1.54,3.73-2.76,1.09-1.23,1.87-2.62,2.33-4.17.38-1.28.31-2.95-.21-5.02-.45-1.2-.69-1.84-.73-1.91-.51-1.3-1.17-2.44-1.97-3.41Z"/></svg>`;
 const ARROW='<li class="arr" aria-hidden="true"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h37M33 1.5 38 6l-5 4.5"/></svg></li>';
 const prog=$('progress');
-for(let i=0;i<=CARD_STEP;i++){
+for(let i=0;i<=LAST;i++){
   if(i)prog.insertAdjacentHTML('beforeend',ARROW);
   const li=document.createElement('li'),b=document.createElement('button');b.type='button';
-  b.setAttribute('aria-label',i<CARD_STEP?`${LAYERS[i].ord} ${LAYERS[i].name}`:'寫張卡片');
+  b.setAttribute('aria-label',i<CARD_STEP?LAYERS[i].ord:'寫張卡片');
   const [vb,d]=PSHAPES[i];
   b.innerHTML=`<svg class="shp" viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="${d}"/></svg><span class="num" aria-hidden="true">${i+1}</span>`+(i<CARD_STEP?OK:'');
   b.onclick=()=>go(i);li.appendChild(b);prog.appendChild(li);
@@ -773,10 +777,10 @@ function drawProgress(){
   });
   const h=$('phint'),left=6-done.size;
   if(step===CARD_STEP)h.innerHTML='最後一步：寫下想說的話，我們會印在小卡上 ✉︎';
-  else if(randMsg)h.innerHTML='已幫你隨機配好 6 層！可以逐層微調，或<button type="button" data-go="card">直接寫卡片 →</button>';
-  else if(left<=0)h.innerHTML='6 層都選好了！<button type="button" data-go="card">來寫張卡片吧 💌</button>';
-  else h.innerHTML=`還差 <b>${left}</b> 層就可以寫卡片囉！`;
-  const g=h.querySelector('[data-go]');if(g)g.onclick=()=>go(CARD_STEP);
+  else if(randMsg)h.innerHTML=VIP?'已幫你隨機配好 6 層！可以逐層微調，或<button type="button" data-go="card">直接完成 →</button>':'已幫你隨機配好 6 層！可以逐層微調，或<button type="button" data-go="card">直接寫卡片 →</button>';
+  else if(left<=0)h.innerHTML=VIP?'6 層都選好了！<button type="button" data-go="card">完成我的聖誕樹 🎄</button>':'6 層都選好了！<button type="button" data-go="card">來寫張卡片吧 💌</button>';
+  else h.innerHTML=VIP?`還差 <b>${left}</b> 層就完成囉！`:`還差 <b>${left}</b> 層就可以寫卡片囉！`;
+  const g=h.querySelector('[data-go]');if(g)g.onclick=()=>VIP?showFinal():go(CARD_STEP);
 }
 function pulseHint(){const h=$('phint');h.classList.remove('pop');void h.offsetWidth;h.classList.add('pop')}
 
@@ -834,12 +838,12 @@ function renderStep(){
     fr.classList.toggle('writing',card);setStageActive(!card);
   }
   drawProgress();
-  setLabel($('next'),card?'生成小卡與客製化內容':step===5?'下一步：寫張卡片':'下一層');
+  setLabel($('next'),card?'生成小卡與客製化內容':step===5?(VIP?'完成，生成我的聖誕樹':'下一步：寫張卡片'):'下一層');
   setLabel($('prev'),card?'上一步':'上一層');$('prev').disabled=step===0;
   if(!card)refreshLayer(false);
 }
 function go(i){
-  i=Math.max(0,Math.min(CARD_STEP,i));
+  i=Math.max(0,Math.min(LAST,i));
   if(!$('finalPage').hidden){showEditor(i);return}
   if(i===step)return;
   if(step<CARD_STEP)done.add(step); // leaving a layer counts it as chosen
@@ -878,7 +882,7 @@ function modeSwitch(){
     },160);
   }
 }
-$('next').onclick=()=>{if(step<CARD_STEP)go(step+1);else showFinal()};
+$('next').onclick=()=>{if(step<LAST)go(step+1);else showFinal()};
 $('prev').onclick=()=>{if(step>0)go(step-1)};
 $('cMsg').addEventListener('input',()=>{$('cCount').textContent=`${$('cMsg').value.length}/80`});
 function hop(b){b.classList.remove('hop');void b.offsetWidth;b.classList.add('hop')}
@@ -948,7 +952,7 @@ function buildSummary(){
     const st=state[i],base=hexOf(WAX,st.c),ink=hexOf(INK,st.sc);
     const bg=st.s?`radial-gradient(circle at 30% 35%,${ink} 0 1.6px,transparent 2px),radial-gradient(circle at 66% 58%,${ink} 0 1.3px,transparent 1.7px),radial-gradient(circle at 44% 74%,${ink} 0 1px,transparent 1.4px),radial-gradient(circle at 72% 28%,${ink} 0 1px,transparent 1.4px),${base}`:base;
     const li=document.createElement('li');
-    li.innerHTML=`<span class="chip" style="background:${bg}"></span><span class="t">${L.ord}・${L.name}<small>${describe(st)}</small></span><button type="button" class="textlink">修改</button>`;
+    li.innerHTML=`<span class="chip" style="background:${bg}"></span><span class="t">${L.ord}<small>${describe(st)}</small></span><button type="button" class="textlink">修改</button>`;
     li.querySelector('button').onclick=()=>showEditor(i);ul.appendChild(li);
   });
 }
@@ -980,7 +984,7 @@ async function makeCard(){
   outEl.innerHTML='<div class="cardwait">小卡製作中…</div>';
   const to=$('cTo').value.trim(),msg=$('cMsg').value.trim(),from=$('cFrom').value.trim();
   const TC='"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif',OP='Optima,"Optima nova",Belleza,serif';
-  try{if(document.fonts)await Promise.all([document.fonts.load(`500 17px ${TC}`,'Dear'+to+msg+from),document.fonts.load(`17px ${OP}`,'May your')])}catch(e){}
+  try{if(document.fonts)await Promise.all([document.fonts.load(`500 17px ${TC}`,'Dear'+to+msg+from+'親愛的你謝謝一直以來支持與陪伴我們有緣起相見忙碌之餘記得好休息喔'),document.fonts.load(`17px ${OP}`,'May your')])}catch(e){}
   if(job!==cardJob)return;
   const W=641.5,H=880,S=3,cv=document.createElement('canvas');cv.width=Math.round(W*S);cv.height=Math.round(H*S);
   const c=cv.getContext('2d');c.scale(cv.width/W,cv.height/H);
@@ -989,11 +993,18 @@ async function makeCard(){
   // text block on top, larger type (max 4 lines of message)
   c.fillStyle='#4d1f21';c.textBaseline='top';
   const FS=19.5,track=FS*.12,L=66,R=W-66;c.font=`500 ${FS}px ${TC}`;let y=78;
+  if(VIP){ // fixed greeting from It's Saturday, centred, signature in the brand face
+    c.font=`500 ${FS*1.15}px ${TC}`;tracked(c,'親愛的你，',W/2,76,track,'center');
+    c.font=`500 ${FS}px ${TC}`;
+    ['謝謝你一直以來的支持與陪伴 It’s Saturday','我們有緣一起相見','忙碌之餘，記得好好休息喔！'].forEach((ln,k)=>tracked(c,ln,W/2,138+k*42,FS*.1,'center'));
+    c.font=`${FS*1.2}px ${OP}`;c.fillStyle='#93755f';tracked(c,'It’s Sat. Abby',R,288,FS*.06,'right');c.fillStyle='#4d1f21';
+  }else{
   if(to)tracked(c,'Dear '+to,L,y,track);
   y=140;
   if(msg){let lines=wrapTracked(c,msg,R-L,track);if(lines.length>4){lines=lines.slice(0,4);lines[3]=lines[3].replace(/.$/,'…')}
     lines.forEach(ln=>{tracked(c,ln,L,y,track);y+=36})}
   if(from)tracked(c,from,R,Math.max(292,y+16),track,'right');
+  }
   // illustration at the bottom, larger; the curved greeting follows it (same transform as in the PDF)
   const TH=420,TOP=372,sc=TH/ART.box[3],ix=(W-ART.box[2]*sc)/2,f=TH/336.7;
   drawIllustration(c,ix,TOP,sc);
@@ -1028,13 +1039,13 @@ function treeText(){return LAYERS.map((L,i)=>{const st=state[i],w=itemOf(WAX,st.
 function cardText(){const to=$('cTo').value.trim(),msg=$('cMsg').value.trim(),from=$('cFrom').value.trim();
   return `【卡片內容】\nDear ${to||'（未填）'}\n${msg||'（未填內容）'}\n署名：${from||'（未填）'}`}
 // everything the shop needs, in one paste: the six layers, then the card text
-function orderText(){return `${treeText()}\n\n${cardText()}`}
+function orderText(){return VIP?treeText():`${treeText()}\n\n${cardText()}`}
 // in the shop: ask the embed code to put the text straight into the product's 「貼上客製內容」 field
 // (and, when asked, scroll the page up to it). Resolves true when the shop page found and filled the field.
 let fillReply=null;
 addEventListener('message',e=>{if(e.data&&typeof e.data.ispFilled==='boolean'&&fillReply){const r=fillReply;fillReply=null;r(e.data.ispFilled)}});
 function askFill(text,scroll){
-  if(!EMBED)return Promise.resolve(false);
+  if(!EMBED||VIP)return Promise.resolve(false);
   return new Promise(res=>{
     if(fillReply)fillReply(false);fillReply=res;
     try{parent.postMessage({ispFill:text,ispFillScroll:!!scroll},'*')}catch(e){fillReply=null;res(false);return}
@@ -1045,7 +1056,7 @@ function copy(btn,text){
   const label=btn.querySelector('.lbl')?btn.querySelector('.lbl').textContent:btn.textContent,f=$('copyField');
   const clip=new Promise(res=>{try{navigator.clipboard.writeText(text).then(()=>res(true),()=>res(false))}catch(e){res(false)}});
   Promise.all([clip,askFill(text,true)]).then(([copied,filled])=>{
-    if(filled||copied){setLabel(btn,filled?'已填入上方欄位 ✓ 確認後即可下單':'已複製 ✓ 請貼到上面備注欄');setTimeout(()=>setLabel(btn,label),2600)}
+    if(filled||copied){setLabel(btn,filled?'已填入上方欄位 ✓ 確認後即可下單':VIP?'已複製 ✓ 請私訊貼給我們':'已複製 ✓ 請貼到上面備注欄');setTimeout(()=>setLabel(btn,label),2600)}
     else{f.hidden=false;f.value=text;f.focus();f.select()}
   });
 }
