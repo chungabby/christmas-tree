@@ -56,8 +56,6 @@ p,h1,h2,h3,ul{margin:0}
 .ed #editCard{grid-column:2;grid-row:3;align-self:center;margin-top:calc(30*var(--u))}
 .ed .stage-col{grid-row:3;align-self:center;margin-top:calc(30*var(--u))}
 .ed{padding-bottom:calc(90*var(--u))}
-.ed.writing .stage-col{position:absolute;visibility:hidden;pointer-events:none} /* keeps its size: no WebGL resize when coming back */
-.ed.writing #editCard{grid-column:2 / 5;justify-self:center;width:calc(641.5*var(--u))}
 
 /* scalloped card: shape drawn by an SVG that follows the element's size */
 .scallop{position:relative;isolation:isolate}
@@ -92,8 +90,6 @@ p,h1,h2,h3,ul{margin:0}
 .phint.pop{animation:pop .5s cubic-bezier(.2,.8,.2,1)}
 
 .swap{position:relative;margin-bottom:calc(31*var(--u))}
-.eyebrow{font-size:max(12px,calc(16.45*var(--u)));letter-spacing:var(--track);margin-top:0;line-height:1.2}
-.lname{font-size:calc(26.5*var(--u));font-weight:500;letter-spacing:.08em;line-height:1.2;margin-top:calc(11.8*var(--u))}
 .label{font-size:max(12px,calc(16.45*var(--u)));letter-spacing:var(--track);line-height:1.2;display:flex;align-items:baseline;gap:calc(14*var(--u));flex-wrap:wrap}
 .label .ico{letter-spacing:0;font-size:.95em;margin-right:calc(-8*var(--u))}
 .label .desc .cs::before{content:"（"}.label .desc .cs::after{content:"）"}
@@ -141,16 +137,6 @@ p,h1,h2,h3,ul{margin:0}
 @keyframes ripple{to{transform:scale(1);opacity:0}}
 .note{margin-top:calc(17.5*var(--u));text-align:center;text-wrap:balance;color:var(--mute);font-size:max(10px,calc(13.5*var(--u)));letter-spacing:.08em;line-height:1.78}
 
-/* card-writing step */
-.intro{margin-top:calc(20*var(--u));font-size:max(12px,calc(16.45*var(--u)));letter-spacing:var(--track);line-height:1.82}
-.fields{display:flex;flex-direction:column;gap:calc(22*var(--u));margin-top:calc(30*var(--u))}
-.field{display:flex;flex-direction:column;gap:calc(8*var(--u))}
-.field .label{justify-content:space-between}
-.field input,.field textarea{font:500 max(14px,calc(16.45*var(--u)))/1.7 var(--tc);letter-spacing:.06em;color:var(--ink);background:transparent;border:0;
-  border-bottom:1px solid var(--ink);border-radius:0;padding:calc(6*var(--u)) calc(2*var(--u));width:100%;transition:border-color .3s,background .3s}
-.field textarea{border:1px solid #d9cec2;padding:calc(10*var(--u)) calc(12*var(--u));resize:none;height:calc(150*var(--u))}
-.field input:focus,.field textarea:focus{background:rgba(255,255,255,.55);outline:none}
-.field ::placeholder{color:#b7a49f}
 
 /* 3D stage */
 .stage-col{grid-column:4;position:relative}
@@ -183,7 +169,7 @@ p,h1,h2,h3,ul{margin:0}
 .final-head{grid-column:2 / 5;grid-row:1;padding-top:calc(60*var(--u));display:flex;flex-direction:column;align-items:center;text-align:center}
 .final-head .thanks+.thanks{margin-top:calc(20*var(--u))}
 .thanks em{font-style:normal;color:var(--alert)}
-.vip .final-head .thanks+.thanks,.vip .ship,.vip #toNotice,.vip #notice{display:none}
+.vip .final-head .thanks+.thanks,.vip .ship{display:none}
 .final-card{grid-column:2;grid-row:2;padding-top:calc(34*var(--u))}
 /* real envelope (PDF): the card stands in the velvet pocket, its lower part tucked inside */
 .reveal{position:relative;padding-bottom:30.9%}
@@ -210,19 +196,7 @@ p,h1,h2,h3,ul{margin:0}
 .restart{align-self:center;margin-top:calc(34*var(--u));font-size:max(13px,calc(16.45*var(--u)));letter-spacing:var(--track);color:var(--ink)}
 .restart.restart-top{margin-top:calc(20*var(--u))}
 .ship{text-align:center;margin-top:calc(22*var(--u));padding:0;color:#a01f1f;font-size:max(11px,calc(13.5*var(--u)));letter-spacing:.1em;line-height:1.4}
-.ghostbtn{margin-top:calc(24*var(--u));height:calc(60*var(--u));min-height:44px;border:0;background:var(--card);font-size:max(13px,calc(16.45*var(--u)));letter-spacing:.16em;
-  transition:background .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
-.ghostbtn:hover{background:#fff;transform:translateY(-2px)}
-.copyfield{margin-top:12px;width:100%;min-height:140px;font:13px/1.6 var(--tc);border:1px solid var(--rule);background:var(--card);color:var(--ink);padding:10px}
-
-.notice{width:calc(1920*var(--u));margin:0 auto;padding:calc(40*var(--u)) 0 calc(140*var(--u))}
-.notice-in{width:calc(820*var(--u));min-width:min(100%,560px);margin:0 auto;padding-top:calc(56*var(--u));border-top:1px solid rgba(77,31,33,.25)}
-.notice h2{font-weight:500;font-size:max(17px,calc(26.5*var(--u)));letter-spacing:.125em;text-align:center}
-.notice .lead{margin-top:calc(26*var(--u));font-size:max(13px,calc(16.45*var(--u)));line-height:1.9;letter-spacing:.08em;text-align:center}
-.notice dl{margin:calc(40*var(--u)) 0 0;display:grid;gap:calc(26*var(--u))}
-.notice dt{font-size:max(14px,calc(17.5*var(--u)));letter-spacing:.12em}
-.notice dt::before{content:"・"}
-.notice dd{margin:calc(8*var(--u)) 0 0;font-weight:400;font-size:max(13px,calc(15.5*var(--u)));line-height:1.9;letter-spacing:.06em;color:#5b3a3b}
+margin:calc(8*var(--u)) 0 0;font-weight:400;font-size:max(13px,calc(15.5*var(--u)));line-height:1.9;letter-spacing:.06em;color:#5b3a3b}
 
 /* ---------- motion ---------- */
 @keyframes pop{0%{opacity:0;transform:scale(.86) rotate(-3deg)}60%{opacity:1;transform:scale(1.03) rotate(.5deg)}100%{opacity:1;transform:none}}
@@ -252,13 +226,10 @@ p,h1,h2,h3,ul{margin:0}
   .dk{display:none}
   .scallop>svg.shape{filter:none}
   .card-in{height:auto;min-height:0;padding:calc(var(--r) + 4px) 20px calc(var(--r) + 4px)}
-  .eyebrow{font-size:11px;letter-spacing:.06em}
-  .lname{font-size:17.5px;letter-spacing:.06em;margin-top:4px}
   .label{font-size:12.5px;letter-spacing:.04em;gap:2px 5px;flex-wrap:wrap}
   .label .ico{margin-right:-1px}
   .label .desc{flex-basis:100%;font-size:11px;white-space:normal;display:flex;flex-direction:column;line-height:1.6;margin-top:3px}
   .label .desc .cs::before{content:"香氣："}.label .desc .cs::after{content:""}
-  .field .label .desc{flex-basis:auto;flex-direction:row;margin-top:0}
   .sec,.sec:first-of-type{margin-top:16px}
   .indent{padding-left:0;margin-top:9px}
   .swatches{grid-template-columns:repeat(3,minmax(0,39px));gap:8px 9px}
@@ -269,7 +240,6 @@ p,h1,h2,h3,ul{margin:0}
   .swap{margin-bottom:22px}
   .cta{height:48px;font-size:14px;letter-spacing:.08em;margin-top:0}
   .note{font-size:11px;letter-spacing:.02em;line-height:1.7;text-wrap:balance;margin-top:10px}
-  .ed.writing #editCard{grid-column:1 / -1;grid-row:4;width:auto;margin:14px 12px 0;justify-self:stretch}
   /* inside the card: name centred on top, colours left, splatter right */
   #layerView{display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:clamp(14px,5vw,24px);align-items:start}
   #layerView .sec:nth-of-type(1){grid-column:1 / -1;grid-row:1;margin-top:0}
@@ -282,11 +252,6 @@ p,h1,h2,h3,ul{margin:0}
   #layerView .label{justify-content:center}
   #layerView .swatches{justify-content:center}
   #layerView .seg{margin:0 auto}
-  .intro{font-size:13.5px;letter-spacing:.04em;line-height:1.75}
-  .intro br{display:none}
-  .fields{gap:14px;margin-top:16px}
-  .field textarea{height:120px}
-  .field input,.field textarea{font-size:16px;letter-spacing:.03em}
   .final-side{display:contents}
   .final>*,.final-side>*{width:100%;max-width:560px}
   .final-head{order:1;padding-top:8px}
@@ -295,7 +260,7 @@ p,h1,h2,h3,ul{margin:0}
   #copyAll{order:2;margin-top:24px}
   #copyField{order:2}
   .final-card{order:3;padding-top:24px}
-  .final-side>.label,.final-side>.summary,.final-side>.restart,.final-side>.ghostbtn{order:4}
+  .final-side>.label,.final-side>.summary,.final-side>.restart{order:4}
   .final-side>.restart{width:auto}
   .save-tip{font-size:11px;letter-spacing:.03em;margin-top:10px}
   .thanks{font-size:13.5px;letter-spacing:.05em}
@@ -307,15 +272,7 @@ p,h1,h2,h3,ul{margin:0}
   .textlink{font-size:12px}
   .restart{font-size:14px;letter-spacing:.06em;margin-top:20px}
   .final-side>.restart-top{order:2;margin-top:14px}
-  .ghostbtn{margin-top:24px;height:48px;font-size:14px;letter-spacing:.08em}
-  .notice{width:auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
-  .notice-in{width:auto;min-width:0;max-width:560px;padding-top:36px}
-  .notice h2{font-size:19px}
-  .notice .lead{font-size:14px;text-align:left}
-  .notice dl{margin-top:28px;gap:22px}
-  .notice dt{font-size:15px}
-  .notice dd{font-size:14px}
-}
+  }
 @media (max-width:359px){
   #editCard .label{flex-wrap:wrap;row-gap:4px}
   #editCard .label .desc{flex-basis:100%;overflow:visible}
@@ -353,19 +310,6 @@ p,h1,h2,h3,ul{margin:0}
               <div class="indent"><div class="swatches" id="splatColors" role="group" aria-label="潑墨顏色"></div></div>
             </div>
           </div>
-          <div id="cardView" hidden>
-            <p class="eyebrow">最後...</p>
-            <h2 class="lname">寫張卡片吧！</h2>
-            <p class="intro">我們將會把卡片內容印製出來<br>給予自己或是收到的摯友一份暖心聖誕祝福：）</p>
-            <div class="fields">
-              <label class="field" for="cTo"><span class="label">Dear（收件人）</span>
-                <input id="cTo" maxlength="16" placeholder="例如：自己" autocomplete="off"></label>
-              <label class="field" for="cMsg"><span class="label">卡片內容 <span class="desc" id="cCount">0/80</span></span>
-                <textarea id="cMsg" maxlength="80" placeholder="想對他說的話…"></textarea></label>
-              <label class="field" for="cFrom"><span class="label">署名</span>
-                <input id="cFrom" maxlength="16" placeholder="你的名字" autocomplete="off"></label>
-            </div>
-          </div>
         </div>
         <div class="act" id="act">
           <div class="btns"><button class="cta cta-ghost" id="prev">上一層</button><button class="cta" id="next">下一層</button></div>
@@ -384,7 +328,7 @@ p,h1,h2,h3,ul{margin:0}
   <div class="frame final">
     <header class="final-head">
       <p class="thanks">謝謝你參與了這份暖心送禮！</p>
-      <p class="thanks">請按下<em>「一鍵複製」按鈕</em><br>會自動幫你填入<em>上方「貼上客製內容」欄位</em><br>確認內容無誤後即可下單</p>
+      <p class="thanks">請按下<em>「一鍵複製」按鈕</em><br>會自動幫你填入<em>下方「貼上客製內容」欄位</em><br>確認內容無誤後即可下單</p>
       <p class="ship">聖誕訂單統一於 12/10 陸續出貨，如另有需求請聯繫我們</p>
     </header>
     <div class="final-card">
@@ -398,21 +342,8 @@ p,h1,h2,h3,ul{margin:0}
       <h3 class="label">你的聖誕配色</h3>
       <ul class="summary" id="summary"></ul>
       <button class="textlink restart" id="restart">回到第一層編輯</button>
-      <button class="ghostbtn" id="toNotice">訂購與退換貨須知</button>
     </section>
   </div>
-  <section class="notice" id="notice" aria-labelledby="noticeTitle">
-    <div class="notice-in">
-      <h2 id="noticeTitle">訂購與退換貨須知</h2>
-      <p class="lead">每一份聖誕蠟燭，都會依照你選擇的造型、配色與香氣安排製作。下單前，請再次確認選配內容，以及卡片上的姓名與祝福文字。</p>
-      <dl>
-        <div><dt>訂單修改</dt><dd>如需修改選配或卡片內容，請盡早聯繫我們。商品進入製作後，可能無法再調整原訂內容；此項限制不影響您依法享有的取消或退貨權利。</dd></div>
-        <div><dt>退貨申請</dt><dd>本商品適用通訊交易七日解除權。您可於收到商品後七日內，以電子郵件或其他書面方式通知我們退貨，無須說明理由或負擔退貨費用。</dd></div>
-        <div><dt>商品檢查與保管</dt><dd>收到商品後，請先確認品項與外觀。七日猶豫期並非試用期，請勿點燃蠟燭，並妥善保留商品、配件與包裝，以利後續退貨處理。必要的拆封檢查不影響您的法定權利。</dd></div>
-        <div><dt>瑕疵或配送問題</dt><dd>若商品有破損、瑕疵，或與訂單確認內容不符，請聯繫我們，並提供訂單編號及相關照片，以便協助確認與依法處理。</dd></div>
-      </dl>
-    </div>
-  </section>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
@@ -428,7 +359,7 @@ const WAX=[
   {id:'5f452c',h:'#4c392d',n:'胡桃木咖',scent:'木質調・雪松與紅茶'},
   {id:'e2d6c4',h:'#e4d5c2',n:'裸米',scent:'麝香調・海鹽與亞麻'},
   {id:'cdcecd',h:'#ccc6be',n:'卵石灰',scent:'麝香調・沐浴皂香'},
-  {id:'95aabc',h:'#85a2c4',n:'煙灰藍',scent:'鹽香調・冬日與海'},
+  {id:'95aabc',h:'#94a6aa',n:'煙灰藍',scent:'鹽香調・冬日與海'},
   {id:'cbe9f4',h:'#c6e0ea',n:'寶寶藍',scent:'麝香調・肌膚香'}
 ];
 // 3 splatter colours (hex from the PDF)
@@ -446,10 +377,11 @@ const LAYERS=[
 /* ============================================================ */
 const hexOf=(list,id)=>(list.find(x=>x.id===id)||list[0]).h;
 const itemOf=(list,id)=>list.find(x=>x.id===id)||list[0];
-const VIP=false; // VIP edition: no card writing, fixed greeting on the card, copy only (sent by DM), no order notes
+const VIP=false; // VIP edition: fixed greeting on the card, copy only (sent by DM); regular: illustration-only card, fills the shop field
 if(VIP)document.documentElement.classList.add('vip');
-const CARD_STEP=6;
-const LAST=VIP?CARD_STEP-1:CARD_STEP; // last step you can open
+else{const l=document.querySelector('.ed-head .lead');if(l)l.remove()} // regular: no intro lines, the page starts higher
+const CARD_STEP=6; // number of layers = number of steps (no card-writing step any more)
+const LAST=CARD_STEP-1; // last step you can open
 const state=LAYERS.map(l=>({...l.def}));
 let step=0;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -777,16 +709,16 @@ $('splatOn').onclick=()=>{state[step].s=true;refreshLayer(true)};
 
 /* ---------- progress: 1 … 6, ✉ (card) ---------- */
 const done=new Set();let randMsg=false;
-const PSHAPES=[["0 0 109.5 122.68", "M104.55,77.75c-2.53-3.68-6-7.22-9.82-9.31l-7.06-3.85c5.05-1.58,8.82-3.11,9.85-8.33,1.37-6.91-6.72-17.79-13.07-21.25l5.12-2.16c6.34-12.57-6.87-18.48-15.68-23.68-5.86-3.46-11.37-6.83-17.71-9.17l-6.71,3.96-8.97,5.29c-6.71,3.96-16.83,13.05-12.42,21.35,1.14,2.15,3.84,3.38,6.96,4.26l-7.01,5.06c-6.88,4.97-17.29,15.77-15.48,24.64.84,4.1,4.87,5.16,8.93,5.69-9.4,8.17-15.19,10.8-20.41,22.41-1.96,4.36-1.12,8.39,1.56,12.27,3.23,4.68,7.01,9.73,13.37,10.37,12.11,1.22,21.6-3.41,32.35-9.4l-.52,12.48c-.25,5.97,7.33,3.35,17.5,4.28,1.78.16,4.76-.53,4.58-2.62-.35-3.95-.65-7.87-.76-11.7l9.17,3.23c7.96,2.8,20.44,1.81,27.28-5.59,1.87-2.02,3.48-6.41,3.77-9.55.6-6.52-1.16-13.35-4.83-18.68ZM33.31,44.24c2.13,4.19-.84,7.37-3.55,9.17l-4.48,2.98,8.03-12.16ZM18.23,98.89c-.28-2.74,3.53-11.89,6.07-13.83,3.76-2.87-3.77,13.4-6.07,13.83ZM29.03,88.98c-.2-1.93,2.49-8.38,4.27-9.74,2.65-2.02-2.65,9.44-4.27,9.74ZM37.15,56.95l-3.16,2.1,5.66-8.56c1.5,2.95-.59,5.19-2.5,6.46Z"], ["0 0 118.67 118.2", "M61.77,88.89l-16.67,13.65-18.31,14.55c-1,.8-2.27,1.41-3.39.97-.93-.37-1.22-2.24-.96-3.38l3.59-15.52,4.99-19.13-15.65-.78-12.92-.85c-.75-.05-2.07-.55-2.36-1.1-.35-.66.33-2.47.98-2.87l13.97-8.39,10.81-6.63-4.72-7.07c-5.51-8.26-11.39-17.45-14.39-26.92-.16-.49-.04-1.66.08-1.98s1.36-.7,1.79-.53l10.59,4.04,22.68,7.84,4.57-10.9c3.4-8.1,7.27-15.8,11.74-23.86,4.01,1.98,5.33,5.68,6.61,9.52,2.87,8.6,5.76,17.01,9.24,25.81l16.44-4.82,21.22-6.38c.65-.19,1.78.11,2.05.4s.18,1.68-.18,2.13l-9.39,11.72-11.6,14.09,26.09,16.95c-10.08,3.05-19.27,4.49-28.93,6.86-.71.17-2.02,1.44-2.25,1.94l.59,17.17.14,13.15-.05,5.28c0,.67-.3,1.73-.64,2.2-.41.57-2.52.19-3-.33-8.08-8.77-15.49-17.52-22.76-26.8Z"], ["0 0 108.09 116.02", "M33.87,76.96c1.61-1.85,3.02-2.94,3.24-5.47-10.78.26-20.05,3.2-30.23,6.47-1.49-.78-2.07-4.64-1.01-5.94,3.87-2.19,7.64-3.62,11-6.64-3.03-1.18-12.03,4.25-12.76.46-.99-5.11,9.5-4.21,13.48-8.66l-13.59-.48c-1.11-.61-1.48-3.85-.51-4.74l9.46-1.74c-5.39-4.47-11.52-2.77-11.85-8.25-.06-1,.14-2.32.65-2.82s2.39-.54,3.08-.28c13.12,4.82,19.33,5.39,31.62,9.9,1.44.53,2.95.7,4.41.07l-9.46-12.63C29.36,33.5,12.21,2.41,14.04.74c.42-.38,2.01-.86,2.57-.72,16.67,4.17,25.58,6.77,41.25,13.9,9.69,4.41,17.43,22.04,19.92,32.74l7.22-1.17c13.25-2.14,8.52-2.04,23.09,2.06-1.85,1.48-3.36,2.26-5.64,3.13-.92,8.04-14.42,20.56-22.62,22.32-1.85,7.69-3.3,12.66-6.55,20.01s-9.92,11.89-16.21,16.19c-7.07,4.83-14.04,5.69-22.42,5.87-5.73.13-11.58,1.16-17.48.92s-11.05-.16-17.17-.06c2.58-4.11,4.81-8.4,8.09-11.6,7.34-7.14,14.23-14.09,20.94-21.81l4.83-5.56Z"], ["0 0 126.54 119.35", "M44.07,118.55c-.33.39-1.76.84-2.19.8-3.33-.3-1.89-19.65-1.65-23.18l1.18-17.27c-3.6-.64-7.31-.2-10.98.58l-16.5,3.5c-3.22.68-6.16,1.18-9.34,2.22-1.58.52-3.89.64-4.59-1.08,2.84-4.21,6.92-7.38,10.54-10.71l19.03-17.5c1.1-1.01-.02-4.27-1.02-5.86-5.64-9.05-10.82-20.13-13.75-30.15-.16-.54.14-1.79.48-1.83.52-.06,2.21.05,2.71.43l13.9,10.56,19.37,14.08c4.66-3.89,21.54-48.27,27.83-42.65l1.35,23.03,2.2,21.27c7.41-2.42,14.31-4.09,21.37-6.89l19.48-7.73c14.92-5.92-29.87,35.91-29.89,35.2,2.72,12.23,7.52,22.59,12.94,33.51,1.77,3.57,4.08,6.76,2.13,9.51-.44.62-2.38.57-3.06.18l-9.77-5.61-12.52-8.5-11.2-7.61-10.04,10.79c-3.48,3.74-6.78,7.54-10.22,11.63l-7.79,9.28Z"], ["0 0 115.99 108.31", "M115.79,54.59c-.09-4.02-1.24-7.83-2.35-12.06-2.9-11.11-6.2-21.73-10.68-32.38-1.25-2.96-2.01-6.14-3.12-9.4l-25.53-.32L33.79,0c-1.09-.01-2.84,1.27-3.75,1.51-2.26.59-4.82,4.42-6.33,6.95C15.26,22.66,7.03,36.54,0,51.47c.73,6.59,1.1,12.41.99,18.41-.23,11.97,1.16,16.49.45,31.38-.12,2.49-.56,5.27.97,7.05h13.09c.4-9.38-2.24-15.25.82-23.72,1.67-4.62,6.13-7.71,10.88-6.7,13.7,2.9,10.72,18.09,12.13,29.43l.55.96,37.76-.5,32.08-.47c1.93-.03,4.36-.44,6.01-.63l.26-42.93-.2-9.16Z"], ["0 0 128.62 128.1", "M66.95,96.34l-18.07,14.79-19.84,15.76c-1.09.87-2.46,1.53-3.67,1.05-1.01-.4-1.33-2.43-1.04-3.66l3.89-16.82,5.41-20.73-16.96-.85-14-.92c-.81-.05-2.24-.6-2.55-1.19-.38-.71.36-2.68,1.06-3.11l15.14-9.1,11.71-7.19-5.11-7.66c-5.97-8.95-12.35-18.91-15.6-29.18-.17-.54-.04-1.8.09-2.15s1.48-.76,1.94-.58l11.48,4.38,24.58,8.49,4.96-11.81c3.68-8.78,7.88-17.12,12.72-25.86,4.34,2.14,5.77,6.16,7.16,10.32,3.11,9.33,6.24,18.43,10.01,27.97l17.81-5.23,22.99-6.92c.7-.21,1.93.12,2.22.43s.19,1.83-.19,2.3l-10.17,12.7-12.57,15.27,28.27,18.37c-10.92,3.3-20.88,4.87-31.35,7.43-.77.19-2.19,1.56-2.44,2.1l.64,18.61.15,14.26-.05,5.73c0,.73-.32,1.87-.69,2.38-.44.62-2.73.2-3.25-.36-8.75-9.5-16.79-18.99-24.66-29.04Z"], ["0 0 120.15 116.74", "M115.19,23.25c.15.08-.61-.52-.75-.52l-6.63-.12c-.28-6.06-.55-15.97-7.12-18.54-4.22-1.65-9.32-1-13.25.77-6.69,3.02-12.56,6.54-17.96,11.32l-7.01,6.21c-1.89-6.81-6.7-11.55-12.28-15.37-5.81-3.99-17.64-10.66-23.7-4.5-5.28,5.38-8.14,12.85-7.36,20.13-4.55.8-14.75-1.76-17.4.58C0,24.74.44,31.94.03,36.79c-.15,1.75.14,3.87,1.33,5.1,1.05,1.08,3.28,1.43,5.25,1.77,1.76,3.9,1.58,8.84,1.67,13.25l.16,8.33c.16,8.46.46,36.28-.34,44.83-.14,1.46,1.71,3.16,3.17,3.35l16.73,2.13c3.4.43,6.75.29,10.08.31l19.75.12c2.61,1.25,5.55.64,8.29-.13l4.88-.06,15.55.49c7.57.24,15.38,1.31,22.66-.86,3.15-.94,2.79-5.64,2.8-8.03l.05-7.26-.24-29.88.26-17.73c.05-3.38.68-6.76,1.13-10.08,3.82.6,6.77-1.42,6.82-4.95l.13-9.71c.04-3.21-2.4-4.55-4.96-4.52ZM29.7,22.52c-2.73-1.72-2.15-6.51-.27-8.8,1.57-4.71,6.17-6.68,10.61-4.69,7.28,2.75,13.78,6.73,18.97,13.5h-29.32ZM94.91,11.45c3.94,2.37,5.02,7.98,4.21,11.82l-4.91-.11-.58-.42-26.53-.18c6.48-5.53,19.37-12.92,27.81-11.11Z"]];
+const PSHAPES=[["0 0 109.5 122.68", "M104.55,77.75c-2.53-3.68-6-7.22-9.82-9.31l-7.06-3.85c5.05-1.58,8.82-3.11,9.85-8.33,1.37-6.91-6.72-17.79-13.07-21.25l5.12-2.16c6.34-12.57-6.87-18.48-15.68-23.68-5.86-3.46-11.37-6.83-17.71-9.17l-6.71,3.96-8.97,5.29c-6.71,3.96-16.83,13.05-12.42,21.35,1.14,2.15,3.84,3.38,6.96,4.26l-7.01,5.06c-6.88,4.97-17.29,15.77-15.48,24.64.84,4.1,4.87,5.16,8.93,5.69-9.4,8.17-15.19,10.8-20.41,22.41-1.96,4.36-1.12,8.39,1.56,12.27,3.23,4.68,7.01,9.73,13.37,10.37,12.11,1.22,21.6-3.41,32.35-9.4l-.52,12.48c-.25,5.97,7.33,3.35,17.5,4.28,1.78.16,4.76-.53,4.58-2.62-.35-3.95-.65-7.87-.76-11.7l9.17,3.23c7.96,2.8,20.44,1.81,27.28-5.59,1.87-2.02,3.48-6.41,3.77-9.55.6-6.52-1.16-13.35-4.83-18.68ZM33.31,44.24c2.13,4.19-.84,7.37-3.55,9.17l-4.48,2.98,8.03-12.16ZM18.23,98.89c-.28-2.74,3.53-11.89,6.07-13.83,3.76-2.87-3.77,13.4-6.07,13.83ZM29.03,88.98c-.2-1.93,2.49-8.38,4.27-9.74,2.65-2.02-2.65,9.44-4.27,9.74ZM37.15,56.95l-3.16,2.1,5.66-8.56c1.5,2.95-.59,5.19-2.5,6.46Z"], ["0 0 118.67 118.2", "M61.77,88.89l-16.67,13.65-18.31,14.55c-1,.8-2.27,1.41-3.39.97-.93-.37-1.22-2.24-.96-3.38l3.59-15.52,4.99-19.13-15.65-.78-12.92-.85c-.75-.05-2.07-.55-2.36-1.1-.35-.66.33-2.47.98-2.87l13.97-8.39,10.81-6.63-4.72-7.07c-5.51-8.26-11.39-17.45-14.39-26.92-.16-.49-.04-1.66.08-1.98s1.36-.7,1.79-.53l10.59,4.04,22.68,7.84,4.57-10.9c3.4-8.1,7.27-15.8,11.74-23.86,4.01,1.98,5.33,5.68,6.61,9.52,2.87,8.6,5.76,17.01,9.24,25.81l16.44-4.82,21.22-6.38c.65-.19,1.78.11,2.05.4s.18,1.68-.18,2.13l-9.39,11.72-11.6,14.09,26.09,16.95c-10.08,3.05-19.27,4.49-28.93,6.86-.71.17-2.02,1.44-2.25,1.94l.59,17.17.14,13.15-.05,5.28c0,.67-.3,1.73-.64,2.2-.41.57-2.52.19-3-.33-8.08-8.77-15.49-17.52-22.76-26.8Z"], ["0 0 108.09 116.02", "M33.87,76.96c1.61-1.85,3.02-2.94,3.24-5.47-10.78.26-20.05,3.2-30.23,6.47-1.49-.78-2.07-4.64-1.01-5.94,3.87-2.19,7.64-3.62,11-6.64-3.03-1.18-12.03,4.25-12.76.46-.99-5.11,9.5-4.21,13.48-8.66l-13.59-.48c-1.11-.61-1.48-3.85-.51-4.74l9.46-1.74c-5.39-4.47-11.52-2.77-11.85-8.25-.06-1,.14-2.32.65-2.82s2.39-.54,3.08-.28c13.12,4.82,19.33,5.39,31.62,9.9,1.44.53,2.95.7,4.41.07l-9.46-12.63C29.36,33.5,12.21,2.41,14.04.74c.42-.38,2.01-.86,2.57-.72,16.67,4.17,25.58,6.77,41.25,13.9,9.69,4.41,17.43,22.04,19.92,32.74l7.22-1.17c13.25-2.14,8.52-2.04,23.09,2.06-1.85,1.48-3.36,2.26-5.64,3.13-.92,8.04-14.42,20.56-22.62,22.32-1.85,7.69-3.3,12.66-6.55,20.01s-9.92,11.89-16.21,16.19c-7.07,4.83-14.04,5.69-22.42,5.87-5.73.13-11.58,1.16-17.48.92s-11.05-.16-17.17-.06c2.58-4.11,4.81-8.4,8.09-11.6,7.34-7.14,14.23-14.09,20.94-21.81l4.83-5.56Z"], ["0 0 126.54 119.35", "M44.07,118.55c-.33.39-1.76.84-2.19.8-3.33-.3-1.89-19.65-1.65-23.18l1.18-17.27c-3.6-.64-7.31-.2-10.98.58l-16.5,3.5c-3.22.68-6.16,1.18-9.34,2.22-1.58.52-3.89.64-4.59-1.08,2.84-4.21,6.92-7.38,10.54-10.71l19.03-17.5c1.1-1.01-.02-4.27-1.02-5.86-5.64-9.05-10.82-20.13-13.75-30.15-.16-.54.14-1.79.48-1.83.52-.06,2.21.05,2.71.43l13.9,10.56,19.37,14.08c4.66-3.89,21.54-48.27,27.83-42.65l1.35,23.03,2.2,21.27c7.41-2.42,14.31-4.09,21.37-6.89l19.48-7.73c14.92-5.92-29.87,35.91-29.89,35.2,2.72,12.23,7.52,22.59,12.94,33.51,1.77,3.57,4.08,6.76,2.13,9.51-.44.62-2.38.57-3.06.18l-9.77-5.61-12.52-8.5-11.2-7.61-10.04,10.79c-3.48,3.74-6.78,7.54-10.22,11.63l-7.79,9.28Z"], ["0 0 115.99 108.31", "M115.79,54.59c-.09-4.02-1.24-7.83-2.35-12.06-2.9-11.11-6.2-21.73-10.68-32.38-1.25-2.96-2.01-6.14-3.12-9.4l-25.53-.32L33.79,0c-1.09-.01-2.84,1.27-3.75,1.51-2.26.59-4.82,4.42-6.33,6.95C15.26,22.66,7.03,36.54,0,51.47c.73,6.59,1.1,12.41.99,18.41-.23,11.97,1.16,16.49.45,31.38-.12,2.49-.56,5.27.97,7.05h13.09c.4-9.38-2.24-15.25.82-23.72,1.67-4.62,6.13-7.71,10.88-6.7,13.7,2.9,10.72,18.09,12.13,29.43l.55.96,37.76-.5,32.08-.47c1.93-.03,4.36-.44,6.01-.63l.26-42.93-.2-9.16Z"], ["0 0 128.62 128.1", "M66.95,96.34l-18.07,14.79-19.84,15.76c-1.09.87-2.46,1.53-3.67,1.05-1.01-.4-1.33-2.43-1.04-3.66l3.89-16.82,5.41-20.73-16.96-.85-14-.92c-.81-.05-2.24-.6-2.55-1.19-.38-.71.36-2.68,1.06-3.11l15.14-9.1,11.71-7.19-5.11-7.66c-5.97-8.95-12.35-18.91-15.6-29.18-.17-.54-.04-1.8.09-2.15s1.48-.76,1.94-.58l11.48,4.38,24.58,8.49,4.96-11.81c3.68-8.78,7.88-17.12,12.72-25.86,4.34,2.14,5.77,6.16,7.16,10.32,3.11,9.33,6.24,18.43,10.01,27.97l17.81-5.23,22.99-6.92c.7-.21,1.93.12,2.22.43s.19,1.83-.19,2.3l-10.17,12.7-12.57,15.27,28.27,18.37c-10.92,3.3-20.88,4.87-31.35,7.43-.77.19-2.19,1.56-2.44,2.1l.64,18.61.15,14.26-.05,5.73c0,.73-.32,1.87-.69,2.38-.44.62-2.73.2-3.25-.36-8.75-9.5-16.79-18.99-24.66-29.04Z"]];
 const OK=`<svg class="ok" viewBox="0 0 41.51 29.41" aria-hidden="true"><path d="M35.47,10.56c-.44-.02-1.08-.03-1.92-.02-.84.01-1.45,0-1.83-.01-.16,0-.32-.02-.48-.05-.17-.04-.37-.08-.6-.14-.23-.06-.42-.1-.56-.12.09-.12.19-.27.29-.46s.2-.34.28-.46c.08-.12.15-.23.23-.32.17-.18.57-.59,1.22-1.23.64-.64,1.15-1.18,1.51-1.63.37-.45.69-.93.96-1.46.5-.97.7-1.81.62-2.52-.06-.63-.31-1.13-.73-1.51-.42-.37-.91-.58-1.47-.62s-1.12.06-1.66.3c-1.13.51-2.02,1.35-2.68,2.52-.41.7-1.01,1.76-1.8,3.18-.11.2-.26.49-.47.87-.21.38-.4.72-.58,1.02-.18.3-.35.59-.51.87l-.1.12-.21.11-.17.1c-.21-.36-.32-.56-.33-.59,0-.02,0-.16,0-.43,0-.27,0-.69,0-1.27,0-.58-.01-1.09-.03-1.53-.02-.44-.05-.86-.12-1.25-.05-.44-.22-.84-.5-1.21-.28-.37-.65-.65-1.11-.83-.46-.19-.96-.24-1.49-.16-1.65.25-2.72,1.26-3.23,3.04-.25.87-.21,2.03.1,3.48.24,1.18.78,2.79,1.6,4.84.46,1.1.84,2.15,1.14,3.16.12.46.29,1.32.52,2.58.03.13.06.27.08.42.02.15.04.3.05.43.01.13.03.27.05.42.02.14.04.29.06.44.02.15.05.29.08.42.15.89.63,1.64,1.44,2.25.81.62,1.64.96,2.51,1.03,1.4.09,2.76-.26,4.09-1.06.88-.54,1.42-1.39,1.62-2.54.19-1.15-.05-2.05-.73-2.7-.14-.14-.47-.47-1.01-.99-.54-.52-.94-.93-1.22-1.23l-.08-.13-.06-.16-.05-.18-.07-.17c.06,0,.14,0,.24-.03.1-.03.19-.04.27-.05l.18.03c.48.27.89.58,1.21.93.37.38.89.92,1.57,1.62.67.7,1.1,1.15,1.29,1.33,1.36,1.4,2.81,2.1,4.35,2.09,1.88-.01,3.22-.88,4.02-2.6.29-.63.36-1.55.2-2.77-.17-1.41-.77-2.59-1.8-3.55-1.08-.98-2.47-1.52-4.16-1.61ZM7.68,16.26c-.46-.1-.8-.52-1.03-1.27-.15-.49-.07-1.06.24-1.71.23-.49.66-.73,1.29-.72.55.01.94.3,1.16.85.35.81.33,1.51-.05,2.08-.43.62-.96.88-1.6.77ZM16.06,10.88c-.52-.63-1.1-1.24-1.74-1.82-1.45-1.35-2.88-2.08-4.28-2.17-1.41-.07-2.84.13-4.27.6-1.25.4-2.32,1.21-3.21,2.42-.72.95-1.29,2.14-1.7,3.57C-.02,16.48-.22,19.38.24,22.16c.25,1.41.64,2.61,1.19,3.59,1.4,2.47,3.38,3.69,5.93,3.66.84,0,1.74-.12,2.69-.34,1.04-.23,2-.54,2.86-.92,1.39-.62,2.64-1.54,3.73-2.76,1.09-1.23,1.87-2.62,2.33-4.17.38-1.28.31-2.95-.21-5.02-.45-1.2-.69-1.84-.73-1.91-.51-1.3-1.17-2.44-1.97-3.41Z"/></svg>`;
 const ARROW='<li class="arr" aria-hidden="true"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h37M33 1.5 38 6l-5 4.5"/></svg></li>';
 const prog=$('progress');
 for(let i=0;i<=LAST;i++){
   if(i)prog.insertAdjacentHTML('beforeend',ARROW);
   const li=document.createElement('li'),b=document.createElement('button');b.type='button';
-  b.setAttribute('aria-label',i<CARD_STEP?LAYERS[i].ord:'寫張卡片');
+  b.setAttribute('aria-label',LAYERS[i].ord);
   const [vb,d]=PSHAPES[i];
-  b.innerHTML=`<svg class="shp" viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="${d}"/></svg><span class="num" aria-hidden="true">${i+1}</span>`+(i<CARD_STEP?OK:'');
+  b.innerHTML=`<svg class="shp" viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="${d}"/></svg><span class="num" aria-hidden="true">${i+1}</span>`+OK;
   b.onclick=()=>go(i);li.appendChild(b);prog.appendChild(li);
 }
 /* ---------- ribbons (PDF): white + red bands, the handwritten line drifts along them ----------
@@ -811,13 +743,12 @@ const RIBBONS=[
   function layout(){
     W=pg.clientWidth;H=pg.clientHeight;if(!W||!H)return;
     dpr=Math.min(2,devicePixelRatio||1);cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
-    const F=pg.getBoundingClientRect(),writing=fr.classList.contains('writing');
+    const F=pg.getBoundingClientRect();
     if(innerWidth<1280){ // phone: the crossing sits behind the tree, fading out at the top and bottom of the tree's row
-      const st=document.querySelector('.ed .stage-col');if(writing||!st.offsetHeight)return;
+      const st=document.querySelector('.ed .stage-col');if(!st.offsetHeight)return;
       const r=st.getBoundingClientRect(),k=.26;
       m={k,x:r.left-F.left+r.width/2-2640*k,y:r.top-F.top+r.height/2-1162*k};clip=[0,r.top-F.top,W,r.height];
     }else{ // desktop: same placement as the PDF, measured from the scalloped card
-      if(writing)return;
       const c=$('editCard').getBoundingClientRect(),k=c.width/1282.9;
       m={k,x:c.left-F.left-451.46*k,y:c.top-F.top-273.67*k};clip=null;
     }
@@ -857,15 +788,14 @@ const RIBBONS=[
 })();
 function drawProgress(){
   [...prog.querySelectorAll('button')].forEach((b,i)=>{
-    b.classList.toggle('cur',i===step);b.classList.toggle('done',i<CARD_STEP&&done.has(i));
+    b.classList.toggle('cur',i===step);b.classList.toggle('done',done.has(i));
     if(i===step)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
   });
   const h=$('phint'),left=6-done.size;
-  if(step===CARD_STEP)h.innerHTML='最後一步：寫下想說的話，我們會印在小卡上 ✉︎';
-  else if(randMsg)h.innerHTML=VIP?'已幫你隨機配好 6 層！可以逐層微調，或<button type="button" data-go="card">直接完成 →</button>':'已幫你隨機配好 6 層！可以逐層微調，或<button type="button" data-go="card">直接寫卡片 →</button>';
-  else if(left<=0)h.innerHTML=VIP?'6 層都選好了！<button type="button" data-go="card">完成我的聖誕樹 🎄</button>':'6 層都選好了！<button type="button" data-go="card">來寫張卡片吧 💌</button>';
-  else h.innerHTML=VIP?`還差 <b>${left}</b> 層就完成囉！`:`還差 <b>${left}</b> 層就可以寫卡片囉！`;
-  const g=h.querySelector('[data-go]');if(g)g.onclick=()=>VIP?showFinal():go(CARD_STEP);
+  if(randMsg)h.innerHTML='已幫你隨機配好 6 層！可以逐層微調，或<button type="button" data-go="card">直接完成 →</button>';
+  else if(left<=0)h.innerHTML='6 層都選好了！<button type="button" data-go="card">完成我的聖誕樹 🎄</button>';
+  else h.innerHTML=`還差 <b>${left}</b> 層就完成囉！`;
+  const g=h.querySelector('[data-go]');if(g)g.onclick=()=>showFinal();
 }
 function pulseHint(){const h=$('phint');h.classList.remove('pop');void h.offsetWidth;h.classList.add('pop')}
 
@@ -894,7 +824,7 @@ function fitDesc(){
   let fs=parseFloat(getComputedStyle(d).fontSize);
   while(l.scrollWidth>l.clientWidth+.5&&fs>9){fs-=.5;d.style.fontSize=fs+'px'}
 }
-addEventListener('resize',()=>{if(step<CARD_STEP)fitDesc()});
+addEventListener('resize',fitDesc);
 function refreshLayer(changed){
   const st=state[step],L=LAYERS[step],wax=itemOf(WAX,st.c);
   const d=$('colorDesc');d.querySelector('.cn').textContent=wax.n;d.querySelector('.cs').textContent=wax.scent;d.style.color=lum(wax.h)>.7?'var(--soft)':wax.h;fitDesc();
@@ -924,60 +854,21 @@ function swapContent(apply){
   },150);
 }
 function renderStep(){
-  const card=step===CARD_STEP;
-  $('layerView').hidden=card;$('cardView').hidden=!card;
-  const fr=$('edFrame'),was=fr.classList.contains('writing');
-  if(card!==was){
-    fr.classList.toggle('writing',card);setStageActive(!card);
-  }
   drawProgress();
-  setLabel($('next'),card?'生成小卡與客製化內容':step===5?(VIP?'完成，生成我的聖誕樹':'下一步：寫張卡片'):'下一層');
-  setLabel($('prev'),card?'上一步':'上一層');$('prev').disabled=step===0;
-  if(!card)refreshLayer(false);
+  setLabel($('next'),step===LAST?'完成，生成我的聖誕樹':'下一層');
+  $('prev').disabled=step===0;
+  refreshLayer(false);
 }
 function go(i){
   i=Math.max(0,Math.min(LAST,i));
   if(!$('finalPage').hidden){showEditor(i);return}
   if(i===step)return;
-  if(step<CARD_STEP)done.add(step); // leaving a layer counts it as chosen
-  randMsg=randMsg&&i!==CARD_STEP;
-  const mode=(step===CARD_STEP)!==(i===CARD_STEP);
-  step=i;if(step<CARD_STEP)bounceLayer(step);
-  if(mode)modeSwitch();else swapContent(renderStep);
-}
-// entering / leaving the card step: the tree sinks and folds away (on phones its row closes),
-// then the card glides to its new place (FLIP); going back reverses it
-let modeAnim=[],modeTimer=0;
-function modeSwitch(){
-  if(swapping){swapping.cancel();swapping=null}clearTimeout(swapTimer);clearTimeout(modeTimer);
-  modeAnim.forEach(a=>a.cancel());modeAnim=[];
-  const c=$('editCard'),sc=document.querySelector('.ed .stage-col'),sw=$('swap');
-  sc.style.overflow='';
-  if(reduce||!c.animate){renderStep();return}
-  const phone=innerWidth<1280,entering=step===CARD_STEP,ease='cubic-bezier(.55,0,.25,1)';
-  const glide=before=>{const a=c.getBoundingClientRect(),dx=before.left-a.left,dy=before.top-a.top;
-    if(Math.abs(dx)+Math.abs(dy)>1)modeAnim.push(c.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)'}));
-    modeAnim.push(sw.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:460,delay:140,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}))};
-  const fold=[{opacity:1,transform:'none'},{opacity:0,transform:'translateY(28px) scale(.8)'}];
-  if(entering){
-    const h=sc.offsetHeight,t=phone?650:450;
-    if(phone){sc.style.overflow='hidden';fold[0].height=h+'px';fold[1].height='0px';fold[0].marginTop='14px';fold[1].marginTop='0px'}
-    modeAnim=[sc.animate(fold,{duration:t,easing:ease,fill:'forwards'}),sw.animate([{opacity:1},{opacity:0}],{duration:220,fill:'forwards'})];
-    modeTimer=setTimeout(()=>{const before=c.getBoundingClientRect();renderStep();modeAnim.forEach(a=>a.cancel());modeAnim=[];sc.style.overflow='';glide(before)},t);
-  }else{
-    modeAnim=[sw.animate([{opacity:1},{opacity:0}],{duration:160,fill:'forwards'})];
-    modeTimer=setTimeout(()=>{
-      const before=c.getBoundingClientRect();renderStep();modeAnim.forEach(a=>a.cancel());modeAnim=[];
-      const grow=[...fold].reverse();
-      if(phone){const h=sc.offsetHeight;sc.style.overflow='hidden';grow[0]={...grow[0],height:'0px',marginTop:'0px'};grow[1]={...grow[1],height:h+'px',marginTop:'14px'}}
-      const g=sc.animate(grow,{duration:phone?650:520,easing:'cubic-bezier(.2,.8,.2,1)'});g.onfinish=g.oncancel=()=>{sc.style.overflow=''};
-      modeAnim.push(g);glide(before);
-    },160);
-  }
+  done.add(step); // leaving a layer counts it as chosen
+  step=i;bounceLayer(step);
+  swapContent(renderStep);
 }
 $('next').onclick=()=>{if(step<LAST)go(step+1);else showFinal()};
 $('prev').onclick=()=>{if(step>0)go(step-1)};
-$('cMsg').addEventListener('input',()=>{$('cCount').textContent=`${$('cMsg').value.length}/80`});
 function hop(b){b.classList.remove('hop');void b.offsetWidth;b.classList.add('hop')}
 $('random').addEventListener('animationend',e=>{if(e.animationName==='hop')e.currentTarget.classList.remove('hop')});
 $('random').onclick=e=>{hop(e.currentTarget);
@@ -985,7 +876,7 @@ $('random').onclick=e=>{hop(e.currentTarget);
     if(st.s){let k;do{k=INK[Math.floor(Math.random()*INK.length)].id}while(k===st.c&&INK.length>1);st.sc=k}repaint(i)});
   meshes.forEach((_,i)=>setTimeout(()=>bounceLayer(i),i*70));
   LAYERS.forEach((_,i)=>done.add(i));randMsg=true;
-  if(step<CARD_STEP)swapContent(renderStep);else drawProgress();
+  swapContent(renderStep);
   pulseHint();
 };
 
@@ -1033,11 +924,10 @@ function showFinal(){
   [...side.children].forEach((c,i)=>{if(!reduce&&c.animate)c.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:520,delay:120+i*45,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'})});
 }
 function showEditor(i){
-  $('finalPage').hidden=true;$('editorPage').hidden=false;setStageActive(i<CARD_STEP);
-  step=i;renderStep();toTop();pageIn(document.querySelector('#editorPage .frame'));bounceLayer(Math.min(i,5));
+  $('finalPage').hidden=true;$('editorPage').hidden=false;setStageActive(true);
+  step=i;renderStep();toTop();pageIn(document.querySelector('#editorPage .frame'));bounceLayer(i);
 }
 $('restart').onclick=$('restartTop').onclick=()=>showEditor(0);
-$('toNotice').onclick=()=>$('notice').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
 
 function buildSummary(){
   const ul=$('summary');ul.innerHTML='';
@@ -1088,26 +978,28 @@ let cardJob=0,playEnvelope=false;
 async function makeCard(){
   const job=++cardJob,outEl=$('cardOut');
   outEl.innerHTML='<div class="cardwait">小卡製作中…</div>';
-  const to=$('cTo').value.trim(),msg=$('cMsg').value.trim(),from=$('cFrom').value.trim();
   const TC='"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif',OP='Optima,"Optima nova",Belleza,serif';
-  try{if(document.fonts)await Promise.all([document.fonts.load(`500 17px ${TC}`,'Dear'+to+msg+from+'親愛的你謝謝一直以來支持與陪伴我們有緣起相見忙碌之餘記得好休息喔'),document.fonts.load(`17px ${OP}`,'May your'),document.fonts.load(`18px ${AV}`,'Dear Abby It’s Saturday'+to+msg+from)])}catch(e){}
+  try{if(document.fonts)await Promise.all([document.fonts.load(`500 17px ${TC}`,'Dear Abby It’s Saturday 親愛的你謝謝一直以來支持與陪伴我們有緣起相見忙碌之餘記得好休息喔'),document.fonts.load(`17px ${OP}`,'May your'),document.fonts.load(`18px ${AV}`,'Dear Abby It’s Saturday')])}catch(e){}
   if(job!==cardJob)return;
   const W=641.5,H=880,S=3,cv=document.createElement('canvas');cv.width=Math.round(W*S);cv.height=Math.round(H*S);
   const c=cv.getContext('2d');c.scale(cv.width/W,cv.height/H);
   c.fillStyle='#f8f4ef';c.fillRect(0,0,W,H); // plain paper card (no frame)
   c.save();
-  // text block: everything centred — Dear line, the message, then the signature (Latin in Avenir Book, tracking 50)
-  c.fillStyle='#4d1f21';c.textBaseline='middle';
-  const lines=VIP?['謝謝你一直以來的支持與陪伴 It’s Saturday','我們有緣一起相見','忙碌之餘，記得好好休息喔！']:wrapMixed(c,msg,W-120,4);
-  const dear=VIP?'Dear 親愛的你，':to?'Dear '+to:'',sign=VIP?'Abby':from;
-  let y=92;
-  if(dear){mixedLine(c,dear,W/2,y);y+=66}else y+=30;
-  lines.forEach(ln=>{mixedLine(c,ln,W/2,y);y+=33});
-  if(sign)mixedLine(c,sign,W/2,Math.min(y+31,318),1.12);
-  // the hand-drawn tree (with its handwritten greeting) between the text and the logo
   const imgs=await loadHand();if(job!==cardJob)return;
-  const asc=(806-336)/HAND_BOX[3]*.85,AT=571-HAND_BOX[3]*asc/2; // 85% of the space, centred
-  drawHand(c,imgs,(W-HAND_BOX[2]*asc)/2,AT,asc,S);
+  if(VIP){
+    // greeting, centred: Dear line, three lines, signature (Latin in Avenir Book, tracking 50)
+    c.fillStyle='#4d1f21';c.textBaseline='middle';
+    let y=92;mixedLine(c,'Dear 親愛的你，',W/2,y);y+=66;
+    ['謝謝你一直以來的支持與陪伴 It’s Saturday','我們有緣一起相見','忙碌之餘，記得好好休息喔！'].forEach(ln=>{mixedLine(c,ln,W/2,y);y+=33});
+    mixedLine(c,'Abby',W/2,Math.min(y+31,318),1.12);
+    // the hand-drawn tree between the text and the logo
+    const asc=(806-336)/HAND_BOX[3]*.85,AT=571-HAND_BOX[3]*asc/2;
+    drawHand(c,imgs,(W-HAND_BOX[2]*asc)/2,AT,asc,S);
+  }else{
+    // illustration only: larger, in the upper part that stays above the envelope's pocket
+    const asc=Math.min(500/HAND_BOX[3],(W-70)/HAND_BOX[2]),AT=70;
+    drawHand(c,imgs,(W-HAND_BOX[2]*asc)/2,AT,asc,S);
+  }
   // It's Saturday! lettering from the PDF, centred
   c.save();c.translate((W-SATURDAY.w/2)/2,818);c.scale(.5,.5);c.fillStyle='#93755f';c.fill(SAT_PATH);c.restore();
   c.restore();
@@ -1134,10 +1026,8 @@ function envelopeReveal(){
 /* ---------- copy ---------- */
 function treeText(){return LAYERS.map((L,i)=>{const st=state[i],w=itemOf(WAX,st.c);
   return `${L.ord}：${w.n}、香氣：${w.scent}${st.s?`、🅥潑墨：${itemOf(INK,st.sc).s}`:''}`}).join('\n')}
-function cardText(){const to=$('cTo').value.trim(),msg=$('cMsg').value.trim(),from=$('cFrom').value.trim();
-  return `【卡片內容】\nDear ${to||'（未填）'}\n${msg||'（未填內容）'}\n署名：${from||'（未填）'}`}
-// everything the shop needs, in one paste: the six layers, then the card text
-function orderText(){return VIP?treeText():`${treeText()}\n\n${cardText()}`}
+// everything the shop needs, in one paste: the six layers
+function orderText(){return treeText()}
 // in the shop: ask the embed code to put the text straight into the product's 「貼上客製內容」 field
 // (and, when asked, scroll the page up to it). Resolves true when the shop page found and filled the field.
 let fillReply=null;
@@ -1154,7 +1044,7 @@ function copy(btn,text){
   const label=btn.querySelector('.lbl')?btn.querySelector('.lbl').textContent:btn.textContent,f=$('copyField');
   const clip=new Promise(res=>{try{navigator.clipboard.writeText(text).then(()=>res(true),()=>res(false))}catch(e){res(false)}});
   Promise.all([clip,askFill(text,true)]).then(([copied,filled])=>{
-    if(filled||copied){setLabel(btn,filled?'已填入上方欄位 ✓ 確認後即可下單':VIP?'已複製 ✓ 請私訊貼給我們':'已複製 ✓ 請貼到上面備注欄');setTimeout(()=>setLabel(btn,label),2600)}
+    if(filled||copied){setLabel(btn,filled?'已填入下方欄位 ✓ 確認後即可下單':VIP?'已複製 ✓ 請私訊貼給我們':'已複製 ✓ 請貼到下方備註欄');setTimeout(()=>setLabel(btn,label),2600)}
     else{f.hidden=false;f.value=text;f.focus();f.select()}
   });
 }
