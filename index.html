@@ -131,7 +131,7 @@ p,h1,h2,h3,ul{margin:0}
 .cta .lbl{position:relative;z-index:1}
 .btns{display:flex;gap:calc(12*var(--u))}
 .btns .cta{width:auto}
-.btns #prev{flex:0 0 32%}.btns #next{flex:1 1 auto}
+.btns #prev,.btns #next{flex:1 1 0}
 .cta.cta-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 .cta.cta-ghost:hover{background:rgba(77,31,33,.06)}
 .cta.cta-ghost .ripple{background:rgba(77,31,33,.14)}
@@ -322,6 +322,24 @@ p,h1,h2,h3,ul{margin:0}
   #finalPage .side-msg p.thanks{text-align:left;font-size:var(--t-body);line-height:1.95;letter-spacing:.05em}
   #finalPage .side-msg .ship{text-align:left;margin-top:calc(14*var(--u))}
   .final-side{padding-top:calc(34*var(--u))}
+}
+
+/* editor: prev / next share the width; "finish" underneath is always there (blush, Christmas red) */
+.cta.cta-finish{margin-top:calc(12*var(--u));background:#af9781;color:#fff;transition:background .35s,transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.cta.cta-finish:hover{background:#9a8069;box-shadow:0 8px 20px rgba(110,80,60,.22)}
+.cta.cta-finish .ripple{background:rgba(255,255,255,.35)}
+.cta:disabled{opacity:.35;pointer-events:none}
+/* final section now always sits below the editor */
+#finalPage{padding-top:calc(60*var(--u))}
+.cta.cta-white{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(77,31,33,.35);margin-top:calc(12*var(--u))}
+.cta.cta-white:hover{background:#fff;box-shadow:inset 0 0 0 1px var(--ink)}
+.cta.cta-white .ripple{background:rgba(77,31,33,.12)}
+.sync-note{margin-top:calc(12*var(--u));font-size:var(--t-cap);letter-spacing:.04em;line-height:1.6;color:#a01f1f;text-align:center}
+@media (max-width:1279px){
+  .cta.cta-finish{margin-top:10px}
+  .final-side>.sync-note{order:2}
+  .final-side>.restart-top{order:2;margin-top:10px;width:100%}
+  #finalPage{padding-top:40px}
 }
 
 /* ---------- motion ---------- */
@@ -558,6 +576,7 @@ body{font-weight:400}
         </div>
         <div class="act" id="act">
           <div class="btns"><button class="cta cta-ghost" id="prev">上一層</button><button class="cta" id="next">下一層</button></div>
+          <button class="cta cta-finish" id="finish">完成我的聖誕樹，下單去！</button>
           <p class="note">頁面不會保存你的設計。請在離開前複製內容並貼到訂單備註，<br>否則我們無法收到你的客製需求。</p>
         </div>
       </div>
@@ -571,7 +590,7 @@ body{font-weight:400}
   </div>
 </div>
 
-<div id="finalPage" hidden>
+<div id="finalPage">
   <div class="frame final">
     <header class="final-head">
       <p class="thanks">謝謝你參與了這份暖心送禮！</p>
@@ -588,11 +607,11 @@ body{font-weight:400}
         <p class="ship">聖誕訂單統一於 12/10 陸續出貨，如另有需求請聯繫我們</p>
       </div>
       <button class="cta" id="copyAll">一鍵複製 「 聖誕樹客製化內容 」</button>
-      <button class="textlink restart restart-top" id="restartTop">回到第一層編輯</button>
+      <p class="sync-note" id="syncNote" aria-live="polite" hidden></p>
+      <button class="cta cta-white restart-top" id="restartTop">回去編輯</button>
       <textarea class="copyfield" id="copyField" readonly hidden aria-label="複製內容"></textarea>
       <h3 class="label">你的聖誕配色</h3>
       <ul class="summary" id="summary"></ul>
-      <button class="textlink restart" id="restart">回到第一層編輯</button>
     </section>
   </div>
 </div>
@@ -881,6 +900,7 @@ if(!renderer||!window.THREE){
 }
 
 function repaint(i){
+  markDirty();
   const m=meshes[i];if(!m)return;const u=m.userData;
   const ctx=u.cv.getContext('2d');
   paint(ctx,u.cv.width,u.cv.height,state[i],u.seed,u.opts);
@@ -1097,19 +1117,19 @@ function swapContent(apply){
 }
 function renderStep(){
   drawProgress();
-  setLabel($('next'),step===LAST?(VIP?'完成，生成我的聖誕樹':'完成！馬上下單'):'下一層');
-  $('prev').disabled=step===0;
+  setLabel($('next'),'下一層');
+  $('prev').disabled=step===0;$('next').disabled=step===LAST;
   refreshLayer(false);
 }
 function go(i){
   i=Math.max(0,Math.min(LAST,i));
-  if(!$('finalPage').hidden){showEditor(i);return}
   if(i===step)return;
   done.add(step); // leaving a layer counts it as chosen
   step=i;bounceLayer(step);
   swapContent(renderStep);
 }
-$('next').onclick=()=>{if(step<LAST)go(step+1);else showFinal()};
+$('next').onclick=()=>{if(step<LAST)go(step+1)};
+$('finish').onclick=()=>showFinal();
 $('prev').onclick=()=>{if(step>0)go(step-1)};
 function hop(b){b.classList.remove('hop');void b.offsetWidth;b.classList.add('hop')}
 $('random').addEventListener('animationend',e=>{if(e.animationName==='hop')e.currentTarget.classList.remove('hop')});
@@ -1171,19 +1191,35 @@ document.querySelectorAll('[data-go-steps]').forEach(b=>b.onclick=()=>toTop($('l
 
 /* ---------- pages ---------- */
 function pageIn(el){if(reduce||!el.animate)return;el.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)'})}
+/* the final section is always on the page, under the editor. It is refreshed lazily: an edit marks it stale,
+   and it redraws when it comes into view (or right away when "finish" is pressed). Each refresh also quietly
+   updates the shop's 「客製內容」 field, so a customer who goes back up and changes a layer never orders the old tree. */
+var finalDirty=true,finalSeen=false,lastText='',finalInView=false,dirtyT=0;
+function markDirty(){finalDirty=true;clearTimeout(dirtyT);if(finalInView)dirtyT=setTimeout(refreshFinal,300)}
+function refreshFinal(){
+  if(!finalDirty)return;finalDirty=false;
+  buildSummary();
+  const text=orderText(),changed=lastText&&text!==lastText;lastText=text;
+  if(!finalSeen||changed)playEnvelope=true;
+  finalSeen=true;makeCard();
+  askFill(text,false).then(ok=>{
+    const n=$('syncNote');
+    if(changed){n.hidden=false;n.textContent=ok?'已依你的修改，同步更新下方「客製內容」欄位 ✓':'你修改了設計，請再按一次「一鍵複製」';
+      clearTimeout(n._t);n._t=setTimeout(()=>{n.hidden=true},6000)}
+  });
+}
+if('IntersectionObserver' in window){
+  new IntersectionObserver(es=>{finalInView=es[0].isIntersecting;if(finalInView)refreshFinal()},{rootMargin:'0px 0px -15% 0px'}).observe($('finalPage'));
+}else finalInView=true;
 function showFinal(){
-  $('editorPage').hidden=true;$('finalPage').hidden=false;setStageActive(false);
-  toTop($('finalPage'));buildSummary();playEnvelope=true;makeCard();
-  askFill(orderText(),false); // quietly fill the shop's field already; the copy button fills it again and scrolls there
-  pageIn(document.querySelector('.final-head'));pageIn(document.querySelector('.final-card'));
-  const side=document.querySelector('.final-side');
-  [...side.children].forEach((c,i)=>{if(!reduce&&c.animate)c.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:520,delay:120+i*45,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'})});
+  LAYERS.forEach((_,i)=>done.add(i));drawProgress();
+  refreshFinal();toTop($('finalPage'),true);
 }
 function showEditor(i){
-  $('finalPage').hidden=true;$('editorPage').hidden=false;setStageActive(true);
-  step=i;renderStep();toTop($('editorPage'));pageIn(document.querySelector('#editorPage .frame'));bounceLayer(i);
+  if(i!==step)go(i);
+  toTop($('editorPage'),true);bounceLayer(i);
 }
-$('restart').onclick=$('restartTop').onclick=()=>showEditor(0);
+$('restartTop').onclick=()=>showEditor(step);
 
 function buildSummary(){
   const ul=$('summary');ul.innerHTML='';
