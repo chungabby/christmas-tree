@@ -549,6 +549,9 @@ body{font-weight:400}
 #editorPage #cardNote{color:#993d3d;font-size:var(--t-sm);letter-spacing:.04em;font-weight:500}
 @media (max-width:1279px){#editorPage #cardNote{font-size:12.5px}}
 .fin-h[hidden],.fin-sum[hidden],#cardNote[hidden]{display:none}
+/* only one line in STEP 2 (nothing saved yet): centre it */
+.fin-row.solo .fin-say{flex:none;text-align:center}
+.fin-row.solo .thanks{margin-top:0}
 </style>
 
 </head>
@@ -1201,6 +1204,7 @@ function markDirty(){
 function syncFill(scroll){return askFill(orderText(),scroll).then(ok=>{fillOK=ok;finMsg();return ok})}
 function finMsg(){
   const m=$('finMsg'),b=$('copyAll'),h=document.querySelector('.fin-h'),sum=$('finSum');
+  sum.parentElement.classList.toggle('solo',!armed);
   if(!armed){h.hidden=true;sum.hidden=true;m.textContent='請先在 STEP 1 完成你的聖誕樹唷！';m.hidden=false;b.hidden=true;return}
   h.hidden=false;sum.hidden=false;
   if(fillOK){m.textContent='系統已自動貼上您的內容，直接下單即可。';m.hidden=false;b.hidden=true}
