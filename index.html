@@ -280,9 +280,6 @@ p,h1,h2,h3,ul{margin:0}
 .cta.cta-finish.synced:hover{background:#765a48}
 .cta.cta-finish .ripple{background:rgba(255,255,255,.35)}
 .cta:disabled{opacity:.35;pointer-events:none}
-.cta.cta-white{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(77,31,33,.35);margin-top:calc(12*var(--u))}
-.cta.cta-white:hover{background:#fff;box-shadow:inset 0 0 0 1px var(--ink)}
-.cta.cta-white .ripple{background:rgba(77,31,33,.12)}
 @media (max-width:1279px){
   .cta.cta-finish{margin-top:10px}
 }
@@ -303,7 +300,7 @@ p,h1,h2,h3,ul{margin:0}
 .fin-h{font-size:var(--t-lead);letter-spacing:.08em;color:var(--ink);line-height:1.4}
 .fin .thanks{margin-top:calc(18*var(--u));font-size:var(--t-body);line-height:1.95;letter-spacing:.05em;color:var(--ink)}
 .thanks em{font-style:normal;color:var(--alert)}
-.fin .ship{margin-top:calc(10*var(--u));font-size:var(--t-cap);letter-spacing:.04em;line-height:1.6;color:#a01f1f}
+.fin .ship{margin-top:calc(10*var(--u));font-size:var(--t-body);letter-spacing:.05em;line-height:1.85;color:#a01f1f}
 .fin #copyAll{margin-top:calc(30*var(--u))}
 .fin .cta{width:100%}
 .cta[hidden]{display:none}
@@ -315,9 +312,8 @@ p,h1,h2,h3,ul{margin:0}
   .fin-share{margin-top:10px}
   .fin-txt{width:100%;max-width:560px;align-items:center;margin-top:14px}
   .fin .thanks{margin-top:8px;font-size:13.5px;line-height:1.85}
-  .fin .ship{margin-top:6px;font-size:11px}
+  .fin .ship{margin-top:6px;font-size:13.5px}
   .fin #copyAll{margin-top:18px}
-  .fin .cta-white{margin-top:10px}
 }
 
 /* price by the finish button */
@@ -518,6 +514,8 @@ body{font-weight:400}
   #editorPage .sub{font-size:calc(13*var(--m));font-weight:500;letter-spacing:.06em}
   #editorPage .disclaimer{font-size:calc(12.5*var(--m));font-weight:400;letter-spacing:.1em;color:#a98e75}
   #editorPage .note{font-size:10.5px;letter-spacing:0}
+  #editorPage #colors{--cw:min(calc(100vw - 24px),420px);display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:5px;width:var(--cw);max-width:none;margin-left:calc((100% - var(--cw)) / 2)}
+  #editorPage #colors .sw{width:100%;height:auto;aspect-ratio:1}
 }
 </style>
 
@@ -651,9 +649,8 @@ body{font-weight:400}
     <div class="fin-txt">
       <p class="fin-h">謝謝你參與了這份暖心送禮！</p>
       <p class="thanks" id="finMsg" aria-live="polite">按下按鈕，就會自動幫你填入下方「客製內容」欄位</p>
-      <p class="ship">聖誕訂單統一於 12/10 陸續出貨，如另有需求請聯繫我們</p>
+      <p class="ship">聖誕訂單統一於 12/10 陸續出貨，<br>如另有需求請聯繫我們</p>
       <button class="cta" id="copyAll">確認無誤，前往下單 ↓</button>
-      <button class="cta cta-white" id="restartTop">回去編輯</button>
       <textarea class="copyfield" id="copyField" readonly hidden aria-label="複製內容"></textarea>
     </div>
   </section>
@@ -1193,11 +1190,7 @@ function showFinal(){
   LAYERS.forEach((_,i)=>done.add(i));drawProgress();
   arm();syncFill(false);refreshFinal();toTop($('finalPage'),true);
 }
-function showEditor(i){
-  if(i!==step)go(i);
-  toTop($('editorPage'),true);bounceLayer(i);
-}
-$('restartTop').onclick=()=>showEditor(step);
+
 
 /* ---------- the hand-drawn tree, in the customer's colours, straight on the white section ---------- */
 let cardJob=0;
