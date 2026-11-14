@@ -166,7 +166,7 @@ p,h1,h2,h3,ul{margin:0}
 .lp-top .lp-photo{height:calc(1500*var(--k));object-fit:cover;object-position:50% 40%;
   -webkit-mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,.55) 80%,transparent 100%);mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,.55) 80%,transparent 100%)}
 .lp-top .lp-low{top:calc(1400*var(--k))}
-.lp-btn{position:absolute;left:calc(241*var(--k));width:calc(441*var(--k));height:calc(108*var(--k));display:grid;place-items:center;padding:0 0 0 .17em;
+.lp-btn{position:absolute;left:calc(241*var(--k));width:calc(441*var(--k));height:44px;display:grid;place-items:center;padding:0 0 0 .17em;
   font-size:calc(35*var(--k));font-weight:500;letter-spacing:.17em;line-height:1;text-decoration:none;
   transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s,box-shadow .3s}
 .lp-btn:hover{transform:translateY(-2px)}
@@ -176,7 +176,7 @@ p,h1,h2,h3,ul{margin:0}
 .lp-sub{top:calc(1018*var(--k));background:rgba(247,243,239,.2);color:#f8f4ef;box-shadow:inset 0 0 0 1px rgba(247,243,239,.45);
   -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
 .lp-sub:hover{background:rgba(247,243,239,.3)}
-.lp-ship{position:absolute;left:0;right:0;top:calc(1160*var(--k));text-align:center;color:#ddd4c9;font-size:calc(29*var(--k));letter-spacing:.08em;line-height:1.2}
+.lp-ship{position:absolute;left:0;right:0;top:calc(1160*var(--k));text-shadow:0 1px 8px rgba(30,10,10,.6);text-align:center;color:#ddd4c9;font-size:calc(29*var(--k));letter-spacing:.08em;line-height:1.2}
 .lp-story{padding-top:calc(110*var(--k));text-align:center;font-size:calc(30*var(--k));line-height:1.87;letter-spacing:.094em}
 .lp-story p+p{margin-top:calc(56*var(--k))}
 .lp-spark{display:block;width:calc(39*var(--k));height:auto;margin:calc(96*var(--k)) auto 0;fill:#fff5e9}
@@ -198,7 +198,7 @@ p,h1,h2,h3,ul{margin:0}
   .lpd-txt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 calc(80*var(--u))}
   .lpd-title{width:calc(470*var(--u));height:auto;display:block}
   .lpd-btns{display:flex;gap:calc(16*var(--u));margin-top:calc(64*var(--u))}
-  .lpd-btn{display:grid;place-items:center;width:calc(260*var(--u));height:calc(64*var(--u));padding-left:.1em;border:0;text-decoration:none;
+  .lpd-btn{display:grid;place-items:center;width:calc(260*var(--u));height:calc(60*var(--u));min-height:44px;padding-left:.1em;border:0;text-decoration:none;
     font-size:max(13px,calc(18*var(--u)));font-weight:500;letter-spacing:.2em;transition:background .3s,color .3s,box-shadow .3s}
   .lpd-main{background:#f7f3ef;color:#1d1112}
   .lpd-main:hover{background:#fff}
@@ -293,7 +293,7 @@ p,h1,h2,h3,ul{margin:0}
 }
 /* final section: white, so it runs straight into the shop page below; illustration + message, nothing else */
 #finalPage{background:#fff;padding:calc(72*var(--u)) 0 calc(64*var(--u))}
-.fin{display:grid;grid-template-columns:calc(330*var(--u)) calc(500*var(--u));justify-content:center;align-items:center;column-gap:calc(110*var(--u))}
+.fin{display:grid;grid-template-columns:max(300px,calc(380*var(--u))) calc(500*var(--u));justify-content:center;align-items:center;column-gap:calc(110*var(--u))}
 .fin-art{width:100%;aspect-ratio:var(--art,1/1.25)}
 .fin-art img{display:block;width:100%;height:auto;-webkit-touch-callout:default}
 .fin-txt{display:flex;flex-direction:column;align-items:flex-start}
@@ -322,9 +322,6 @@ p,h1,h2,h3,ul{margin:0}
 .price b{font-weight:500;font-size:1.2em;letter-spacing:.04em}
 .price s{color:var(--soft);font-size:var(--t-cap)}
 #editorPage .cta.cta-finish{margin-top:calc(10*var(--u))}
-/* "restored" line under 第 N 層 */
-.restored{margin-top:calc(8*var(--u));font-size:var(--t-cap);color:var(--soft);letter-spacing:.04em}
-.restored button{margin-left:.8em;background:none;border:0;padding:0 0 1px;font:inherit;color:#a01f1f;border-bottom:1px solid currentColor}
 /* scent overview: one line when closed, a list of nine when open (tap a row = choose that colour) */
 .scent-tg{display:flex;align-items:center;gap:.4em;margin:calc(12*var(--u)) auto 0;background:none;border:0;padding:4px 0;font:inherit;font-size:var(--t-cap);color:var(--soft);letter-spacing:.08em}
 .scent-tg span{font-size:1.1em;transition:transform .3s}
@@ -359,8 +356,8 @@ p,h1,h2,h3,ul{margin:0}
 @keyframes ping{40%{transform:scale(1.22);background:rgba(77,31,33,.12)}}
 /* share / save the illustration */
 .fin-left{display:flex;flex-direction:column;align-items:center}
-.fin-share{display:flex;gap:8px;margin-top:calc(14*var(--u))}
-.pill{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:99px;border:1px solid rgba(77,31,33,.3);background:#fff;color:var(--ink);font:inherit;font-size:var(--t-cap);letter-spacing:.06em;transition:border-color .25s,background .25s,transform .25s}
+.fin-share{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:calc(14*var(--u))}
+.pill{display:inline-flex;align-items:center;gap:6px;height:34px;white-space:nowrap;padding:0 14px;border-radius:99px;border:1px solid rgba(77,31,33,.3);background:#fff;color:var(--ink);font:inherit;font-size:var(--t-cap);letter-spacing:.06em;transition:border-color .25s,background .25s,transform .25s}
 .pill:hover{border-color:var(--ink);transform:translateY(-1px)}
 .pill svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .share-msg{min-height:1.4em;margin-top:6px;font-size:var(--t-cap);color:var(--soft);letter-spacing:.04em;text-align:center}
@@ -517,6 +514,26 @@ body{font-weight:400}
   #editorPage #colors{--cw:min(calc(100vw - 24px),420px);display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:5px;width:var(--cw);max-width:none;margin-left:calc((100% - var(--cw)) / 2)}
   #editorPage #colors .sw{width:100%;height:auto;aspect-ratio:1}
 }
+
+/* option card rhythm: 3 groups (colour & scent · splatter · actions); small steps inside a group, big steps between groups */
+#editorPage .lhead{margin-bottom:calc(22*var(--u))}
+#editorPage #scentTg{margin-top:calc(14*var(--u))}
+#editorPage #layerView .sec:nth-of-type(2){margin-top:calc(40*var(--u))}
+#editorPage #layerView #splatOpts{margin-top:calc(20*var(--u))}
+#editorPage #act{margin-top:calc(48*var(--u))}
+#editorPage .price{margin-top:calc(28*var(--u))}
+#editorPage .cta.cta-finish{margin-top:calc(16*var(--u))}
+#editorPage .note{margin-top:calc(18*var(--u))}
+@media (max-width:1279px){
+  #editorPage .lhead{margin-bottom:14px}
+  #editorPage #scentTg{margin-top:10px}
+  #editorPage #layerView .sec:nth-of-type(2){margin-top:26px}
+  #editorPage #layerView #splatOpts{margin-top:14px}
+  #editorPage #act{margin-top:18px}
+  #editorPage .price{margin-top:22px}
+  #editorPage .cta.cta-finish{margin-top:12px}
+  #editorPage .note{margin-top:14px}
+}
 </style>
 
 </head>
@@ -601,7 +618,7 @@ body{font-weight:400}
     <div id="editCard">
       <div class="card-in"><button class="random" id="random" aria-label="隨機配色"><span class="rnd"><svg class="burst" viewBox="0 0 210.75 197.76" aria-hidden="true"><path d="M82.11,19.89c5.13-.98,7.63,6.28,8.78,9.73l15.86,47.42c7.51-15.85,14.08-28.02,18.89-42.55L137.07,0c9.47.49,19.73-.34,27.03,5.36,3.98,5.09-.43,14.12-2.71,19.48l-16.71,39.22-8.22,20.1,46.17-17.51c4.76-1.81,12.26-6.3,17.25-2.89,4,2.73,5.63,11.33,6.35,16.5l-31.23,13.89-27.18,11.73,28.07,13.63,34.86,15.67-10.1,23.8c-14.12,1.64-50.86-15.89-66.14-22.3l12.94,29.52c2.58,5.89,4.6,11.76,6.01,18.33-9.07,4.21-16.37,7.02-25.76,9.91l-14.23-41.49c-.43-1.26-2.56-3.97-3.04-4.67-1.54-2.21-19.89,43.17-24.49,49.48-8.8-2.47-15.57-5.9-22.69-11.39l19.7-56.89-52.88,27.38c-6.08-6.32-10.92-15.11-10.94-25.17l39.57-13.3c5.98-2.01,10.91-4.7,16.77-9.53l-22.86-8.75-28.99-13.1L0,75.83c2.57-8.72,7.2-25.61,19.11-20.05,9.86,4.6,19.32,8.9,29.31,12.42l31.81,11.22-19.33-51.59c7.87-3.81,13.69-6.51,21.21-7.93ZM145.36,105.24c.16.43.65.65,1.08.49s.65-.65.49-1.08-.65-.65-1.08-.49-.65.65-.49,1.08Z"/></svg><svg class="blob" viewBox="0 0 135.66 119.88" preserveAspectRatio="none" aria-hidden="true"><path d="M118.41,19.25C104.67,7.81,86.14.07,68.06,0,50.05-.07,25.25,11.54,14.28,25.59c-5.08,6.52-11.81,12.27-13.35,21.02-3.29,18.78,2.56,27.92,11.04,42.73,4.76,8.32,11.94,13.67,19.52,19.62,12.97,10.18,57.38,16.48,75.02,3.97,7.31-5.19,14.99-12.08,20.4-18.59,15.01-18.04,9.73-59.93-8.5-75.11Z"/></svg><span class="txt">隨機<br>配色</span></span></button>
         <div class="swap" id="swap">
-          <div class="lhead"><p class="lnum" id="lnum">第 1 層</p><p class="restored" id="restored" hidden>已還原你上次的設計<button type="button" id="resetAll">重新開始</button></p></div>
+          <div class="lhead"><p class="lnum" id="lnum">第 1 層</p></div>
           <div id="layerView">
             <div class="sec">
               <div class="label" id="colorLabel"><span class="ico" aria-hidden="true">🕯️</span>蠟塊顏色與香氣 <span class="desc" id="colorDesc"><span class="cn"></span><span class="cs"></span></span></div>
@@ -650,7 +667,7 @@ body{font-weight:400}
       <p class="fin-h">謝謝你參與了這份暖心送禮！</p>
       <p class="thanks" id="finMsg" aria-live="polite">按下按鈕，就會自動幫你填入下方「客製內容」欄位</p>
       <p class="ship">聖誕訂單統一於 12/10 陸續出貨，<br>如另有需求請聯繫我們</p>
-      <button class="cta" id="copyAll">確認無誤，前往下單 ↓</button>
+      <button class="cta cta-finish" id="copyAll">確認無誤，前往下單 ↓</button>
       <textarea class="copyfield" id="copyField" readonly hidden aria-label="複製內容"></textarea>
     </div>
   </section>
@@ -1219,13 +1236,7 @@ function loadDesign(){
     d.state.forEach((x,i)=>{if(itemOf(WAX,x.c)&&itemOf(INK,x.sc))Object.assign(state[i],{c:x.c,s:!!x.s,sc:x.sc})});
     step=Math.max(0,Math.min(LAST,d.step|0));(d.done||[]).forEach(i=>done.add(i));return true}catch(e){return false}
 }
-const restored=loadDesign();
-if(restored){$('restored').hidden=false}
-$('resetAll').onclick=()=>{
-  try{localStorage.removeItem(SAVE_KEY)}catch(e){}
-  LAYERS.forEach((L,i)=>{Object.assign(state[i],L.def);repaint(i)});done.clear();step=0;$('restored').hidden=true;
-  swapContent(renderStep);meshes.forEach((_,i)=>setTimeout(()=>bounceLayer(i),i*70));
-};
+loadDesign();
 
 /* ---------- nine scents at a glance ---------- */
 (function scents(){
