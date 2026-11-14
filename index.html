@@ -61,13 +61,10 @@ p,h1,h2,h3,ul{margin:0}
 .ed .stage-col{grid-row:2;align-self:stretch;margin-top:calc(70*var(--u));display:flex;flex-direction:column}
 .ed{padding-bottom:calc(90*var(--u))}
 
-/* scalloped card: shape drawn by an SVG that follows the element's size */
-.scallop{position:relative;isolation:isolate}
 #editorPage{position:relative}
 #edFrame{z-index:1}
-.scallop>svg.shape{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible;filter:drop-shadow(0 14px 28px rgba(77,31,33,.07))}
 .card-in{position:relative;display:flex;flex-direction:column;
-  padding:calc(100*var(--u)) calc(87.5*var(--u)) calc(76*var(--u))}
+  padding:calc(40*var(--u)) calc(60*var(--u)) calc(40*var(--u))}
 /* progress (PDF): a column of circles left of the tree, 6 on top … 1 at the bottom; the current one filled */
 .progress{--pi:calc(57*var(--u));--sg:calc(17*var(--u));position:absolute;left:0;top:calc(240*var(--u));z-index:2;margin:0;padding:0;list-style:none;
   display:flex;flex-direction:column-reverse;gap:var(--sg)}
@@ -245,8 +242,8 @@ p,h1,h2,h3,ul{margin:0}
   #editorPage .sub{margin-top:calc(24.6*var(--m));font-size:calc(13*var(--m));font-weight:500;line-height:1;letter-spacing:.06em;color:var(--ink);padding:0 10px}
   #editorPage .taphint{display:none}
   #editorPage .ed .stage-col{margin-top:calc(27*var(--m))}
-  #editorPage .stage{height:calc(288*var(--m))}
-  #editorPage .progress{--pi:calc(28.5*var(--m));--sg:calc(7.9*var(--m));left:calc(61.5*var(--m));top:calc(42.5*var(--m));transform:none}
+  #editorPage .stage{height:calc(340*var(--m))}
+  #editorPage .progress{--pi:calc(28.5*var(--m));--sg:calc(7.9*var(--m));left:calc(40*var(--m));top:50%;transform:translateY(-50%)}
   #editorPage .progress button{font-size:calc(14.5*var(--m));border-color:#472222;border-width:1px}
   #editorPage .random{--s:calc(62*var(--m));left:calc(256*var(--m));top:calc(24*var(--m));right:auto;bottom:auto;font-size:calc(10.5*var(--m))}
   #editorPage .disclaimer{margin-top:0;white-space:normal;font-size:calc(12.5*var(--m));font-weight:500;line-height:1.7;letter-spacing:.12em;color:#b39a80;padding:0 8px}
@@ -278,12 +275,14 @@ p,h1,h2,h3,ul{margin:0}
 /* editor: prev / next share the width; "finish" underneath is always there (blush, Christmas red) */
 .cta.cta-finish{margin-top:calc(12*var(--u));background:#af9781;color:#fff;transition:background .35s,transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
 .cta.cta-finish:hover{background:#9a8069;box-shadow:0 8px 20px rgba(110,80,60,.22)}
+/* after the first confirm, edits refill the field: the button turns a deeper brown and says so */
+.cta.cta-finish.synced{background:#8a6c58}
+.cta.cta-finish.synced:hover{background:#765a48}
 .cta.cta-finish .ripple{background:rgba(255,255,255,.35)}
 .cta:disabled{opacity:.35;pointer-events:none}
 .cta.cta-white{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(77,31,33,.35);margin-top:calc(12*var(--u))}
 .cta.cta-white:hover{background:#fff;box-shadow:inset 0 0 0 1px var(--ink)}
 .cta.cta-white .ripple{background:rgba(77,31,33,.12)}
-.sync-note{margin-top:calc(12*var(--u));font-size:var(--t-cap);letter-spacing:.04em;line-height:1.6;color:#a01f1f;text-align:center}
 @media (max-width:1279px){
   .cta.cta-finish{margin-top:10px}
 }
@@ -307,6 +306,7 @@ p,h1,h2,h3,ul{margin:0}
 .fin .ship{margin-top:calc(10*var(--u));font-size:var(--t-cap);letter-spacing:.04em;line-height:1.6;color:#a01f1f}
 .fin #copyAll{margin-top:calc(30*var(--u))}
 .fin .cta{width:100%}
+.cta[hidden]{display:none}
 @media (max-width:1279px){
   #finalPage{padding:28px 16px 24px}
   .fin{display:flex;flex-direction:column;align-items:center;text-align:center}
@@ -418,8 +418,7 @@ p,h1,h2,h3,ul{margin:0}
   .ed .stage-col{grid-column:1 / -1;grid-row:2;margin:14px 0 0;align-self:start;position:relative}
   .disclaimer{margin-top:4px;font-size:min(12.5px,3.15vw);letter-spacing:.04em;white-space:nowrap;padding:0 8px}
   .ed #editCard{grid-column:1 / -1;grid-row:3;margin:14px 12px 0;display:block}
-  .scallop>svg.shape{filter:none}
-  .card-in{height:auto;min-height:0;padding:calc(var(--r) + 4px) 20px calc(var(--r) + 4px)}
+    .card-in{height:auto;min-height:0;padding:16px 20px 8px}
   .label{font-size:12.5px;letter-spacing:.04em;gap:2px 5px;flex-wrap:wrap}
   .label .ico{margin-right:-1px}
   .label .desc{flex-basis:100%;font-size:11px;white-space:normal;display:flex;flex-direction:column;line-height:1.6;margin-top:3px}
@@ -456,7 +455,7 @@ p,h1,h2,h3,ul{margin:0}
   .sub,.taphint,.disclaimer{width:max-content;max-width:100%;margin-left:auto;margin-right:auto}
   .taphint{left:50%;right:auto;transform:translateX(-50%)}
   .ed #editCard{margin-top:8px}
-  .card-in{padding:calc(var(--r) + 2px) 16px var(--r)}
+  .card-in{padding:14px 8px 4px}
   .swap{margin-bottom:16px}
   /* one centred column: colours, then 潑墨效果 (無/有), its colours appear underneath when 有 */
   #layerView{display:flex;flex-direction:column;align-items:center}
@@ -601,8 +600,7 @@ body{font-weight:400}
       <p class="sub">請依照指示完成你的聖誕樹</p>
       <p class="lead">在這邊，你可以隨心做出你的暖心聖誕香氛<br>按照你的直覺與心意<br>依序選擇你要的顏色與香氣</p>
     </header>
-    <div class="scallop" id="editCard">
-      <svg class="shape" aria-hidden="true"></svg>
+    <div id="editCard">
       <div class="card-in"><button class="random" id="random" aria-label="隨機配色"><span class="rnd"><svg class="burst" viewBox="0 0 210.75 197.76" aria-hidden="true"><path d="M82.11,19.89c5.13-.98,7.63,6.28,8.78,9.73l15.86,47.42c7.51-15.85,14.08-28.02,18.89-42.55L137.07,0c9.47.49,19.73-.34,27.03,5.36,3.98,5.09-.43,14.12-2.71,19.48l-16.71,39.22-8.22,20.1,46.17-17.51c4.76-1.81,12.26-6.3,17.25-2.89,4,2.73,5.63,11.33,6.35,16.5l-31.23,13.89-27.18,11.73,28.07,13.63,34.86,15.67-10.1,23.8c-14.12,1.64-50.86-15.89-66.14-22.3l12.94,29.52c2.58,5.89,4.6,11.76,6.01,18.33-9.07,4.21-16.37,7.02-25.76,9.91l-14.23-41.49c-.43-1.26-2.56-3.97-3.04-4.67-1.54-2.21-19.89,43.17-24.49,49.48-8.8-2.47-15.57-5.9-22.69-11.39l19.7-56.89-52.88,27.38c-6.08-6.32-10.92-15.11-10.94-25.17l39.57-13.3c5.98-2.01,10.91-4.7,16.77-9.53l-22.86-8.75-28.99-13.1L0,75.83c2.57-8.72,7.2-25.61,19.11-20.05,9.86,4.6,19.32,8.9,29.31,12.42l31.81,11.22-19.33-51.59c7.87-3.81,13.69-6.51,21.21-7.93ZM145.36,105.24c.16.43.65.65,1.08.49s.65-.65.49-1.08-.65-.65-1.08-.49-.65.65-.49,1.08Z"/></svg><svg class="blob" viewBox="0 0 135.66 119.88" preserveAspectRatio="none" aria-hidden="true"><path d="M118.41,19.25C104.67,7.81,86.14.07,68.06,0,50.05-.07,25.25,11.54,14.28,25.59c-5.08,6.52-11.81,12.27-13.35,21.02-3.29,18.78,2.56,27.92,11.04,42.73,4.76,8.32,11.94,13.67,19.52,19.62,12.97,10.18,57.38,16.48,75.02,3.97,7.31-5.19,14.99-12.08,20.4-18.59,15.01-18.04,9.73-59.93-8.5-75.11Z"/></svg><span class="txt">隨機<br>配色</span></span></button>
         <div class="swap" id="swap">
           <div class="lhead"><p class="lnum" id="lnum">第 1 層</p><p class="restored" id="restored" hidden>已還原你上次的設計<button type="button" id="resetAll">重新開始</button></p></div>
@@ -626,8 +624,8 @@ body{font-weight:400}
         <div class="act" id="act">
           <div class="btns"><button class="cta cta-ghost" id="prev">上一層</button><button class="cta" id="next">下一層</button></div>
           <p class="price"><span class="tag">預購優惠</span><b>NT$1,280</b><s>原價 NT$1,380</s></p>
-          <button class="cta cta-finish" id="finish">完成我的聖誕樹，下單去！</button>
-          <p class="note">設計會自動暫存在這台裝置上。完成後記得按「一鍵送出」，<br>填入下方「客製內容」欄位，我們才收得到你的設計。</p>
+          <button class="cta cta-finish" id="finish">確認無誤，前往下單 ↓</button>
+          <p class="note" id="cardNote">設計會自動暫存在這台裝置上。按下「確認無誤，前往下單」，<br>就會自動幫你填入下方「客製內容」欄位。</p>
         </div>
       </div>
     </div>
@@ -652,10 +650,9 @@ body{font-weight:400}
     </div>
     <div class="fin-txt">
       <p class="fin-h">謝謝你參與了這份暖心送禮！</p>
-      <p class="thanks">請按下<em>「一鍵送出」按鈕</em><br>系統會自動幫你填入<em>下方「客製內容」欄位</em><br>確認內容無誤後即可下單</p>
+      <p class="thanks" id="finMsg" aria-live="polite">按下按鈕，就會自動幫你填入下方「客製內容」欄位</p>
       <p class="ship">聖誕訂單統一於 12/10 陸續出貨，如另有需求請聯繫我們</p>
-      <button class="cta" id="copyAll">一鍵送出 「 聖誕樹客製化內容 」</button>
-      <p class="sync-note" id="syncNote" aria-live="polite" hidden></p>
+      <button class="cta" id="copyAll">確認無誤，前往下單 ↓</button>
       <button class="cta cta-white" id="restartTop">回去編輯</button>
       <textarea class="copyfield" id="copyField" readonly hidden aria-label="複製內容"></textarea>
     </div>
@@ -994,21 +991,7 @@ function lum(h){const n=parseInt(h.slice(1),16);return(.299*(n>>16)+.587*(n>>8&2
 function waxText(id){const w=itemOf(WAX,id);return w.scent?`${w.n}（${w.scent}）`:w.n}
 function describe(st){return waxText(st.c)+(st.s?`・潑墨：${itemOf(INK,st.sc).n}`:'')}
 
-// scalloped card shape. Desktop: six circles along the top and bottom edge.
-// Phone: circles down the left edge, flat right side running to the screen edge (PDF phone layout).
-function scallop(svg){
-  const draw=()=>{
-    const w=svg.clientWidth,h=svg.clientHeight;if(!w||!h)return;
-    // half-circles along the top and bottom edges: six on desktop, nine (smaller, same rhythm) on phones
-    const n=6,r=w/(2+(n-1)*1.4729),step=(w-2*r)/(n-1);
-    svg.parentElement.style.setProperty('--r',r+'px');
-    let s=`<rect x="0" y="${r}" width="${w}" height="${Math.max(0,h-2*r)}"/>`;
-    for(let i=0;i<n;i++){const cx=r+i*step;s+=`<circle cx="${cx}" cy="${r}" r="${r}"/><circle cx="${cx}" cy="${h-r}" r="${r}"/>`}
-    svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.innerHTML=`<g fill="var(--card)">${s}</g>`;
-  };
-  new ResizeObserver(draw).observe(svg);draw();
-}
-scallop(document.querySelector('#editCard svg.shape'));
+
 
 const TICK='<span class="tick"><svg viewBox="0 0 20 20" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg></span>';
 function swatchRow(el,list,key){
@@ -1181,27 +1164,34 @@ document.querySelectorAll('.shop-link').forEach(a=>a.href=SHOP_URL);
 document.querySelectorAll('[data-go-steps]').forEach(b=>b.onclick=()=>innerWidth>=1280?toTop($('editorPage'),true,0):toTop(document.querySelector('.ed .stage-col'),true,12));
 
 /* ---------- pages ---------- */
-/* the final section is always on the page, under the editor. It is refreshed lazily: an edit marks it stale,
-   and it redraws when it comes into view (or right away when "finish" is pressed). Each refresh also quietly
-   updates the shop's 「客製內容」 field, so a customer who goes back up and changes a layer never orders the old tree. */
-var finalDirty=true,finalSeen=false,lastText='',finalInView=false,dirtyT=0;
-function markDirty(){finalDirty=true;clearTimeout(dirtyT);if(finalInView)dirtyT=setTimeout(refreshFinal,300)}
+/* The final section is always on the page, under the editor; its illustration redraws lazily (when it comes into view).
+   Filling the shop's 「客製內容」 field: nothing happens until the customer presses 「確認無誤，前往下單」 the first time
+   (so an untouched tool never fills the field, and the shop's "empty note can't order" check still works).
+   From then on every edit refills the field quietly, and the button says so. */
+var finalDirty=true,finalSeen=false,lastText='',finalInView=false,dirtyT=0,armed=false,fillOK=null,syncT=0;
+function markDirty(){
+  finalDirty=true;clearTimeout(dirtyT);if(finalInView)dirtyT=setTimeout(refreshFinal,300);
+  if(armed){clearTimeout(syncT);syncT=setTimeout(()=>syncFill(false).then(ok=>{if(ok){setLabel($('finish'),'已自動更新客製內容 ↓');$('finish').classList.add('synced')}}),500)}
+}
 function refreshFinal(){
   if(!finalDirty)return;finalDirty=false;
   const text=orderText(),changed=lastText&&text!==lastText;lastText=text;
   makeCard(!finalSeen||changed);finalSeen=true;
-  askFill(text,false).then(ok=>{
-    const n=$('syncNote');
-    if(changed){n.hidden=false;n.textContent=ok?'已依你的修改，同步更新下方「客製內容」欄位 ✓':'你修改了設計，請再按一次「一鍵送出」';
-      clearTimeout(n._t);n._t=setTimeout(()=>{n.hidden=true},6000)}
-  });
 }
-if('IntersectionObserver' in window){
-  new IntersectionObserver(es=>{finalInView=es[0].isIntersecting;if(finalInView)refreshFinal()},{rootMargin:'0px 0px -15% 0px'}).observe($('finalPage'));
-}else finalInView=true;
+function syncFill(scroll){return askFill(orderText(),scroll).then(ok=>{fillOK=ok;finMsg();return ok})}
+function finMsg(){
+  const m=$('finMsg'),b=$('copyAll');
+  if(!armed){m.textContent='按下按鈕，就會自動幫你填入下方「客製內容」欄位';setLabel(b,'確認無誤，前往下單 ↓');b.hidden=false}
+  else if(fillOK){m.textContent='已更新你的客製內容，可以直接下單👇🏻';b.hidden=true}
+  else{m.innerHTML='系統已自動帶入你的客製內容🎄<br>若沒有自動填入，請按下方複製按鈕<br>再貼到客製內容欄位喔！';setLabel(b,'複製客製內容');b.hidden=false}
+}
+function arm(){
+  if(armed)return;armed=true;
+  $('cardNote').textContent='如果編輯了樣式，就會自動更新訂單內容喔！';
+}
 function showFinal(){
   LAYERS.forEach((_,i)=>done.add(i));drawProgress();
-  refreshFinal();toTop($('finalPage'),true);
+  arm();syncFill(false);refreshFinal();toTop($('finalPage'),true);
 }
 function showEditor(i){
   if(i!==step)go(i);
@@ -1319,14 +1309,13 @@ function askFill(text,scroll){
   });
 }
 function copy(btn,text){
-  const label=btn.querySelector('.lbl')?btn.querySelector('.lbl').textContent:btn.textContent,f=$('copyField');
-  const clip=new Promise(res=>{try{navigator.clipboard.writeText(text).then(()=>res(true),()=>res(false))}catch(e){res(false)}});
-  Promise.all([clip,askFill(text,true)]).then(([copied,filled])=>{
-    if(filled||copied){setLabel(btn,filled?'已填入下方欄位 ✓ 確認後即可下單':VIP?'已複製 ✓ 請私訊貼給我們':'已複製 ✓ 請貼到下方備註欄');setTimeout(()=>setLabel(btn,label),2600)}
-    else{f.hidden=false;f.value=text;f.focus();f.select()}
-  });
+  const f=$('copyField');
+  const done_=ok=>{if(ok){setLabel(btn,'已複製 ✓ 請貼到下方「客製內容」');setTimeout(()=>setLabel(btn,'複製客製內容'),2600);f.hidden=true}
+    else{f.value=text;f.hidden=false;f.focus();f.select();setLabel(btn,'請長按上方文字複製')}};
+  try{navigator.clipboard.writeText(text).then(()=>done_(true),()=>done_(false))}catch(e){done_(false)}
 }
-$('copyAll').onclick=e=>copy(e.currentTarget,orderText());
+$('copyAll').onclick=e=>{if(armed&&fillOK===false){copy(e.currentTarget,orderText());return}
+  LAYERS.forEach((_,i)=>done.add(i));drawProgress();arm();syncFill(true)};
 
 LAYERS.forEach((_,i)=>repaint(i));
 renderStep();
