@@ -318,6 +318,7 @@ html.embedded,html.embedded body{background:var(--bg)}
 .scents .blk{display:block;align-self:stretch;box-shadow:inset -1px 0 0 rgba(0,0,0,.04)}
 .scents .tx{padding:calc(9*var(--u)) calc(14*var(--u));display:flex;flex-direction:column;justify-content:center;gap:2px}
 .scents .nm{font-weight:500;font-size:var(--t-sm);letter-spacing:.1em}
+.scents .nm .em{margin-right:.45em;letter-spacing:0}
 .scents .fm{font-size:var(--t-cap);color:var(--soft);letter-spacing:.04em;line-height:1.5}
 @media (max-width:1279px){
   .scents button{grid-template-columns:44px 1fr;min-height:48px}
@@ -479,6 +480,9 @@ body{font-weight:400}
 #editorPage .lnum{font-size:var(--t-h);font-weight:400;letter-spacing:.1em}
 #editorPage .label{font-size:var(--t-sm);font-weight:500;letter-spacing:.06em}
 #editorPage .label .desc{font-size:var(--t-cap);font-weight:400;letter-spacing:.03em;color:var(--soft)}
+#editorPage #colorLabel .desc{font-size:var(--t-sm);letter-spacing:.04em;display:inline-flex;flex-direction:row;gap:.5em;align-items:baseline}
+#editorPage #colorLabel .desc .cn{font-weight:700}
+#editorPage #colorLabel .desc .cs::before,#editorPage #colorLabel .desc .cs::after{content:none}
 #editorPage .seg button{font-size:var(--t-sm);font-weight:400;letter-spacing:.08em}
 .cta{font-size:var(--t-btn);font-weight:500;letter-spacing:.1em}
 #editorPage .note{font-size:var(--t-cap);letter-spacing:.02em;line-height:1.75}
@@ -554,8 +558,10 @@ body{font-weight:400}
 #editorPage #cardNote{color:#993d3d;font-size:var(--t-sm);letter-spacing:.04em;font-weight:500}
 @media (max-width:1279px){#editorPage #cardNote{font-size:12.5px}}
 .fin-h[hidden],.fin-sum[hidden]{display:none}
+#finMsg .ok{font-weight:700;color:#993d3d}
 /* STEP 1 folded after saving: only its heading stays */
 #edFrame.folded .stage-col,#edFrame.folded #editCard{display:none}
+#edFrame.folded{min-height:0}
 .fin #reEdit{margin-top:calc(14*var(--u));width:100%}
 .fin #copyAll+#reEdit[hidden]{display:none}
 /* only one line in STEP 2 (nothing saved yet): centre it */
@@ -695,15 +701,15 @@ body{font-weight:400}
 /* ================= product data — edit here ================= */
 // 10 wax colours (hex from the PDF). n = colour name, scent = matching fragrance (empty = not provided yet)
 const WAX=[
-  {id:'410b14',h:'#5c2021',n:'聖誕紅',scent:'花果調・黑莓與無花果'},
-  {id:'494934',h:'#353a25',n:'諾貝松綠',scent:'木質調・皮革與岩蘭草'},
-  {id:'9c836c',h:'#b4967e',n:'暖米咖',scent:'木質調・煙燻檀香'},
-  {id:'ffffff',h:'#fcf8f5',n:'象牙白',scent:'木質調・溫柔奶香'},
-  {id:'5f452c',h:'#4c392d',n:'胡桃木咖',scent:'木質調・雪松與紅茶'},
-  {id:'e2d6c4',h:'#e4d5c2',n:'裸米',scent:'麝香調・海鹽與亞麻'},
-  {id:'cdcecd',h:'#ccc6be',n:'卵石灰',scent:'麝香調・沐浴皂香'},
-  {id:'95aabc',h:'#94a6aa',n:'煙灰藍',scent:'鹽香調・冬日與海'},
-  {id:'cbe9f4',h:'#c6e0ea',n:'寶寶藍',scent:'麝香調・肌膚香'}
+  {id:'410b14',h:'#5c2021',e:'🫐',n:'聖誕紅',scent:'花果調・黑莓與無花果'},
+  {id:'494934',h:'#353a25',e:'🌿',n:'諾貝松綠',scent:'木質調・皮革與岩蘭草'},
+  {id:'9c836c',h:'#b4967e',e:'🪵',n:'暖米咖',scent:'木質調・煙燻檀香'},
+  {id:'ffffff',h:'#fcf8f5',e:'🍼',n:'象牙白',scent:'木質調・溫柔奶香'},
+  {id:'5f452c',h:'#4c392d',e:'☕️',n:'胡桃木咖',scent:'木質調・雪松與紅茶'},
+  {id:'e2d6c4',h:'#e4d5c2',e:'🤎',n:'裸米',scent:'麝香調・海鹽與亞麻'},
+  {id:'cdcecd',h:'#ccc6be',t:'#6e6b67',e:'🫧',n:'卵石灰',scent:'麝香調・沐浴皂香'},
+  {id:'95aabc',h:'#94a6aa',e:'🌊',n:'煙灰藍',scent:'鹽香調・冬日與海'},
+  {id:'cbe9f4',h:'#c6e0ea',t:'#5a8fa8',e:'🛁',n:'寶寶藍',scent:'麝香調・肌膚香'}
 ];
 // 3 splatter colours (hex from the PDF)
 const INK=[{id:'ffffff',h:'#ffffff',n:'白色',s:'白'},{id:'e2d6c4',h:'#e4d5c2',n:'米',s:'米'},{id:'5f452c',h:'#4c392d',n:'咖',s:'咖'}];
@@ -994,7 +1000,7 @@ function repaint(i){
 }
 
 
-/* ---------- no WebGL: show Abby's hand-drawn tree in the customer's colours instead (drawing data: hand.json) ---------- */
+/* ---------- no WebGL: show the hand-drawn layers in the customer's colours instead (drawing data: hand.json) ---------- */
 let HAND=null,HAND_BOX=null,handImgs=null,artT=0;
 function loadHand(){
   if(!handImgs)handImgs=fetch('hand.json').then(r=>r.json()).then(h=>{
@@ -1019,8 +1025,8 @@ function drawHand(c,imgs,ox,oy,sc,S){
       o.globalCompositeOperation='source-over';o.drawImage(sp,0,0);
     }
     c.drawImage(off,x,y,w,h);
+    const ln=imgs['l'+(i+1)];if(ln&&ln.width)c.drawImage(ln,...at('l'+(i+1)));   // bottom layer first, each upper layer covers the one below
   }
-  for(let i=1;i<=6;i++){const img=imgs['l'+i];if(img&&img.width)c.drawImage(img,...at('l'+i))}
   ['spark','text'].forEach(k=>{const img=imgs[k];if(img&&img.width)c.drawImage(img,...at(k))});
 }
 
@@ -1103,7 +1109,7 @@ function fitDesc(){
 addEventListener('resize',fitDesc);
 function refreshLayer(changed){
   const st=state[step],L=LAYERS[step],wax=itemOf(WAX,st.c);
-  const d=$('colorDesc');d.querySelector('.cn').textContent=wax.n;d.querySelector('.cs').textContent=wax.scent;d.style.color=lum(wax.h)>.7?'var(--soft)':wax.h;fitDesc();
+  const d=$('colorDesc');d.querySelector('.cn').textContent=wax.n;d.querySelector('.cs').textContent=wax.scent;d.style.color=wax.t||(lum(wax.h)>.7?'var(--soft)':wax.h);fitDesc();
   $('splatDesc').textContent=st.s?itemOf(INK,st.sc).n:'';
   showSplat(st.s,changed);document.querySelector('.seg').classList.toggle('on',st.s);
   $('colors').querySelectorAll('.sw').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.id===st.c)));
@@ -1188,16 +1194,30 @@ if(EMBED){
 let embedV2=false;
 addEventListener('message',e=>{if(e.data&&e.data.ispEmbed>=2)embedV2=true});
 if(EMBED){const hi=()=>{try{parent.postMessage({ispHello:2},'*')}catch(e){}};hi();addEventListener('load',hi);setTimeout(hi,1500)}
-// unhurried scroll: 1–2 s depending on distance, sine ease (gentle start and stop, lowest top speed)
-function glide(sc,to,smooth){
+// smooth scroll: 0.8–1.5 s depending on distance; the shop's embed uses the same curve (and our duration when we send one)
+const durFor=d=>Math.min(1500,800+Math.abs(d)*.25),EASE=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+let VIEW=null; // where the tool sits in the shop's window (sent by the embed while the shop scrolls)
+addEventListener('message',e=>{if(e.data&&e.data.ispViewport)VIEW=e.data.ispViewport});
+function glide(sc,to,smooth,dur){
   const win=sc===window,from=win?scrollY:sc.scrollTop,d=to-from;
   if(!smooth||reduce||Math.abs(d)<2){win?scrollTo(0,to):sc.scrollTop=to;return}
-  const dur=Math.min(2000,1000+Math.abs(d)*.3),t0=performance.now(),ease=t=>-(Math.cos(Math.PI*t)-1)/2;
+  dur=dur||durFor(d);const t0=performance.now(),ease=EASE;
   let stop=false;const cancel=()=>{stop=true};['wheel','touchstart','keydown'].forEach(e=>addEventListener(e,cancel,{once:true,passive:true}));
   (function f(now){if(stop)return;const t=Math.min(1,(now-t0)/dur),y=from+d*ease(t);win?scrollTo(0,y):sc.scrollTop=y;if(t<1)requestAnimationFrame(f)})(t0);
 }
+const offOf=(el,gap)=>el?Math.max(0,Math.round(el.getBoundingClientRect().top-document.body.getBoundingClientRect().top-(gap||0))):0;
+// how long the scroll to `off` will take, so a page fold can move in step with it
+function scrollDur(off){
+  if(EMBED&&embedV2)return VIEW?durFor(VIEW.top+off-VIEW.header):durFor(600);
+  return durFor(off-scrollY);
+}
+// scroll to a spot known in advance (the layout is still changing), once, with the given duration
+function scrollToOff(off,dur){
+  if(!EMBED||!embedV2){glide(window,off,true,dur);return}
+  try{parent.postMessage({ispScrollTop:true,ispOffset:off,ispDur:dur},'*')}catch(e){}
+}
 function toTop(el,smooth,gap){
-  const off=()=>el?Math.max(0,Math.round(el.getBoundingClientRect().top-document.body.getBoundingClientRect().top-(gap||0))):0;
+  const off=()=>offOf(el,gap);
   if(!EMBED||!embedV2){glide(window,off(),smooth);return}
   const H=()=>Math.ceil(document.body.getBoundingClientRect().height);let h0=0;
   const send=()=>{try{h0=H();parent.postMessage({ispBannerHeight:h0},'*');parent.postMessage({ispScrollTop:true,ispOffset:off()},'*')}catch(e){}};
@@ -1224,31 +1244,47 @@ function finMsg(){
   sum.parentElement.classList.toggle('solo',!armed);re.hidden=!armed;
   if(!armed){h.hidden=true;sum.hidden=true;m.textContent='請先在 STEP 1 完成你的聖誕樹唷！';m.hidden=false;b.hidden=true;return}
   h.hidden=false;sum.hidden=false;
-  if(fillOK){m.textContent='系統已自動貼上您的內容，直接下單即可。';m.hidden=false;b.hidden=true}
+  if(fillOK){m.innerHTML='<b class="ok">系統已自動貼上您的內容，直接下單即可。</b>';m.hidden=false;b.hidden=true}
   else{m.innerHTML='若沒有自動填入，請按下方複製按鈕<br>再貼到客製內容欄位喔！';m.hidden=false;setLabel(b,'複製客製內容');b.hidden=false}
 }
-// fold STEP 1 (tree + options) away / back, animating the page height
-function foldEditor(fold){
-  const pg=$('editorPage'),fr=$('edFrame');if(fr.classList.contains('folded')===fold)return Promise.resolve();
-  const h1=pg.offsetHeight;fr.classList.toggle('folded',fold);setStageActive(!fold);const h2=pg.offsetHeight;
-  if(reduce||!pg.animate)return Promise.resolve();
-  const a=pg.animate([{height:h1+'px',overflow:'hidden'},{height:h2+'px',overflow:'hidden'}],{duration:520,easing:'cubic-bezier(.4,0,.2,1)'});
-  return a.finished.catch(()=>{});
+// fold STEP 1 (tree + options) away / back in one movement: the page height eases while the shop scrolls
+// to where the target will end up, both on the same curve and duration, so it lands once, without a second hop
+let folding=false;
+function foldTo(fold,target,gap){
+  const pg=$('editorPage'),fr=$('edFrame'),parts=[fr.querySelector('.stage-col'),$('editCard')];
+  if(folding||fr.classList.contains('folded')===fold)return;folding=true;
+  const h1=pg.offsetHeight;
+  fr.classList.toggle('folded',fold);const h2=pg.offsetHeight,off=offOf(target,gap);  // the final layout, measured before painting
+  if(fold)fr.classList.remove('folded');else setStageActive(true);
+  const dur=scrollDur(off);
+  const end=()=>{pg.style.height=pg.style.overflow='';parts.forEach(p=>{p.style.opacity='';p.style.transition=''});
+    if(fold){fr.classList.add('folded');setStageActive(false)}folding=false};
+  if(reduce){if(fold)fr.classList.add('folded');end();scrollToOff(off,1);return}
+  pg.style.overflow='hidden';pg.style.height=h1+'px';
+  parts.forEach(p=>{p.style.transition=`opacity ${fold?dur*.55:dur*.8}ms ease ${fold?0:dur*.2}ms`;p.style.opacity=fold?'1':'0'});
+  requestAnimationFrame(()=>{
+    parts.forEach(p=>p.style.opacity=fold?'0':'1');
+    scrollToOff(off,dur);
+    const t0=performance.now();
+    (function f(now){const t=Math.min(1,(now-t0)/dur);pg.style.height=(h1+(h2-h1)*EASE(t))+'px';if(t<1)requestAnimationFrame(f);else end()})(t0);
+  });
 }
 function showFinal(){
+  if(folding)return;
   LAYERS.forEach((_,i)=>done.add(i));drawProgress();
-  armed=true;fillOK=null;syncFill(false);
-  foldEditor(true).then(()=>toTop($('finalPage'),true));
+  armed=true;fillOK=null;
+  // wait for the shop's answer first, so STEP 2 already shows its final text when we measure where it lands
+  syncFill(false).then(()=>foldTo(true,$('finalPage')));
 }
 $('reEdit').onclick=()=>{
+  if(folding)return;
   armed=false;fillOK=null;askFill('',false);finMsg();   // the shop field is emptied until the tree is saved again
-  foldEditor(false).then(()=>toTop(document.querySelector('.ed-head .step-h'),true,innerWidth>=1280?40:24));
+  foldTo(false,document.querySelector('.ed-head .step-h'),innerWidth>=1280?40:24);
 };
 /* ---------- nine scents at a glance ---------- */
 (function scents(){
   const ul=$('scents'),tg=$('scentTg');
-  ul.innerHTML=WAX.map(w=>{const [fam,notes]=w.scent.split('・');
-    return `<li><button type="button" data-id="${w.id}" aria-pressed="false"><span class="blk" style="background:${w.h}"></span><span class="tx"><span class="nm">${w.n}</span><span class="fm">${fam}　${notes||''}</span></span></button></li>`}).join('');
+  ul.innerHTML=WAX.map(w=>`<li><button type="button" data-id="${w.id}" aria-pressed="false"><span class="blk" style="background:${w.h}"></span><span class="tx"><span class="nm"><span class="em" aria-hidden="true">${w.e||''}</span>${w.n}</span><span class="fm">${w.scent}</span></span></button></li>`).join('');
   tg.onclick=()=>{const open=ul.hidden||!!ul.dataset.leaving;if(open)markScents();growToggle(ul,open,true,'li');tg.setAttribute('aria-expanded',String(open))};
   ul.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
     const sw=$('colors').querySelector(`[data-id="${b.dataset.id}"]`);if(sw)sw.click();markScents()});
