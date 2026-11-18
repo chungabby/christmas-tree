@@ -707,11 +707,11 @@ const WAX=[
   {id:'410b14',h:'#5c2021',e:'🫐',n:'聖誕紅',scent:'花果調・黑莓與無花果'},
   {id:'494934',h:'#353a25',e:'🌿',n:'諾貝松綠',scent:'木質調・皮革與岩蘭草'},
   {id:'9c836c',h:'#b4967e',e:'🪵',n:'暖米咖',scent:'木質調・煙燻檀香'},
-  {id:'ffffff',h:'#fcf8f5',e:'🍼',n:'象牙白',scent:'木質調・溫柔奶香'},
+  {id:'ffffff',h:'#fcf8f5',e:'🍼',n:'象牙白',scent:'奶香調・溫柔奶香'},
   {id:'5f452c',h:'#4c392d',e:'☕️',n:'胡桃木咖',scent:'木質調・雪松與紅茶'},
   {id:'e2d6c4',h:'#e4d5c2',e:'🤎',n:'裸米',scent:'麝香調・海鹽與亞麻'},
   {id:'cdcecd',h:'#ccc6be',t:'#6e6b67',e:'🫧',n:'卵石灰',scent:'麝香調・沐浴皂香'},
-  {id:'95aabc',h:'#94a6aa',e:'🌊',n:'煙灰藍',scent:'鹽香調・冬日與海'},
+  {id:'95aabc',h:'#94a6aa',e:'🌊',n:'煙灰藍',scent:'鹽香調・海鹽與雪松'},
   {id:'cbe9f4',h:'#c6e0ea',t:'#5a8fa8',e:'🛁',n:'寶寶藍',scent:'麝香調・肌膚香'}
 ];
 // 3 splatter colours (hex from the PDF)
@@ -930,15 +930,47 @@ if(!renderer||!window.THREE){
     candle.add(m);meshes.push(m);
   });
   const total=meshes[meshes.length-1].userData.top;
+  // acrylic base like the real one (frosted disc, cross with clear tabs, engraving, small feet)
+  function makeBase(THREE,DR,DH,o){
+    o=o||{};const g=new THREE.Group();
+    const frost=o.cheap
+      ?new THREE.MeshPhysicalMaterial({color:0xf3f1ee,roughness:.38,metalness:0,transparent:true,opacity:.5,clearcoat:.4,clearcoatRoughness:.35,envMapIntensity:.9,depthWrite:false})
+      :new THREE.MeshPhysicalMaterial({color:0xf4f2ef,transmission:.55,roughness:.5,thickness:.15,attenuationColor:new THREE.Color(0xe8e6e2),attenuationDistance:.6,ior:1.45,metalness:0,clearcoat:.3,clearcoatRoughness:.4,envMapIntensity:.8});
+    const disc=new THREE.Mesh(new THREE.CylinderGeometry(DR,DR,DH,128,1),frost);disc.position.y=-DH/2;disc.renderOrder=-1;g.add(disc);
+    // top face drawing: the frosted cross (clearer strips) + the engraving, front edge
+    const S=2048,ec=document.createElement('canvas');ec.width=ec.height=S;const x=ec.getContext('2d');
+    x.translate(S/2,S/2);
+    x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=S*.016;x.lineCap='butt';
+    [Math.PI/4,3*Math.PI/4].forEach(a=>{x.beginPath();x.moveTo(Math.cos(a)*S*.47,Math.sin(a)*S*.47);x.lineTo(-Math.cos(a)*S*.47,-Math.sin(a)*S*.47);x.stroke()});
+    x.fillStyle='rgba(255,255,255,.9)';x.textAlign='center';x.textBaseline='alphabetic';
+    const font=px=>`500 ${px}px "Avenir Next","Gill Sans","Helvetica Neue",Arial,sans-serif`;
+    x.font=font(S*.03);x.fillText("IT'S SATURDAY!",0,S*.385);
+    x.font=font(S*.03);x.fillText('A Christmas That Feels Like You.',0,S*.425);
+    const et=new THREE.CanvasTexture(ec);et.encoding=THREE.sRGBEncoding;et.anisotropy=8;
+    const top=new THREE.Mesh(new THREE.CircleGeometry(DR,128),new THREE.MeshBasicMaterial({map:et,transparent:true,depthWrite:false,opacity:o.textOpacity||.9}));
+    top.rotation.x=-Math.PI/2;top.position.y=.002;g.add(top);
+    // little clear tabs along the cross that hold the bottom layer
+    const clear=new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:.08,metalness:0,transparent:true,opacity:.55,clearcoat:1,envMapIntensity:1.4});
+    const tg=new THREE.BoxGeometry(DR*.12,DR*.035,DR*.06);
+    [Math.PI/4,3*Math.PI/4,5*Math.PI/4,7*Math.PI/4].forEach(a=>[o.inner||.42,o.outer||.74].forEach(r=>{
+      const t=new THREE.Mesh(tg,clear);t.position.set(Math.cos(a)*DR*r,DR*.0175,Math.sin(a)*DR*r);t.rotation.y=-a;g.add(t)}));
+    // feet
+    if(o.feet){const fg=new THREE.CylinderGeometry(DR*.03,DR*.03,o.feet,12);[0,1,2,3].forEach(k=>{const a=k*Math.PI/2;const f=new THREE.Mesh(fg,clear);f.position.set(Math.cos(a)*DR*.8,-DH-o.feet/2,Math.sin(a)*DR*.8);g.add(f)})}
+    g.userData={disc,top};return g;
+  }
+  
+  const b0=new THREE.Box3().setFromObject(meshes[0]),BDR=Math.max(b0.max.x,-b0.min.x,b0.max.z,-b0.min.z)*1.6,BDH=.1,BFT=.05;
+  candle.add(makeBase(THREE,BDR,BDH,{cheap:true,feet:BFT}));
+  const below=BDH+BFT+BDR*.38;   // how far the base reaches under the bottom layer on screen (its front edge, seen from above)
 
   const FOV=24,T=Math.tan(THREE.MathUtils.degToRad(FOV/2));
-  const VIEW=new THREE.Vector3(.2,.6,1).normalize(),target=new THREE.Vector3(0,total*.5,0);
+  const VIEW=new THREE.Vector3(0,.4,1).normalize(),target=new THREE.Vector3(0,(total-below)*.5,0);
   const camera=new THREE.PerspectiveCamera(FOV,1,.1,100);
   let fw=0,fh=0;
   fit=()=>{
     const w=host.clientWidth,h=host.clientHeight;if(!w||!h||(w===fw&&h===fh))return;fw=w;fh=h;
     renderer.setSize(w,h,false);camera.aspect=w/h;
-    const d=Math.max(total*(innerWidth<1280?1.08:1.14)/2/T,3.7/2/(T*camera.aspect)); // width term leaves room for the brackets
+    const d=Math.max((total+below)*(innerWidth<1280?1.08:1.14)/2/T,Math.max(3.7,BDR*2.08)/2/(T*camera.aspect)); // width term leaves room for the brackets
     camera.position.copy(target).addScaledVector(VIEW,d);camera.lookAt(target);
     camera.updateProjectionMatrix();
   };
