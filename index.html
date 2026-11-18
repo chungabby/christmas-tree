@@ -285,6 +285,9 @@ p,h1,h2,h3,ul{margin:0}
 /* in the shop, any rounding sliver under the last section shows white (not a beige line) */
 #editorPage{background:var(--bg)}
 html.embedded,html.embedded body{background:var(--bg)}
+/* never wider than the shop's iframe: iOS grows an iframe to its content, which pushed the shop page sideways */
+html.embedded,html.embedded body{overflow-x:hidden;overflow-x:clip;max-width:100%}
+#colorLabel{max-width:100%}
 .fin{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:560px;margin:0 auto}
 .fin-script{display:block;width:min(100%,calc(440*var(--u)));min-width:240px;height:auto}
 .fin-h{margin-top:calc(36*var(--u));font-size:var(--t-lead);letter-spacing:.08em;color:var(--ink);line-height:1.5}
