@@ -710,12 +710,12 @@ const INK=[{id:'ffffff',h:'#ffffff',n:'白色',s:'白'},{id:'e2d6c4',h:'#e4d5c2'
 const CM=0.3,LH=3*CM,rad=d=>d/2*CM;
 // every layer is 3 cm tall; diameters 8 / 7 / 5.5 / 4.5 / 3.5 / 2.7 cm
 const LAYERS=[
-  {ord:'第一層',shape:{R:1.2,H:1.10,p:3.2,lobes:8,depth:0.14,sharp:0.55},def:{c:'494934',s:false,sc:'ffffff'}},
-  {ord:'第二層',shape:{R:1.09,H:1.24,p:2.4},engrave:['Give yourself a little break :)','It’s Saturday!'],def:{c:'ffffff',s:false,sc:'5f452c'}},
-  {ord:'第三層',shape:{R:0.98,H:1.08,p:2.2,lobes:4,depth:0.15,soft:0.05},def:{c:'95aabc',s:false,sc:'ffffff'}},
-  {ord:'第四層',shape:{R:0.73,H:1.05,p:2.5,ribbons:4,rw:0.26,rh:0.055},def:{c:'410b14',s:false,sc:'ffffff'}},
-  {ord:'第五層',shape:{R:0.58,H:0.99,p:5,pTop:2.1,taper:0.12},def:{c:'9c836c',s:false,sc:'ffffff'}},
-  {ord:'第六層',star:true,width:0.8,def:{c:'494934',s:false,sc:'ffffff'}}
+  {ord:'第一層',shape:{R:rad(8),H:LH,p:3.2,lobes:8,depth:0.14,sharp:0.55},def:{c:'494934',s:false,sc:'ffffff'}},
+  {ord:'第二層',shape:{R:rad(7),H:LH,p:2.4},engrave:['Give yourself a little break :)','It’s Saturday!'],def:{c:'ffffff',s:false,sc:'5f452c'}},
+  {ord:'第三層',shape:{R:rad(5.5),H:LH,p:2.2,lobes:4,depth:0.15,soft:0.05},def:{c:'95aabc',s:false,sc:'ffffff'}},
+  {ord:'第四層',shape:{R:rad(4.5),H:LH,p:2.5,ribbons:4,rw:0.26,rh:0.055},def:{c:'410b14',s:false,sc:'ffffff'}},
+  {ord:'第五層',shape:{R:rad(3.5),H:LH,p:5,pTop:2.1,taper:0.12},def:{c:'9c836c',s:false,sc:'ffffff'}},
+  {ord:'第六層',star:true,width:2.7*CM,def:{c:'494934',s:false,sc:'ffffff'}}
 ];
 /* ============================================================ */
 const hexOf=(list,id)=>(list.find(x=>x.id===id)||list[0]).h;
@@ -872,17 +872,18 @@ if(!renderer||!window.THREE){
     g.setIndex(idx);return g;
   }
   function starGeo(width){
-    const o=width/(2*Math.cos(Math.PI/10)),inner=o*.58,k=o/.52,cut=-.5*o;let pts=[];
+    const o=width/(2*Math.cos(Math.PI/10)),inner=o*.58,pts=[],k=o/.52;
     for(let i=0;i<10;i++){const a=Math.PI/2+i*Math.PI/5,r=i%2?inner:o;pts.push(new THREE.Vector2(Math.cos(a)*r,Math.sin(a)*r))}
-    // clip below y=cut (flat underside)
-    const out=[];for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length],ia=a.y>=cut,ib=b.y>=cut;
-      if(ia)out.push(a);if(ia!==ib){const s=(cut-a.y)/(b.y-a.y);out.push(new THREE.Vector2(a.x+(b.x-a.x)*s,cut))}}
-    pts=out;const n=pts.length,sh=new THREE.Shape();
-    pts.forEach((c,i)=>{const pv=pts[(i+n-1)%n],nx=pts[(i+1)%n],t=c.y===cut?.08:(Math.hypot(c.x,c.y)>o*.9?.2:.12);
-      const p1=c.clone().lerp(pv,t),p2=c.clone().lerp(nx,t);if(i===0)sh.moveTo(p1.x,p1.y);else sh.lineTo(p1.x,p1.y);sh.quadraticCurveTo(c.x,c.y,p2.x,p2.y)});
+    const sh=new THREE.Shape();
+    pts.forEach((c,i)=>{
+      const pv=pts[(i+9)%10],nx=pts[(i+1)%10],t=i%2?.12:.2;
+      const p1=c.clone().lerp(pv,t),p2=c.clone().lerp(nx,t);
+      if(i===0)sh.moveTo(p1.x,p1.y);else sh.lineTo(p1.x,p1.y);
+      sh.quadraticCurveTo(c.x,c.y,p2.x,p2.y);
+    });
     sh.closePath();
     const g=new THREE.ExtrudeGeometry(sh,{depth:.24*k,bevelEnabled:true,bevelThickness:.07*k,bevelSize:.05*k,bevelSegments:6,curveSegments:10});
-    g.translate(0,0,-.12*k);return {g,outer:o,cut};
+    g.translate(0,0,-.12*k);return {g,outer:o};
   }
 
   const candle=new THREE.Group();scene.add(candle);
@@ -891,7 +892,7 @@ if(!renderer||!window.THREE){
     const cv=document.createElement('canvas');
     let geo,opts;
     if(L.star){
-      cv.width=cv.height=512*TEXQ;const s=starGeo(L.width);geo=s.g;L.outer=s.outer;L.cut=s.cut;
+      cv.width=cv.height=512*TEXQ;const s=starGeo(L.width);geo=s.g;L.outer=s.outer;
       opts={count:.1,scale:TEXQ};
     }else{
       const hi=(L.engrave?2:1)*TEXQ;cv.width=2048*hi;cv.height=1024*hi;geo=bodyGeo(L.shape);
@@ -911,7 +912,7 @@ if(!renderer||!window.THREE){
     }
     const m=new THREE.Mesh(geo,mat);m.castShadow=m.receiveShadow=true;m.userData={i,cv,tex,opts,seed:1009+i*7919};
     if(L.star){
-      const H=meshes[i-1].userData.top;m.position.y=H-L.cut-.03;m.userData.top=m.position.y+L.outer;
+      const H=meshes[i-1].userData.top;m.position.y=H+L.outer*.68;m.userData.top=m.position.y+L.outer;
     }else{
       const s=L.shape,bottom=i===0?0:y-s.H*.1;m.position.y=bottom+s.H/2;y=bottom+s.H;m.userData.top=y;
       if(s.lobes)m.rotation.y=Math.PI/(s.lobes*2)*(i%2);
