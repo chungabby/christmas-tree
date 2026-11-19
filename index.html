@@ -48,7 +48,6 @@ p,h1,h2,h3,ul{margin:0}
 .frame{position:relative;width:calc(1920*var(--u));min-height:calc(1080*var(--u));margin:0 auto;display:grid;
   grid-template-columns:calc(225.5*var(--u)) calc(641.5*var(--u)) calc(91*var(--u)) calc(727*var(--u)) calc(53.5*var(--u)) calc(56.5*var(--u)) 1fr}
 .mb{display:none}
-.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .sub{margin-top:calc(16*var(--u));color:var(--ink);font-size:max(13px,calc(21*var(--u)));letter-spacing:.14em;line-height:1.5}
 /* editor (PDF): title + lead centred, progress centred, then card left / tree right */
 .ed{grid-template-rows:auto auto auto auto;align-items:start}
@@ -109,7 +108,7 @@ p,h1,h2,h3,ul{margin:0}
 .seg button[aria-pressed="true"]{color:var(--card)}
 .seg button[aria-pressed="true"]:hover{background:transparent}
 
-.cta{position:relative;-webkit-appearance:none;appearance:none;max-width:100%;min-width:0;flex:none;display:flex;align-items:center;justify-content:center;width:100%;height:calc(60*var(--u));min-height:44px;border:0;background:var(--ink);color:var(--card);
+.cta{position:relative;-webkit-appearance:none;appearance:none;max-width:100%;min-width:0;flex:none;display:flex;align-items:center;justify-content:center;width:100%;height:calc(64*var(--u));min-height:48px;border:0;background:var(--ink);color:var(--card);
   font-size:max(13px,calc(16.45*var(--u)));letter-spacing:.18em;transition:background .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
 .cta:hover{background:var(--ink-hover);transform:translateY(-2px)}
 .cta:active{transform:translateY(0) scale(.99)}
@@ -174,7 +173,7 @@ p,h1,h2,h3,ul{margin:0}
 .lp-top .lp-photo{height:calc(1500*var(--k));object-fit:cover;object-position:50% 40%;
   -webkit-mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,.55) 80%,transparent 100%);mask-image:linear-gradient(to bottom,#000 60%,rgba(0,0,0,.55) 80%,transparent 100%)}
 .lp-top .lp-low{top:calc(1400*var(--k))}
-.lp-btn{position:absolute;left:calc(241*var(--k));width:calc(441*var(--k));height:44px;display:grid;place-items:center;padding:0 0 0 .17em;
+.lp-btn{position:absolute;left:calc(241*var(--k));width:calc(441*var(--k));height:50px;display:grid;place-items:center;padding:0 0 0 .17em;
   font-size:calc(35*var(--k));font-weight:500;letter-spacing:.17em;line-height:1;text-decoration:none;
   transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s,box-shadow .3s}
 .lp-btn:hover{transform:translateY(-2px)}
@@ -197,9 +196,8 @@ p,h1,h2,h3,ul{margin:0}
   .lp-top{display:none}
   .lpd-hero{display:grid;grid-template-columns:1fr .86fr;height:calc(940*var(--u));min-height:560px}
   .lpd-txt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 calc(80*var(--u))}
-  .lpd-title{width:calc(470*var(--u));height:auto;display:block}
   .lpd-btns{display:flex;gap:calc(16*var(--u));margin-top:calc(64*var(--u))}
-  .lpd-btn{display:grid;place-items:center;width:calc(260*var(--u));height:calc(60*var(--u));min-height:44px;padding-left:.1em;border:0;text-decoration:none;
+  .lpd-btn{display:grid;place-items:center;width:calc(260*var(--u));height:calc(64*var(--u));min-height:48px;padding-left:.1em;border:0;text-decoration:none;
     font-size:max(13px,calc(18*var(--u)));font-weight:500;letter-spacing:.2em;transition:background .3s,color .3s,box-shadow .3s}
   .lpd-main{background:#f7f3ef;color:#1d1112}
   .lpd-main:hover{background:#fff}
@@ -405,7 +403,7 @@ html.embedded,html.embedded body{overflow-x:hidden;overflow-x:clip;max-width:100
   .seg{display:flex;width:127px}
   .seg button{flex:1;width:auto;height:33px;font-size:12px;letter-spacing:.05em}
   .swap{margin-bottom:22px}
-  .cta{height:48px;font-size:14px;letter-spacing:.08em;margin-top:0}
+  .cta{height:50px;font-size:14px;letter-spacing:.08em;margin-top:0}
   .note{font-size:11px;letter-spacing:.02em;line-height:1.7;text-wrap:balance;margin-top:10px}
   /* inside the card: name centred on top, colours left, splatter right */
   #layerView .label .desc{flex-basis:auto;flex-direction:row;margin-top:0}
@@ -447,7 +445,7 @@ html.embedded,html.embedded body{overflow-x:hidden;overflow-x:clip;max-width:100
   #layerView #splatOpts .label .desc{flex-basis:auto}
   .seg{width:104px}
   .seg button{height:30px}
-  .cta{height:44px}
+  .cta{height:50px}
 }
 @media (max-width:359px){
   #colors .sw{width:27px}
@@ -486,6 +484,10 @@ body{font-weight:400}
 #editorPage #colorLabel .desc{font-size:var(--t-sm);letter-spacing:.04em;display:inline-flex;flex-direction:row;gap:.5em;align-items:baseline}
 #editorPage #colorLabel .desc .cn{font-weight:700}
 #editorPage #colorLabel .desc .cs::before,#editorPage #colorLabel .desc .cs::after{content:none}
+@media (max-width:1279px){
+  #editorPage #colorLabel{flex-wrap:wrap;white-space:normal;justify-content:center;row-gap:4px}
+  #editorPage #colorLabel .desc{flex-basis:100%;justify-content:center;margin-top:0}
+}
 #editorPage .seg button{font-size:var(--t-sm);font-weight:400;letter-spacing:.08em}
 .cta{font-size:var(--t-btn);font-weight:500;letter-spacing:.1em}
 #editorPage .note{font-size:var(--t-cap);letter-spacing:.02em;line-height:1.75}
@@ -537,9 +539,8 @@ body{font-weight:400}
 .fin-next .step-h{margin-bottom:0}
 
 /* the save button in the option card: the most visible thing in the card */
-#editorPage #finish{background:#993d3d;height:calc(76*var(--u));min-height:52px;font-size:calc(var(--t-btn) * 1.06);box-shadow:0 6px 16px rgba(153,61,61,.22)}
+#editorPage #finish{background:#993d3d;box-shadow:0 6px 16px rgba(153,61,61,.22)}
 #editorPage #finish:hover{background:#86302f;box-shadow:0 10px 22px rgba(153,61,61,.3)}
-@media (max-width:1279px){#editorPage #finish{height:54px;min-height:54px;font-size:15.5px}}
 /* final section: STEP 2 + handwriting on top; thank-you (left) and the six layers (right) side by side on wide screens */
 .fin-row{width:100%;margin-top:calc(30*var(--u));display:flex;flex-direction:column;align-items:center}
 .fin-sum{width:100%;margin:calc(18*var(--u)) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;text-align:left}
@@ -704,14 +705,14 @@ body{font-weight:400}
 /* ================= product data — edit here ================= */
 // 10 wax colours (hex from the PDF). n = colour name, scent = matching fragrance (empty = not provided yet)
 const WAX=[
-  {id:'410b14',h:'#5c2021',e:'🫐',n:'聖誕紅',scent:'花果調・黑莓與無花果'},
+  {id:'5f452c',h:'#4c392d',e:'☕️',n:'胡桃木咖',scent:'木質調・雪松與紅茶'},
   {id:'494934',h:'#353a25',e:'🌿',n:'諾貝松綠',scent:'木質調・皮革與岩蘭草'},
   {id:'9c836c',h:'#b4967e',e:'🪵',n:'暖米咖',scent:'木質調・煙燻檀香'},
   {id:'ffffff',h:'#fcf8f5',e:'🍼',n:'象牙白',scent:'奶香調・溫柔奶香'},
-  {id:'5f452c',h:'#4c392d',e:'☕️',n:'胡桃木咖',scent:'木質調・雪松與紅茶'},
+  {id:'410b14',h:'#5c2021',e:'🫐',n:'聖誕紅',scent:'花果調・黑莓與無花果'},
   {id:'e2d6c4',h:'#e4d5c2',e:'🤎',n:'裸米',scent:'麝香調・海鹽與亞麻'},
-  {id:'cdcecd',h:'#ccc6be',t:'#6e6b67',e:'🫧',n:'卵石灰',scent:'麝香調・沐浴皂香'},
   {id:'95aabc',h:'#94a6aa',e:'🌊',n:'煙灰藍',scent:'鹽香調・海鹽與雪松'},
+  {id:'cdcecd',h:'#ccc6be',t:'#6e6b67',e:'🫧',n:'卵石灰',scent:'麝香調・沐浴皂香'},
   {id:'cbe9f4',h:'#c6e0ea',t:'#5a8fa8',e:'🛁',n:'寶寶藍',scent:'麝香調・肌膚香'}
 ];
 // 3 splatter colours (hex from the PDF)
@@ -800,11 +801,12 @@ const TEXQ=(matchMedia('(pointer:coarse)').matches||innerWidth<1280)?.5:1; // te
 let renderer;
 try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){renderer=null}
 let no3d=false;
-const meshes=[],bounces={};let fit=()=>{},placeBrk=()=>{},stageActive=true,brkUntil=0;
+const meshes=[],bounces={};let fit=()=>{},placeBrk=()=>{},stageActive=true,brkUntil=0,onScreen=true,arC=null;
 function bounceLayer(i){bounces[i]=performance.now();if(i===step)flashBrk()}
 // show the brackets around the current layer for a moment (they follow its bounce)
 function flashBrk(){brkUntil=performance.now()+1000;['brkL','brkR'].forEach(id=>document.getElementById(id).classList.add('on'))}
-function setStageActive(on){stageActive=on;if(on)requestAnimationFrame(()=>fit())}
+function setStageActive(on){stageActive=on;arC=null;if(on)requestAnimationFrame(()=>fit())}
+addEventListener('resize',()=>{arC=null});
 
 if(!renderer||!window.THREE){
   host.innerHTML='<div class="fail"><canvas id="artFb" aria-label="你的聖誕樹插畫"></canvas><p>這個瀏覽器無法顯示 3D 預覽，仍可用我們的插畫圖示意。</p></div>'; // (replaces the loader)
@@ -938,7 +940,7 @@ if(!renderer||!window.THREE){
       :new THREE.MeshPhysicalMaterial({color:0xf4f2ef,transmission:.55,roughness:.5,thickness:.15,attenuationColor:new THREE.Color(0xe8e6e2),attenuationDistance:.6,ior:1.45,metalness:0,clearcoat:.3,clearcoatRoughness:.4,envMapIntensity:.8});
     const disc=new THREE.Mesh(new THREE.CylinderGeometry(DR,DR,DH,128,1),frost);disc.position.y=-DH/2;disc.renderOrder=-1;g.add(disc);
     // top face drawing: the frosted cross (clearer strips) + the engraving, front edge
-    const S=2048,ec=document.createElement('canvas');ec.width=ec.height=S;const x=ec.getContext('2d');
+    const S=2048*TEXQ,ec=document.createElement('canvas');ec.width=ec.height=S;const x=ec.getContext('2d');
     x.translate(S/2,S/2);
     x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=S*.016;x.lineCap='butt';
     [Math.PI/4,3*Math.PI/4].forEach(a=>{x.beginPath();x.moveTo(Math.cos(a)*S*.47,Math.sin(a)*S*.47);x.lineTo(-Math.cos(a)*S*.47,-Math.sin(a)*S*.47);x.stroke()});
@@ -986,8 +988,8 @@ if(!renderer||!window.THREE){
     { // arrow: left of the layer (and of its bracket), never over the step circles
       m.getWorldPosition(pc);right.set(1,0,0).applyQuaternion(camera.quaternion);
       const [lx2,cy]=px(pt.copy(pc).addScaledVector(right,-m.userData.rad*1.12).project(camera));
-      const aw=ar.offsetWidth,ah=ar.offsetHeight,pr=document.getElementById('progress').getBoundingClientRect(),hr=host.getBoundingClientRect();
-      const x=Math.max(pr.right-hr.left+6,lx2-26-aw),y=cy-ah/2;
+      if(!arC){const pr=document.getElementById('progress').getBoundingClientRect(),hr=host.getBoundingClientRect();arC={aw:ar.offsetWidth,ah:ar.offsetHeight,min:pr.right-hr.left+6}}
+      const x=Math.max(arC.min,lx2-26-arC.aw),y=cy-arC.ah/2;
       const k=x.toFixed(0)+','+y.toFixed(0);if(ar._k!==k){ar._k=k;ar.style.setProperty('--ax',x.toFixed(1)+'px');ar.style.setProperty('--ay',y.toFixed(1)+'px')}
       if(!ar.classList.contains('on'))requestAnimationFrame(()=>ar.classList.add('on'));
     }
@@ -1012,11 +1014,12 @@ if(!renderer||!window.THREE){
     if(hit){hideTip();go(hit.object.userData.i)}
   });
 
+  if('IntersectionObserver' in window)new IntersectionObserver(es=>{onScreen=es[es.length-1].isIntersecting},{rootMargin:'40px'}).observe(host);
   let last=0;
   (function loop(now){
     requestAnimationFrame(loop);
     const dt=Math.min(.05,(now-last)/1000||0);last=now;
-    if(!stageActive)return;
+    if(!stageActive||!onScreen||document.hidden)return;   // nothing to draw: save the phone's battery
     if(!reduce)candle.rotation.y+=dt*.35;
     meshes.forEach(m=>m.position.y=m.userData.baseY);
     if(!reduce)for(const i in bounces){const t=(now-bounces[i])/650;if(t>=1){delete bounces[i];continue}if(t>0)meshes[i].position.y+=.14*Math.sin(Math.PI*t)*(1-t*.5)}
@@ -1080,7 +1083,6 @@ function drawArt(){
 const $=id=>document.getElementById(id);
 function lum(h){const n=parseInt(h.slice(1),16);return(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255}
 function waxText(id){const w=itemOf(WAX,id);return w.scent?`${w.n}（${w.scent}）`:w.n}
-function describe(st){return waxText(st.c)+(st.s?`・潑墨：${itemOf(INK,st.sc).n}`:'')}
 
 
 
@@ -1272,7 +1274,6 @@ document.querySelectorAll('[data-go-steps]').forEach(b=>b.onclick=()=>toTop(docu
    (so an untouched tool never fills the field, and the shop's "empty note can't order" check still works).
    From then on every edit refills the field quietly, and the button says so. */
 var armed=false,fillOK=null;
-function markDirty(){}
 function syncFill(scroll){return askFill(orderText(),scroll).then(ok=>{fillOK=ok;finMsg();return ok})}
 function finMsg(){
   const m=$('finMsg'),b=$('copyAll'),h=document.querySelector('.fin-h'),sum=$('finSum'),re=$('reEdit');
