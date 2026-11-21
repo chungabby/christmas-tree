@@ -1470,7 +1470,7 @@ function toTop(el,smooth,gap){
   if('IntersectionObserver' in window)new IntersectionObserver(es=>{es[es.length-1].isIntersecting?on():v.pause()},{rootMargin:'200px'}).observe(v);else on();
 })();
 /* ---------- landing: 客製我的聖誕樹 → STEP 1–4; 選購老闆娘搭配款 → SHOP_URL ---------- */
-const SHOP_URL='https://www.its-saturday.com/'; // ← 換成「老闆娘搭配款」的商品連結
+const SHOP_URL='https://its-saturday.com/item/christmas-tree-001'; // 老闆娘搭配款
 document.querySelectorAll('.shop-link').forEach(a=>a.href=SHOP_URL);
 // lands on NOTICE (購買前提醒), with STEP 1 already showing underneath it
 document.querySelectorAll('[data-go-steps]').forEach(b=>b.onclick=()=>toTop(document.querySelector('.lx-notice'),true,0));
